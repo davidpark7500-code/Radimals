@@ -520,6 +520,7 @@ setInterval(schedule,25);
 const $=id=>document.getElementById(id);
 const playB=$('play'),scrub=$('scrub'),timeL=$('time'),startB=$('start'),saveB=$('save'),recL=$('rec');
 let playing=false,T=0,perfBase=0,recorder=null,started=false;
+let dl=null;if(window.claude&&window.claude.use){saveB.hidden=true;window.claude.use('downloads').then(d=>{dl=d;saveB.hidden=!d}).catch(()=>{})}
 const fmt=s=>`${Math.floor(s/60)}:${pad(Math.floor(s%60),2)}`;
 function clock(){if(!playing)return T;return AC&&sess?AC.currentTime-sess.base:(performance.now()-perfBase)/1000}
 function play(from=T){
@@ -550,7 +551,9 @@ saveB.onclick=()=>{
   const types=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];const mime=types.find(m=>MediaRecorder.isTypeSupported(m))||'';
   const chunks=[];recorder=new MediaRecorder(st,mime?{mimeType:mime,videoBitsPerSecond:6e6}:{});
   recorder.ondataavailable=e=>e.data.size&&chunks.push(e.data);
-  recorder.onstop=()=>{const blob=new Blob(chunks,{type:'video/webm'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='totally-radimals-98-promo.webm';document.body.appendChild(a);a.click();a.remove();recorder=null;recL.hidden=true;saveB.disabled=false;saveB.textContent='SAVE VIDEO'};
+  recorder.onstop=async()=>{const blob=new Blob(chunks,{type:'video/webm'}),name='totally-radimals-98-promo.webm';recorder=null;recL.hidden=true;saveB.disabled=false;saveB.textContent='SAVE VIDEO';
+    if(dl){try{await dl.save({filename:name,data:blob})}catch(e){if(e&&e.code!=='declined')alert('Could not save the video here.')}return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove()};
   saveB.disabled=true;saveB.textContent='RECORDING...';recL.hidden=false;
   if(playing)pause();T=0;recorder.start(500);play(0);
 };
