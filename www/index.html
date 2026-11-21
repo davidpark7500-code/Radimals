@@ -848,6 +848,11 @@ function drawMapView(){ctx.fillStyle='#fbfbf4';ctx.fillRect(0,0,160,144);ctx.fil
   const here=MAPNODES[G.map]||MAPNODES[(G.map.startsWith('sleep')||G.map.startsWith('mart'))?({sleep1:'home',mart1:'home',myhome:'home',lab:'home',sleep2:'t2',mart2:'t2',arcade:'t2',sleep3:'t3',mart3:'t3',foodcourt:'t3',rink:'t3',sleep4:'t4',mart4:'t4',vault:'t4',surfshop:'beach'}[G.map]||'home'):'home'];
   if(Math.floor(frameCount/15)%2){ctx.fillStyle='#1fa3e0';ctx.fillRect(here[0]-5,here[1]-5,10,10);txt('YOU',here[0]-6,here[1]-12);}
   txt('ROUTE PRINTOUT (P.4 OF 12)',4,2);txt('B: CLOSE',124,136);}
+/* starter preview card: shown while choosing a starter (PREVIEW = species name) */
+let PREVIEW=null;
+function drawPreview(){const n=PREVIEW;if(!n||!MONSPR[n])return;ctx.fillStyle='rgba(14,30,44,.55)';ctx.fillRect(0,0,160,144);
+  ctx.fillStyle='#181818';ctx.fillRect(36,4,88,86);ctx.fillStyle='#fbfbf4';ctx.fillRect(38,6,84,82);const tc={Fire:'#ff8c2a',Water:'#3a6cff',Grass:'#57d65a'}[SPECIES[n].type]||'#1fa3e0';ctx.fillStyle=tc;ctx.fillRect(38,6,84,4);
+  const bob=Math.floor(frameCount/24)%2;drawMon(MONSPR[n],80,40+bob,2);txt(n.toUpperCase(),80-n.length*2,70);txt(SPECIES[n].type.toUpperCase(),80-SPECIES[n].type.length*2,78,tc);}
 function drawTitle(){ctx.fillStyle='#0e1e2c';ctx.fillRect(0,0,160,144);for(let i=0;i<12;i++){ctx.fillStyle=i%2?'#1fa3e0':'#ff9a2a';const t=(frameCount/2+i*13)%160;ctx.fillRect((i*37)%160,t,3,3);}
   txt('TOTALLY',52,14,'#b6ff3b',2);txt('RADIMALS',16,28,'#1fa3e0',4);txt("'98",118,50,'#ff9a2a',2);txt('151 RADIMALS. ONE MODEM.',32,60,'#fbfbf4');txt('(C) 2026. ALL CHARACTERS ORIGINAL.',12,136,'#8a8a94');
   const names=['Dialupine','Floppuss','Trollsprout'];names.forEach((n,i)=>{ctx.save();const k=48/MONSPR[n].width;ctx.translate(8+i*50,66);ctx.scale(k,k);ctx.drawImage(MONSPR[n],0,0);ctx.restore();});
@@ -879,8 +884,8 @@ function pickMenu(items,opts={}){return new Promise(async res=>{textOpen=true;tb
     if(pages.length>1){tbOpts.style.display='none';for(let p=0;p<pages.length-1;p++){tbText.textContent=pages[p];cue.classList.add('on');await new Promise(r=>textResolve=r);cue.classList.remove('on');}tbOpts.style.display='';}
     text=pages[pages.length-1];}
   tbText.textContent=text||'';if(text&&!opts.desc&&inner-tbText.offsetHeight-4<rowH){tbOpts.style.display='none';cue.classList.add('on');await new Promise(r=>textResolve=r);cue.classList.remove('on');tbOpts.style.display='';text='';tbText.textContent='';}
-  let sel=Math.max(0,items.findIndex(it=>!it.disabled)),top=0;
-  const upd=()=>{if(opts.desc){tbText.textContent=opts.desc(sel);if(inner-tbText.offsetHeight-4<rowH)tbText.textContent='';}tbOpts.style.marginTop=tbText.textContent?'4px':'0';const avail=inner-(tbText.textContent?tbText.offsetHeight+4:0);
+  let sel=Math.max(0,items.findIndex(it=>!it.disabled)),top=0,lastSel=-1;
+  const upd=()=>{if(opts.onSel&&sel!==lastSel){lastSel=sel;try{opts.onSel(sel);}catch(e){}}if(opts.desc){tbText.textContent=opts.desc(sel);if(inner-tbText.offsetHeight-4<rowH)tbText.textContent='';}tbOpts.style.marginTop=tbText.textContent?'4px':'0';const avail=inner-(tbText.textContent?tbText.offsetHeight+4:0);
     let vis=Math.max(1,Math.floor((avail+gap+.75)/(rowH+gap)));if(vis>=nRows){vis=nRows;top=0;}const r=Math.floor(sel/cols);if(r<top)top=r;if(r>=top+vis)top=r-vis+1;top=Math.max(0,Math.min(top,nRows-vis));
     btns.forEach((b,i)=>{const br=Math.floor(i/cols);b.style.display=br>=top&&br<top+vis?'':'none';b.classList.toggle('sel',i===sel);});tbArrows(top>0,top+vis<nRows);};
   if(!items.length){res(-1);return;}upd();
@@ -1017,9 +1022,9 @@ const specials={
     else if(r==='win'){await say('The egg goes dark... then reboots. It is HUNGRY again. It will always be hungry again.');closeText();}
     else if(r==='run'){await say('It watches you leave. It has all the time in the world.');closeText();}else await blackout();},
   async prof(){if(G.party.length===0){await say('PROF. DIALTONE: You came! Sorry about the noise. That\'s my modem. It\'s always my modem.');await say('PROF. DIALTONE: Radimals: creatures, collectibles, and an excuse to skip school. Pick one to start.');
-      const names=['Dialupine','Floppuss','Trollsprout'];let i=-1;while(i<0){i=await pickMenu(names.map(n=>({label:n.toUpperCase(),sub:SPECIES[n].type})),{text:'Choose your first Radimal.',cancel:false});
+      const names=['Dialupine','Floppuss','Trollsprout'];let i=-1;while(i<0){i=await pickMenu(names.map(n=>({label:n.toUpperCase(),sub:SPECIES[n].type})),{text:'Choose your first Radimal.',cancel:false,onSel:j=>{PREVIEW=names[j];cry(names[j]);}});
         const yes=await choose(`${SPECIES[names[i]].desc}\nBond with ${names[i].toUpperCase()}?`,['TOTALLY','AS IF']);if(yes!==0)i=-1;}
-      const m=makeMon(names[i],5);G.party.push(m);G.flags.starter=names[i];G.seen[names[i]]=1;G.caught[names[i]]=1;sfx('catch');
+      PREVIEW=null;const m=makeMon(names[i],5);G.party.push(m);G.flags.starter=names[i];G.seen[names[i]]=1;G.caught[names[i]]=1;sfx('catch');
       await say(`PROF. DIALTONE: ${names[i].toUpperCase()} is yours. Here are 5 SLAMMERS to catch more, 3 JUICE BOXES, and $500. Don't spend it all on gel pens.`);
       await say('PROF. DIALTONE: Collect the four CAPS from the Hangout leaders. Then Y2K Tower. Something up there is... glitchy. Probably fine. Probably.');
       await say('PROF. DIALTONE: Oh, and CHAD went north already. He took the good bike.');closeText();save();}
@@ -1302,7 +1307,7 @@ function loop(now){const dt=Math.min(50,now-last);last=now;frameCount++;bumpT-=d
   if(B.garble){for(let i=0;i<40;i++){ctx.fillStyle=['#b6ff3b','#ff9a2a','#1fa3e0','#181818','#fbfbf4'][rnd(0,4)];ctx.fillRect(rnd(0,152),rnd(0,136),rnd(4,24),rnd(2,8));}requestAnimationFrame(loop);return;}
   if(mode==='title')drawTitle();
   else if(mode==='mapview')drawMapView();
-  else if(mode==='map'||mode==='menu'){if(!P.moving&&held.size&&mode==='map'){tryStep([...held].pop());}updateMove(dt);drawMap();if(idleT>45000&&mode==='map')drawScreensaver(dt);}
+  else if(mode==='map'||mode==='menu'){if(!P.moving&&held.size&&mode==='map'){tryStep([...held].pop());}updateMove(dt);drawMap();if(PREVIEW)drawPreview();if(idleT>45000&&mode==='map')drawScreensaver(dt);}
   else if(mode==='battle'){if(B.en||B.me)drawBattle();else drawMap();}
   requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
