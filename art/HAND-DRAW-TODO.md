@@ -1,105 +1,12 @@
-# Sprites still generated (need hand-drawing): 101 of 151
+# Sprite status: all 151 hand-drawn
 
-Hand-drawn: 50. Standard: clear silhouette, a face with attitude, a prop that sells the pun. No blobs.
+- 50 original sprites live as raw 24x24 strings in `MON_ART` / `HAND_ART` inside `www/index.html`.
+- The other 101 are authored in `tools/sprites/designs.py` (one function per creature, composed from
+  shapes with an automatic outline) and injected by `python tools/sprites/build.py` into the
+  `/*HAND_ART2_START*/ ... /*HAND_ART2_END*/` block of `www/index.html`. Edit the Python, rebuild — never
+  hand-edit the generated block.
+- Review a set: `python tools/sprites/preview.py out.png Name1 Name2 ...`
+- Full in-game roster sheet: `python tools/sheet.py` -> `art/all-151-radimals.png`.
+- The old `buildArt()`/`GEN` part generator is no longer used for any art (GEN still supplies stats/learnsets).
 
-- #028 Sparklerp (Fire, evolves to Fizzlerp at L14; body hint: bug) — Write your name in the air with it. Do NOT hold the hot end.
-- #029 Fizzlerp (Fire; body hint: bug) — Burns bright for nine seconds. Then sulks for an hour.
-- #030 Flaminhawk (Fire, evolves to Inflamingo at L30; body hint: bird) — Dusted in something red that never washes off your fingers.
-- #032 Crimpede (Fire, evolves to Curlironx at L26; body hint: serpent) — Crimped every hair on your head, then the carpet.
-- #033 Curlironx (Fire; body hint: serpent) — Left plugged in since 1994. Your mother is still worried.
-- #034 Orangeglug (Fire, evolves to Glugdeluxe at L20; body hint: blob) — Ten percent juice. Ninety percent tang.
-- #035 Glugdeluxe (Fire; body hint: tall) — Ten percent juice, ninety percent attitude.
-- #036 Sourbomb (Fire; body hint: blob) — Extreme sour. Your face folds in half. Worth it.
-- #037 Kerosnail (Fire; body hint: fish) — Slow, greasy, flammable. The trifecta.
-- #038 Minibagel (Fire, evolves to Pizzarolla at L16; body hint: box) — Pizza in the morning. Pizza in the evening. Pizza at suppertime.
-- #039 Pizzarolla (Fire; body hint: wide) — Cool on the outside, plasma on the inside. Wait two minutes. Nobody waits.
-- #042 Slipslug (Water, evolves to Slidemander at L15; body hint: blob) — Requires a garden hose and zero regard for your knees.
-- #043 Slidemander (Water; body hint: quad) — Hits every rock in the yard on the way down. Goes again.
-- #045 Bubbletapir (Water, evolves to Bubblewrapir at L20; body hint: quad) — Six feet of gum. Rolled up. Regret.
-- #046 Bubblewrapir (Water; body hint: quad) — Pop pop pop. You cannot stop. Nobody can stop.
-- #048 Dunktank (Water, evolves to Dunkzilla at L22; body hint: box) — Three balls for a dollar. Hit the target. Dunk the principal.
-- #050 Brineape (Water, evolves to Brinekong at L18; body hint: bug) — Advertised as a royal family. It is shrimp. Angry shrimp.
-- #052 Fishtankamari (Water; body hint: fish) — Lives in the 32-bit aquarium on the office computer. Never fed.
-- #053 Hangryhippo (Water; body hint: wide) — It is not a game. It has never been a game.
-- #055 Snorkelord (Water; body hint: tall) — King of the shallow end. Will not enter the deep end.
-- #056 Yakkity (Basic; body hint: quad) — Records six seconds. Plays them back. Forever.
-- #057 Sockpup (Basic, evolves to Puppetmaster at L12; body hint: blob) — Made from a sock, a button, and a lonely afternoon.
-- #058 Puppetmaster (Basic; body hint: tall) — Pulls its own strings now. Nobody asked it to.
-- #059 Hamsterjam (Basic, evolves to Hamsterrave at L16; body hint: blob) — Dances to one looping song. It has never stopped. It will never stop.
-- #061 Binderling (Basic, evolves to Binderbeast at L17; body hint: quad) — Holds everything. Loses everything. The rip is loud.
-- #063 Fannypacker (Basic; body hint: tall) — Wears it in the front. Refuses to discuss it.
-- #064 Goofyputt (Basic, evolves to Goofypuddle at L14; body hint: blob) — Copies the comics page. Bounces. Gets in the carpet.
-- #065 Goofypuddle (Basic; body hint: ghost) — It was left in the sun. It is everywhere now.
-- #066 Springee (Basic, evolves to Springstretch at L18; body hint: serpent) — Walks down stairs alone. Never walks back up.
-- #067 Springstretch (Basic; body hint: serpent) — Got tangled once in 1993. Still tangled.
-- #068 Mallrat (Basic, evolves to Mallratking at L20; body hint: quad) — Lives in the food court. Loiters professionally.
-- #069 Mallratking (Basic; body hint: quad) — Has a key to the fountain. Owns every coin in it.
-- #070 Couchpotato (Basic; body hint: wide) — Has seen every episode. Will explain every episode.
-- #071 Gooshpod (Grass; body hint: blob) — Explodes when bitten. Also when not bitten.
-- #072 Freshprints (Basic, evolves to Freshroyal at L22; body hint: quad) — Leaves a paw print on every fresh cement sidewalk in town.
-- #073 Freshroyal (Basic; body hint: tall) — Rules the block. Every block. Has a theme song about it.
-- #074 Goosebumpy (Air, evolves to Goosepimple at L20; body hint: bird) — Comes with a warning label. The scare is mild.
-- #076 Papairplane (Air, evolves to Paperjet at L16; body hint: bird) — Folded in class. Confiscated in class. Flew anyway.
-- #077 Paperjet (Air; body hint: bird) — Thrown from the top bunk. Never landed.
-- #078 Balloonatic (Air; body hint: blob) — Lets go of the string on purpose. Every time.
-- #079 Foamfalcon (Air; body hint: bird) — Foam beak. Still hurts. Do not aim at the face.
-- #080 Kitedelic (Air; body hint: ghost) — Only flies on windy days. Is always somehow tangled in a tree.
-- #081 Dustbunnie (Air, evolves to Dustbeast at L15; body hint: blob) — Lives under the bed. Has a whole society under there.
-- #082 Dustbeast (Air; body hint: wide) — The vacuum fears it now.
-- #083 Cloudsurf (Air; body hint: blob) — Totally airbrushed on a t-shirt at the boardwalk.
-- #084 Aquanetta (Air; body hint: bird) — Its hair does not move. In a hurricane. Ever.
-- #085 Parachutie (Air, evolves to Parachuteor at L18; body hint: ghost) — Pants so wide they catch wind. Twenty pockets. Zero contents.
-- #086 Parachuteor (Air; body hint: tall) — Can you touch this? No. No you cannot.
-- #087 Twistorm (Air; body hint: ghost) — Right hand red. Left foot blue. Everybody falls down.
-- #088 Moonbootle (Rock; body hint: box) — Bounces four inches higher than regular shoes. Rolls every ankle.
-- #089 Blowcart (Rock, evolves to Cartrolith at L24; body hint: box) — Blow on it. Blow on it again. It works. It always works.
-- #091 Boomboxer (Rock; body hint: box) — Carried on one shoulder. Deafens that side of the street.
-- #092 Brickphone (Rock, evolves to Brickzilla at L20; body hint: tall) — Weighs three pounds. Battery lasts four calls. Immortal.
-- #094 Petrock (Rock; body hint: blob) — Does nothing. Costs five dollars. The perfect pet.
-- #095 Petrocksteady (Rock; body hint: wide) — Still does nothing. Now with sunglasses. Costs fifty.
-- #096 Gargoylie (Rock; body hint: ghost) — Perched on the school roof. Judges the whole recess.
-- #097 Cassettle (Rock, evolves to Cassettitan at L16; body hint: box) — Side A is fine. Side B is a mystery to everyone.
-- #098 Cassettitan (Rock; body hint: wide) — Unspooled once. Was rewound with a pencil. Never forgave.
-- #099 Blockstack (Rock; body hint: box) — Four in a row. Gone. It is the line piece. Everyone wanted the line piece.
-- #100 Pixelpest (Bug; body hint: bug) — Beeps at 3 AM. Died because you went to school. Your fault.
-- #101 Anklehop (Bug, evolves to Anklehopper at L14; body hint: bug) — Clips to your ankle. Counts. Trips you at 47.
-- #102 Anklehopper (Bug; body hint: bug) — Counter reads 999. Ankle reads bruised.
-- #103 Mothballer (Bug; body hint: bug) — Smells like a grandparent closet. Nests in your sweater.
-- #104 Captula (Bug; body hint: bug) — Eight legs. Eight pogs. Won them all fair and square.
-- #105 Rantz (Bug, evolves to Rantzilla at L13; body hint: bug) — Carries ten times its weight in complaints.
-- #107 Butterclip (Bug, evolves to Flutterclip at L15; body hint: bug) — Twelve of them in your hair. Pulls out exactly one strand each.
-- #108 Flutterclip (Bug; body hint: bird) — Sparkles. Snaps shut on fingers. A butterfly with a grudge.
-- #109 Ladybugsy (Bug; body hint: bug) — Runs the playground protection racket. Pay in gummy worms.
-- #111 Spicearachnid (Bug; body hint: bug) — Five of them. Each has a nickname. Each thinks it is the leader.
-- #112 Cicadaboom (Bug; body hint: bug) — Silent for seventeen years. Then it found a boombox.
-- #113 Sproutpup (Grass, evolves to Sprouthound at L17; body hint: quad) — Just add water. Wait three weeks. Mild disappointment.
-- #115 Footbaggle (Grass, evolves to Footbagsquatch at L19; body hint: blob) — Kicked in a circle by five guys who will not go to class.
-- #117 Fuzzpuff (Grass, evolves to Fuzznado at L16; body hint: blob) — Ten thousand rubber hairs. All of them in your face.
-- #118 Fuzznado (Grass; body hint: ghost) — Thrown at a sibling. Came back around. Physics is a lie.
-- #119 Cabbagebaby (Grass, evolves to Cabbagelord at L21; body hint: tall) — Comes with adoption papers. Has never been adopted.
-- #121 Dandylion (Grass; body hint: quad) — Make a wish. Blow. Now there are forty of them on your lawn.
-- #122 Fruityfoot (Grass; body hint: tall) — Three feet long. Sticks to the roof of your mouth. Also to the couch.
-- #123 Slimeon (Grass; body hint: ghost) — Dumped from the ceiling. Green. Somehow still in your ears.
-- #124 Weedwhack (Grass; body hint: serpent) — Set loose in the yard on a Saturday. Took out the tomatoes.
-- #125 Fernbaby (Grass, evolves to Fernfury at L18; body hint: bug) — Cries when the forest is sad. The forest is often sad.
-- #126 Fernfury (Grass; body hint: wide) — Grew up. Grew teeth. Grew a whole opinion about bulldozers.
-- #127 Zapdisk (Techno, evolves to Diskdrake at L18; body hint: box) — Holds 100 MB. Makes the click of death. Ominous.
-- #129 Roboruff (Techno, evolves to Robowoof at L16; body hint: quad) — Sits. Stays. Runs out of batteries mid-trick.
-- #130 Robowoof (Techno; body hint: quad) — Learned one new trick: static shock. Uses it on the mailman.
-- #131 Laserpouncer (Techno; body hint: quad) — Chases the red dot. Has never caught the red dot. Will die trying.
-- #132 Staticling (Techno, evolves to Statickle at L17; body hint: ghost) — Rubbed on a balloon. Stuck to the ceiling. Living up there now.
-- #133 Statickle (Techno; body hint: ghost) — Touches the doorknob for you. You will not enjoy it.
-- #134 Spellbot (Techno; body hint: box) — Spells everything wrong in a robot voice. Confident.
-- #135 Glowpeg (Techno, evolves to Glowpegger at L15; body hint: tall) — Made a picture of a clown out of pegs. The pegs are everywhere now.
-- #136 Glowpegger (Techno; body hint: tall) — Glows in the dark. Also in the light. Never off.
-- #137 Snakebyte (Techno; body hint: serpent) — Eats pixels on a tiny gray screen. Grows. Bites its own tail. Game over.
-- #138 Electricslide (Techno; body hint: blob) — Everybody at the wedding knows the steps. Nobody knows why.
-- #139 Walkiehawkie (Techno, evolves to Walkiehawker at L20; body hint: bird) — Over. Over. OVER. Copy? OVER.
-- #140 Walkiehawker (Techno; body hint: bird) — Range: two houses. Volume: the whole street.
-- #143 Screensaurus (Rock; body hint: quad) — A pipe maze with teeth. Bounces around the corners of your screen.
-- #144 Slushpuppy (Water, evolves to Slushhound at L17; body hint: quad) — Half ice, half syrup, all brain freeze.
-- #145 Slushhound (Water; body hint: quad) — Bites cold. Melts slightly indoors. Drips on the carpet.
-- #147 Chatbrat (Techno, evolves to Chatroomer at L14; body hint: ghost) — Types a/s/l and nothing else. Ever.
-- #148 Chatroomer (Techno; body hint: ghost) — Lurks. Occasionally types "lol". Has never laughed out loud.
-- #149 Emailephant (Techno; body hint: wide) — Never forgets. Never deletes. Inbox: 4,812 unread.
-- #150 Bufferfly (Techno; body hint: bug) — Loading... loading... loading... it moved one inch.
+Quality bar for any new or revised sprite: clear silhouette, a face with attitude, a prop that sells the pun. No blobs.

@@ -4,3 +4,7 @@ Playwright test scripts used during development. Run from the project root:
   python tools/playthrough.py  # full scripted arc
   python tools/fuzz.py         # random battles + rules
   python tools/sheet.py        # renders art/all-151-radimals.png
+
+Sprite authoring (all 101 non-legacy sprites):
+  python tools/sprites/preview.py out.png Name1 Name2   # review sheet from designs.py
+  python tools/sprites/build.py                         # inject designs.py into www/index.html

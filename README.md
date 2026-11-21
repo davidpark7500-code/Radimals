@@ -9,7 +9,7 @@ The Internet.
 - **Ship to iOS:** `README-SHIP.md` (Capacitor → Xcode), plus `PRIVACY-POLICY.md`,
   `APP-STORE-LISTING.md`, `LEGAL-REVIEW.md`
 - **Tests:** `tools/` (Playwright: audit, scripted playthrough, fuzz, sprite sheet)
-- **Art status:** `art/HAND-DRAW-TODO.md` — 50 of 151 sprites hand-drawn, 101 to go
+- **Art:** all 151 Radimals hand-drawn — sprite source in `tools/sprites/`, roster sheet in `art/all-151-radimals.png`
 - **Promo video:** `promo/`
 
 © 2026. All characters, names, artwork and music are original.

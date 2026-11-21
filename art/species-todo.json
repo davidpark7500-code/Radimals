@@ -4,7 +4,6 @@
   "n": 1,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ff7a3a",
    "b": "#ffd9a8"
@@ -18,7 +17,6 @@
   "n": 2,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#d84a1e",
    "b": "#ffc080"
@@ -32,7 +30,6 @@
   "n": 3,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#3a6cff",
    "b": "#ffffff"
@@ -46,7 +43,6 @@
   "n": 4,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#2a4cd8",
    "b": "#ffffff"
@@ -60,7 +56,6 @@
   "n": 5,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#f0c890",
    "b": "#fff0c0",
@@ -75,7 +70,6 @@
   "n": 6,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#d8a870",
    "b": "#ffe8c0",
@@ -90,7 +84,6 @@
   "n": 7,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ff9a3a",
    "b": "#ffe0a0"
@@ -104,7 +97,6 @@
   "n": 8,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#e07a2a",
    "b": "#ffd080"
@@ -118,7 +110,6 @@
   "n": 9,
   "type": "Bug",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#b6ff3b",
    "b": "#ff3fa4"
@@ -132,7 +123,6 @@
   "n": 10,
   "type": "Bug",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#7fe010",
    "b": "#ff3fa4"
@@ -146,7 +136,6 @@
   "n": 11,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#c9a86b",
    "b": "#f0dcb0",
@@ -161,7 +150,6 @@
   "n": 12,
   "type": "Air",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#a04cff",
    "b": "#ffffff"
@@ -175,7 +163,6 @@
   "n": 13,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#6a6a7a",
    "b": "#c8c8d8",
@@ -190,7 +177,6 @@
   "n": 14,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#404058",
    "b": "#a8a8c0"
@@ -204,7 +190,6 @@
   "n": 15,
   "type": "Bug",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#7a5a30",
    "b": "#c8a060",
@@ -219,7 +204,6 @@
   "n": 16,
   "type": "Rock",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#4a4a5a",
    "b": "#ffffff"
@@ -233,7 +217,6 @@
   "n": 17,
   "type": "Rock",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#5a4a40",
    "b": "#a8a8b8"
@@ -247,7 +230,6 @@
   "n": 18,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#2a2a48",
    "b": "#ffffff",
@@ -262,7 +244,6 @@
   "n": 19,
   "type": "Air",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#8a6a3a",
    "b": "#ffffff"
@@ -276,7 +257,6 @@
   "n": 20,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#8a6a48",
    "b": "#d8c0a0"
@@ -290,7 +270,6 @@
   "n": 21,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffe66a"
@@ -304,7 +283,6 @@
   "n": 22,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#5a5aa8",
    "b": "#ffffff"
@@ -318,7 +296,6 @@
   "n": 23,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ffe03a",
    "b": "#ff8c2a",
@@ -333,7 +310,6 @@
   "n": 24,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#c88a50",
    "b": "#ffe0b0"
@@ -347,7 +323,6 @@
   "n": 25,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#3a1a5a",
    "b": "#ff3fa4",
@@ -362,7 +337,6 @@
   "n": 26,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ff7a3a",
    "b": "#ffe0a0",
@@ -377,7 +351,6 @@
   "n": 27,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#e0481e",
    "b": "#ffd080",
@@ -391,8 +364,7 @@
   "name": "Sparklerp",
   "n": 28,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffb040",
    "b": "#fff0a0",
@@ -406,8 +378,7 @@
   "name": "Fizzlerp",
   "n": 29,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8c2a",
    "b": "#ffe66a",
@@ -421,8 +392,7 @@
   "name": "Flaminhawk",
   "n": 30,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffc070",
@@ -437,7 +407,6 @@
   "n": 31,
   "type": "Fire",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffd0e0",
@@ -451,8 +420,7 @@
   "name": "Crimpede",
   "n": 32,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c8402a",
    "b": "#ffb090",
@@ -466,8 +434,7 @@
   "name": "Curlironx",
   "n": 33,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a02020",
    "b": "#ff9060",
@@ -481,8 +448,7 @@
   "name": "Orangeglug",
   "n": 34,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffe03a",
    "b": "#fff8c0",
@@ -496,8 +462,7 @@
   "name": "Glugdeluxe",
   "n": 35,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffc020",
    "b": "#fff0a0",
@@ -511,8 +476,7 @@
   "name": "Sourbomb",
   "n": 36,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#b6ff3b",
    "b": "#ffe66a",
@@ -526,8 +490,7 @@
   "name": "Kerosnail",
   "n": 37,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "fish",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a6a48",
    "b": "#ffd0a0",
@@ -541,8 +504,7 @@
   "name": "Minibagel",
   "n": 38,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e8b060",
    "b": "#ffe8c0",
@@ -556,8 +518,7 @@
   "name": "Pizzarolla",
   "n": 39,
   "type": "Fire",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#d89040",
    "b": "#ffd090",
@@ -572,7 +533,6 @@
   "n": 40,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#19e6d2",
    "b": "#ffe03a",
@@ -587,7 +547,6 @@
   "n": 41,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#0ea8a0",
    "b": "#ffe03a",
@@ -601,8 +560,7 @@
   "name": "Slipslug",
   "n": 42,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffe03a",
    "b": "#fff8c0",
@@ -616,8 +574,7 @@
   "name": "Slidemander",
   "n": 43,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffd020",
    "b": "#fff0a0",
@@ -632,7 +589,6 @@
   "n": 44,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#3a6cff",
    "b": "#a8e0ff",
@@ -646,8 +602,7 @@
   "name": "Bubbletapir",
   "n": 45,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8ccc",
    "b": "#ffe0f0",
@@ -661,8 +616,7 @@
   "name": "Bubblewrapir",
   "n": 46,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff5fb0",
    "b": "#ffe0f0",
@@ -677,7 +631,6 @@
   "n": 47,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#57d65a",
    "b": "#c0ffb0",
@@ -691,8 +644,7 @@
   "name": "Dunktank",
   "n": 48,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2a8cff",
    "b": "#a8e0ff",
@@ -707,7 +659,6 @@
   "n": 49,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#1a5cc8",
    "b": "#88c0ff",
@@ -721,8 +672,7 @@
   "name": "Brineape",
   "n": 50,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff9a60",
    "b": "#ffe0c0",
@@ -737,7 +687,6 @@
   "n": 51,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#e07030",
    "b": "#ffc090",
@@ -751,8 +700,7 @@
   "name": "Fishtankamari",
   "n": 52,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "fish",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8c2a",
    "b": "#ffe0a0",
@@ -766,8 +714,7 @@
   "name": "Hangryhippo",
   "n": 53,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#e0c0ff",
@@ -782,7 +729,6 @@
   "n": 54,
   "type": "Water",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#3a9bff",
    "b": "#c0e8ff",
@@ -796,8 +742,7 @@
   "name": "Snorkelord",
   "n": 55,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2060d0",
    "b": "#a0d0ff",
@@ -811,8 +756,7 @@
   "name": "Yakkity",
   "n": 56,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a6a48",
    "b": "#d8c0a0",
@@ -826,8 +770,7 @@
   "name": "Sockpup",
   "n": 57,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffffff",
    "b": "#ffe0e0",
@@ -841,8 +784,7 @@
   "name": "Puppetmaster",
   "n": 58,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e0e0e0",
    "b": "#ffd0d0",
@@ -856,8 +798,7 @@
   "name": "Hamsterjam",
   "n": 59,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e8b060",
    "b": "#fff0d0",
@@ -872,7 +813,6 @@
   "n": 60,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ffd040",
    "b": "#fff8d0",
@@ -886,8 +826,7 @@
   "name": "Binderling",
   "n": 61,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#57d65a",
    "b": "#c0ffb0",
@@ -902,7 +841,6 @@
   "n": 62,
   "type": "Basic",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#2fa848",
    "b": "#a0ffa0",
@@ -916,8 +854,7 @@
   "name": "Fannypacker",
   "n": 63,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#e0c0ff",
@@ -931,8 +868,7 @@
   "name": "Goofyputt",
   "n": 64,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffb0c0",
    "b": "#ffe0e8",
@@ -946,8 +882,7 @@
   "name": "Goofypuddle",
   "n": 65,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff90b0",
    "b": "#ffd0e0",
@@ -961,8 +896,7 @@
   "name": "Springee",
   "n": 66,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c0c0d0",
    "b": "#ffffff",
@@ -976,8 +910,7 @@
   "name": "Springstretch",
   "n": 67,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#909aa8",
    "b": "#e8e8f0",
@@ -991,8 +924,7 @@
   "name": "Mallrat",
   "n": 68,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a8a9a",
    "b": "#e0e0e8",
@@ -1006,8 +938,7 @@
   "name": "Mallratking",
   "n": 69,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#606070",
    "b": "#d0d0e0",
@@ -1021,8 +952,7 @@
   "name": "Couchpotato",
   "n": 70,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c8a070",
    "b": "#f0e0c0",
@@ -1036,8 +966,7 @@
   "name": "Gooshpod",
   "n": 71,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffc0d0",
@@ -1051,8 +980,7 @@
   "name": "Freshprints",
   "n": 72,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#3a6cff",
    "b": "#c0d8ff",
@@ -1066,8 +994,7 @@
   "name": "Freshroyal",
   "n": 73,
   "type": "Basic",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2040c0",
    "b": "#a0c0ff",
@@ -1081,8 +1008,7 @@
   "name": "Goosebumpy",
   "n": 74,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#57d65a",
    "b": "#c0ffb0",
@@ -1097,7 +1023,6 @@
   "n": 75,
   "type": "Air",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#2fa848",
    "b": "#a0ffa0",
@@ -1111,8 +1036,7 @@
   "name": "Papairplane",
   "n": 76,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffffff",
    "b": "#e8e8f0",
@@ -1126,8 +1050,7 @@
   "name": "Paperjet",
   "n": 77,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e8f0ff",
    "b": "#c0d0f0",
@@ -1141,8 +1064,7 @@
   "name": "Balloonatic",
   "n": 78,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffb0d8",
@@ -1156,8 +1078,7 @@
   "name": "Foamfalcon",
   "n": 79,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8c2a",
    "b": "#ffd0a0",
@@ -1171,8 +1092,7 @@
   "name": "Kitedelic",
   "n": 80,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#ffe03a",
@@ -1186,8 +1106,7 @@
   "name": "Dustbunnie",
   "n": 81,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c8c8d0",
    "b": "#f0f0f0",
@@ -1201,8 +1120,7 @@
   "name": "Dustbeast",
   "n": 82,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#909098",
    "b": "#e0e0e8",
@@ -1216,8 +1134,7 @@
   "name": "Cloudsurf",
   "n": 83,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffffff",
    "b": "#e0f0ff",
@@ -1231,8 +1148,7 @@
   "name": "Aquanetta",
   "n": 84,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffe03a",
    "b": "#fff0a0",
@@ -1246,8 +1162,7 @@
   "name": "Parachutie",
   "n": 85,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#19e6d2",
    "b": "#ffffff",
@@ -1261,8 +1176,7 @@
   "name": "Parachuteor",
   "n": 86,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#0ea8a0",
    "b": "#ffffff",
@@ -1276,8 +1190,7 @@
   "name": "Twistorm",
   "n": 87,
   "type": "Air",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a8a8b8",
    "b": "#e0e0f0",
@@ -1291,8 +1204,7 @@
   "name": "Moonbootle",
   "n": 88,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c0c0e0",
    "b": "#ffffff",
@@ -1306,8 +1218,7 @@
   "name": "Blowcart",
   "n": 89,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a8a9a",
    "b": "#c0c0c8",
@@ -1322,7 +1233,6 @@
   "n": 90,
   "type": "Rock",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#606070",
    "b": "#b0b0c0",
@@ -1336,8 +1246,7 @@
   "name": "Boomboxer",
   "n": 91,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2c2444",
    "b": "#909098",
@@ -1351,8 +1260,7 @@
   "name": "Brickphone",
   "n": 92,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#404050",
    "b": "#a0a0b0",
@@ -1367,7 +1275,6 @@
   "n": 93,
   "type": "Rock",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#303040",
    "b": "#909098",
@@ -1381,8 +1288,7 @@
   "name": "Petrock",
   "n": 94,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a7a68",
    "b": "#c0b0a0",
@@ -1396,8 +1302,7 @@
   "name": "Petrocksteady",
   "n": 95,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#7a6a58",
    "b": "#c0b0a0",
@@ -1411,8 +1316,7 @@
   "name": "Gargoylie",
   "n": 96,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#606878",
    "b": "#b0b8c8",
@@ -1426,8 +1330,7 @@
   "name": "Cassettle",
   "n": 97,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#3a3a4a",
    "b": "#a0a0b0",
@@ -1441,8 +1344,7 @@
   "name": "Cassettitan",
   "n": 98,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2a2a3a",
    "b": "#909098",
@@ -1456,8 +1358,7 @@
   "name": "Blockstack",
   "n": 99,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#19e6d2",
    "b": "#ffe03a",
@@ -1471,8 +1372,7 @@
   "name": "Pixelpest",
   "n": 100,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#b6ff3b",
    "b": "#e0ffa0",
@@ -1486,8 +1386,7 @@
   "name": "Anklehop",
   "n": 101,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffd0e0",
@@ -1501,8 +1400,7 @@
   "name": "Anklehopper",
   "n": 102,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e02090",
    "b": "#ffb0d0",
@@ -1516,8 +1414,7 @@
   "name": "Mothballer",
   "n": 103,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#d0c8b0",
    "b": "#f0e8d8",
@@ -1531,8 +1428,7 @@
   "name": "Captula",
   "n": 104,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8c2a",
    "b": "#ffe0a0",
@@ -1546,8 +1442,7 @@
   "name": "Rantz",
   "n": 105,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c8402a",
    "b": "#ffb0a0",
@@ -1562,7 +1457,6 @@
   "n": 106,
   "type": "Bug",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#a02020",
    "b": "#ff9080",
@@ -1576,8 +1470,7 @@
   "name": "Butterclip",
   "n": 107,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#ffe03a",
@@ -1591,8 +1484,7 @@
   "name": "Flutterclip",
   "n": 108,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffe03a",
@@ -1606,8 +1498,7 @@
   "name": "Ladybugsy",
   "n": 109,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffffff",
@@ -1622,7 +1513,6 @@
   "n": 110,
   "type": "Bug",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ffe03a",
    "b": "#fff8c0",
@@ -1636,8 +1526,7 @@
   "name": "Spicearachnid",
   "n": 111,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffe03a",
@@ -1651,8 +1540,7 @@
   "name": "Cicadaboom",
   "n": 112,
   "type": "Bug",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#57d65a",
    "b": "#c0ffb0",
@@ -1666,8 +1554,7 @@
   "name": "Sproutpup",
   "n": 113,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c8a070",
    "b": "#8cf05a",
@@ -1682,7 +1569,6 @@
   "n": 114,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#a08050",
    "b": "#8cf05a",
@@ -1696,8 +1582,7 @@
   "name": "Footbaggle",
   "n": 115,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a6a48",
    "b": "#d8c0a0",
@@ -1712,7 +1597,6 @@
   "n": 116,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#6a4a28",
    "b": "#b09070",
@@ -1726,8 +1610,7 @@
   "name": "Fuzzpuff",
   "n": 117,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#19e6d2",
@@ -1741,8 +1624,7 @@
   "name": "Fuzznado",
   "n": 118,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#19e6d2",
@@ -1756,8 +1638,7 @@
   "name": "Cabbagebaby",
   "n": 119,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#57d65a",
    "b": "#c0ffb0",
@@ -1772,7 +1653,6 @@
   "n": 120,
   "type": "Grass",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#2fa848",
    "b": "#a0ffa0",
@@ -1786,8 +1666,7 @@
   "name": "Dandylion",
   "n": 121,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffe03a",
    "b": "#fff8c0",
@@ -1801,8 +1680,7 @@
   "name": "Fruityfoot",
   "n": 122,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffe03a",
@@ -1816,8 +1694,7 @@
   "name": "Slimeon",
   "n": 123,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#57d65a",
    "b": "#b6ff3b",
@@ -1831,8 +1708,7 @@
   "name": "Weedwhack",
   "n": 124,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2fa848",
    "b": "#8cf05a",
@@ -1846,8 +1722,7 @@
   "name": "Fernbaby",
   "n": 125,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2fa848",
    "b": "#a0ffa0",
@@ -1861,8 +1736,7 @@
   "name": "Fernfury",
   "n": 126,
   "type": "Grass",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#1f8a38",
    "b": "#8cf05a",
@@ -1876,8 +1750,7 @@
   "name": "Zapdisk",
   "n": 127,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#a04cff",
    "b": "#e0c0ff",
@@ -1892,7 +1765,6 @@
   "n": 128,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#7020d0",
    "b": "#c0a0ff",
@@ -1906,8 +1778,7 @@
   "name": "Roboruff",
   "n": 129,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#c0c0d0",
    "b": "#ffffff",
@@ -1921,8 +1792,7 @@
   "name": "Robowoof",
   "n": 130,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#909098",
    "b": "#e0e0e8",
@@ -1936,8 +1806,7 @@
   "name": "Laserpouncer",
   "n": 131,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3f5f",
    "b": "#ffc0c8",
@@ -1951,8 +1820,7 @@
   "name": "Staticling",
   "n": 132,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#b6ff3b",
    "b": "#e0ffa0",
@@ -1966,8 +1834,7 @@
   "name": "Statickle",
   "n": 133,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8cf05a",
    "b": "#e0ffa0",
@@ -1981,8 +1848,7 @@
   "name": "Spellbot",
   "n": 134,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "box",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff8c2a",
    "b": "#ffe0a0",
@@ -1996,8 +1862,7 @@
   "name": "Glowpeg",
   "n": 135,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#181818",
    "b": "#ffe03a",
@@ -2011,8 +1876,7 @@
   "name": "Glowpegger",
   "n": 136,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "tall",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#2c2444",
    "b": "#ffe03a",
@@ -2026,8 +1890,7 @@
   "name": "Snakebyte",
   "n": 137,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "serpent",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#181818",
    "b": "#b6ff3b",
@@ -2041,8 +1904,7 @@
   "name": "Electricslide",
   "n": 138,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "blob",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#3a6cff",
    "b": "#a0c8ff",
@@ -2056,8 +1918,7 @@
   "name": "Walkiehawkie",
   "n": 139,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ffe03a",
    "b": "#fff0a0",
@@ -2071,8 +1932,7 @@
   "name": "Walkiehawker",
   "n": 140,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "bird",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e0c020",
    "b": "#fff0a0",
@@ -2087,7 +1947,6 @@
   "n": 141,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#c0c0e0",
    "b": "#ffffff",
@@ -2102,7 +1961,6 @@
   "n": 142,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#d8d8e0",
    "b": "#8a8a98",
@@ -2116,8 +1974,7 @@
   "name": "Screensaurus",
   "n": 143,
   "type": "Rock",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#3a1a5a",
    "b": "#a04cff",
@@ -2131,8 +1988,7 @@
   "name": "Slushpuppy",
   "n": 144,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#7ee6ff",
    "b": "#ffffff",
@@ -2146,8 +2002,7 @@
   "name": "Slushhound",
   "n": 145,
   "type": "Water",
-  "status": "GENERATED",
-  "body_hint": "quad",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#3ab0ff",
    "b": "#e0f8ff",
@@ -2162,7 +2017,6 @@
   "n": 146,
   "type": "Rock",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#ffffff",
    "b": "#e0f0ff",
@@ -2176,8 +2030,7 @@
   "name": "Chatbrat",
   "n": 147,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#ff3fa4",
    "b": "#ffd0e8",
@@ -2191,8 +2044,7 @@
   "name": "Chatroomer",
   "n": 148,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "ghost",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#e02090",
    "b": "#ffb0d8",
@@ -2206,8 +2058,7 @@
   "name": "Emailephant",
   "n": 149,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "wide",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#8a8aa0",
    "b": "#d0d0e0",
@@ -2221,8 +2072,7 @@
   "name": "Bufferfly",
   "n": 150,
   "type": "Techno",
-  "status": "GENERATED",
-  "body_hint": "bug",
+  "status": "HAND-DRAWN",
   "colors": {
    "a": "#19e6d2",
    "b": "#ffffff",
@@ -2237,7 +2087,6 @@
   "n": 151,
   "type": "Techno",
   "status": "HAND-DRAWN",
-  "body_hint": null,
   "colors": {
    "a": "#fbfbf4",
    "b": "#ffe03a",
