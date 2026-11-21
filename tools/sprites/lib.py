@@ -10,18 +10,19 @@ W = H = 24
 
 
 class C:
-    def __init__(self):
-        self.g = [['.'] * W for _ in range(H)]
+    def __init__(self, size=24):
+        self.W = self.H = size
+        self.g = [['.'] * size for _ in range(size)]
 
     # --- primitives -------------------------------------------------------
     def px(self, x, y, c):
         x, y = int(round(x)), int(round(y))
-        if 0 <= x < W and 0 <= y < H:
+        if 0 <= x < self.W and 0 <= y < self.H:
             self.g[y][x] = c
         return self
 
     def get(self, x, y):
-        return self.g[y][x] if 0 <= x < W and 0 <= y < H else '.'
+        return self.g[y][x] if 0 <= x < self.W and 0 <= y < self.H else '.'
 
     def rect(self, x0, y0, x1, y1, c):
         for y in range(min(y0, y1), max(y0, y1) + 1):
@@ -30,15 +31,15 @@ class C:
         return self
 
     def ell(self, cx, cy, rx, ry, c):
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 if ((x - cx) / (rx + 0.35)) ** 2 + ((y - cy) / (ry + 0.35)) ** 2 <= 1:
                     self.px(x, y, c)
         return self
 
     def ring(self, cx, cy, rx, ry, w, c):
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 d = ((x - cx) / (rx + 0.35)) ** 2 + ((y - cy) / (ry + 0.35)) ** 2
                 d2 = ((x - cx) / max(0.5, rx - w + 0.35)) ** 2 + ((y - cy) / max(0.5, ry - w + 0.35)) ** 2
                 if d <= 1 and d2 > 1:
@@ -46,8 +47,8 @@ class C:
         return self
 
     def poly(self, pts, c):
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 px, py = x + 0.5, y + 0.5
                 inside = False
                 j = len(pts) - 1
@@ -83,13 +84,13 @@ class C:
 
     def mirror(self):
         """Copy the left half onto the right half (symmetric creatures)."""
-        for y in range(H):
-            for x in range(12):
-                self.g[y][23 - x] = self.g[y][x]
+        for y in range(self.H):
+            for x in range(self.W // 2):
+                self.g[y][self.W - 1 - x] = self.g[y][x]
         return self
 
     def recolor(self, frm, to, region=None):
-        x0, y0, x1, y1 = region or (0, 0, 23, 23)
+        x0, y0, x1, y1 = region or (0, 0, self.W - 1, self.H - 1)
         for y in range(y0, y1 + 1):
             for x in range(x0, x1 + 1):
                 if self.g[y][x] == frm:
@@ -99,8 +100,8 @@ class C:
     def outline(self, diag=False):
         add = []
         nb = [(1, 0), (-1, 0), (0, 1), (0, -1)] + ([(1, 1), (1, -1), (-1, 1), (-1, -1)] if diag else [])
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 if self.g[y][x] != '.':
                     continue
                 for dx, dy in nb:
@@ -115,8 +116,8 @@ class C:
     def shadow(self, frm, to):
         """Darken the bottom/right inner edge of a fill (gives volume)."""
         pts = []
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 if self.g[y][x] == frm and (self.get(x, y + 1) == '#' or self.get(x + 1, y) == '#'):
                     pts.append((x, y))
         for x, y in pts:
@@ -126,8 +127,8 @@ class C:
     def shine(self, frm, to):
         """Lighten the top/left inner edge of a fill."""
         pts = []
-        for y in range(H):
-            for x in range(W):
+        for y in range(self.H):
+            for x in range(self.W):
                 if self.g[y][x] == frm and (self.get(x, y - 1) == '#' or self.get(x - 1, y) == '#'):
                     pts.append((x, y))
         for x, y in pts:
