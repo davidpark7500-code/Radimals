@@ -95,10 +95,11 @@ tracks, and an App Store legal pass.
 `tools/` has Playwright scripts: `audit.py` (warps/edges/NPCs/species/items), `playthrough.py`
 (scripted full arc: starter → all leaders → tower → boss → legendary), `fuzz.py` (random
 battles + rule checks), `textfit.py` (text box never overflows at 3 screen widths; optional
-screenshot dir arg), `sheet.py` (renders all 151 with hand/generated tags), `shots.py`.
+screenshot dir arg), `sweep.py` (500-battle fuzz with invariants, every dialogue string fits,
+save/load + old-save compatibility, field items, swarm expiry, shop limits), `sheet.py` (renders all 151 with hand/generated tags), `shots.py`.
 Run `pip install playwright && playwright install chromium` first (in the cloud sandbox, set
 `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` instead of installing). Every change should pass
-audit + playthrough + fuzz + textfit before it ships.
+audit + playthrough + fuzz + textfit + sweep before it ships.
 
 ## Build / ship
 See README-SHIP.md (Capacitor → Xcode), PRIVACY-POLICY.md, APP-STORE-LISTING.md, LEGAL-REVIEW.md.

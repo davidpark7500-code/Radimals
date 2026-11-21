@@ -4,6 +4,7 @@ Playwright test scripts used during development. Run from the project root:
   python tools/playthrough.py  # full scripted arc
   python tools/fuzz.py         # random battles + rules
   python tools/textfit.py [dir] # text box never overflows (330/390/600 px); optional screenshots
+  python tools/sweep.py         # broad bug sweep (long fuzz + invariants, dialogue fit, saves, items)
   python tools/sheet.py        # renders art/all-151-radimals.png
 
 Sprite authoring (all 101 non-legacy sprites):
