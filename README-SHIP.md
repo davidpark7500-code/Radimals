@@ -20,7 +20,7 @@ npx cap sync ios
 npx cap open ios                         # opens Xcode
 ```
 In Xcode: set your Team, change the Bundle Identifier in capacitor.config.json
-(`com.yourcompany.radimals98`) to your own reverse-domain id, set Deployment Target to
+(now `com.holisticcreativestudios.radimals`) to your own reverse-domain id, set Deployment Target to
 iOS 15, lock orientation to Portrait, then Product > Archive > Distribute > App Store Connect.
 
 Haptics: `@capacitor/haptics` is in package.json, so `npm install` + `npx cap sync ios` registers

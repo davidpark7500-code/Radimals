@@ -1,9 +1,9 @@
 # Privacy Policy — Totally Radimals '98
 
-Effective date: (fill in)
+Effective date: November 21, 2026
 
 Totally Radimals '98 ("the App") is an offline, single-player game published by
-(your name / company).
+Holistic Creative Studios LLC.
 
 **We do not collect, store, transmit, sell or share any personal information.**
 
@@ -16,4 +16,4 @@ Totally Radimals '98 ("the App") is an offline, single-player game published by
 - The App is suitable for all ages and does not knowingly collect information from children.
 
 If this policy changes, the updated version will be posted at this URL and the effective date
-updated. Questions: (support email)
+updated. Questions: hello@holisticcreativestudios.com

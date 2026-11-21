@@ -24,4 +24,4 @@ Fed. Cleaned. Loved. Then forgotten in a drawer. It remembers.
 **What's New (1.0):** Initial release.
 
 **Support URL / Privacy URL:** (host PRIVACY-POLICY.md somewhere and paste the links)
-**Copyright:** © 2026 (your name / company)
+**Copyright:** © 2026 Holistic Creative Studios LLC
