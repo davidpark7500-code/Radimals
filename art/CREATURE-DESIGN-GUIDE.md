@@ -87,6 +87,9 @@ something you want to hug. Research on cuteness and toys:
     the floppy bill, the gem belly button, the bird in the nest.
 13. **Plush test:** no needle-thin parts (flames are soft curls, cords are chunky), 2 to 4 flat
     colors, would still make sense from the back.
+    **Shape check for tails and protrusions:** no lone upright shaft with a rounded tip, especially
+    in skin or beige tones. Coil it, flatten it, split it, or lay it along the ground (see the
+    Dialupine cord fix).
 14. **Lovable flaw in the face or pose**, never meanness: the one goofy fang, the bent disk corner,
     the sleepy giant who never moves, the troll whose luck never works.
 15. **Give it a one-line personality** in the Binder entry that a kid would repeat.
