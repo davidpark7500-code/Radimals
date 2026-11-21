@@ -899,27 +899,75 @@ let AC=null,MASTER=null,MUSICBUS=null,SFXBUS=null,TRACKBUS=null,soundOn=true,cur
 const NOTE={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 function freq(n){const m=n.match(/([A-G])(#?)(\d)/);return 440*Math.pow(2,(NOTE[m[1]]+(m[2]?1:0)+(parseInt(m[3])+1)*12-69)/12);}
 function tone(f,t,d,type='square',g=.04,f2,bus){if(!AC)return;const o=AC.createOscillator(),a=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);a.gain.setValueAtTime(g,t);a.gain.exponentialRampToValueAtTime(.0005,t+d);o.connect(a);a.connect(bus||SFXBUS||MASTER);o.start(t);o.stop(t+d+.02);if(bus)bus._osc.push(o);}
-const TRACKS={
- town:{bpm:118,mel:'E5.5 G5.5 C6.5 G5.5 A5.5 G5.5 E5 . D5.5 F5.5 A5.5 F5.5 G5.5 E5.5 C5 . E5.5 G5.5 C6.5 G5.5 A5.5 C6.5 B5 . A5.5 G5.5 E5.5 D5.5 C5 . . .',bass:'C3 G3 A2 E3 F2 C3 G2 G2 C3 G3 A2 E3 F2 F2 G2 C3'},
- route:{bpm:132,mel:'G4.5 A4.5 C5 E5.5 D5.5 C5 A4 . G4.5 A4.5 C5 D5.5 E5.5 G5 E5 . F5.5 E5.5 D5 C5.5 D5.5 E5 C5 . A4.5 C5.5 D5 E5.5 D5.5 C5 A4 .',bass:'A2 E3 A2 E3 F2 C3 F2 C3 G2 D3 G2 D3 E2 B2 E2 E2'},
- mall:{bpm:104,mel:'C5.5 E5.5 G5 . A5.5 G5.5 E5 . F5.5 A5.5 C6 . B5.5 A5.5 G5 . E5.5 G5.5 C6 . D6.5 C6.5 A5 . G5.5 A5.5 F5 . E5 D5 C5 .',bass:'C3 . E3 . F3 . G3 . C3 . E3 . F3 G3 C3 .'},
- inside:{bpm:100,mel:'E5 . C5 . D5 . G4 . E5 . C5 . D5 G5 E5 .',bass:'C3 . . . G2 . . . A2 . . . G2 . . .'},
- hang:{bpm:140,mel:'A4.5 A4.5 C5.5 A4.5 D5.5 A4.5 E5 . G5.5 E5.5 D5.5 C5.5 A4 . . . F5.5 F5.5 E5.5 D5.5 C5.5 D5.5 E5 . A5.5 G5.5 E5.5 D5.5 C5 . . .',bass:'A2 A2 A2 A2 D3 D3 D3 D3 F2 F2 F2 F2 E2 E2 E2 E2'},
- battle:{bpm:156,mel:'A4.25 A4.25 A4.5 C5.5 E5.5 A5 G5.5 E5.5 C5.5 G4.5 F4.5 A4.5 C5.5 F5 E5.5 D5.5 C5.5 B4.5 A4.5 . E5.25 E5.25 E5.5 G5.5 B5.5 E6 D6.5 B5.5 G5.5 E5.5 C5.5 E5.5 G5.5 C6 B5.5 A5.5 G5.5 F5.5 E5 .',bass:'A2 A2 A2 A2 F2 F2 F2 F2 E2 E2 E2 E2 G2 G2 C3 E3'},
- tower:{bpm:120,mel:'E4.5 E4.5 G4.5 E4.5 A#4 . G4 . E4.5 E4.5 D4.5 E4.5 A#3 . . . F4.5 F4.5 A#4.5 F4.5 C5 . A#4 . G4.5 F4.5 E4.5 D4.5 E4 . . .',bass:'E2 E2 E2 E2 A#2 A#2 A#2 A#2 F2 F2 F2 F2 E2 E2 E2 E2'},
- boss:{bpm:170,mel:'E5.25 E5.25 E5.5 D#5.5 E5.5 G5 . F5.5 E5.5 D5.5 C5.5 B4.5 C5 . A#4.25 A#4.25 A#4.5 A4.5 A#4.5 D5 . C5.5 A#4.5 A4.5 G4.5 F#4.5 G4 .',bass:'E2 E2 E2 E2 C2 C2 C2 C2 A#1 A#1 A#1 A#1 G2 G2 G2 G2'},
- title:{bpm:112,mel:'C5.5 E5.5 G5 . E5.5 G5.5 C6 . B5.5 G5.5 E5 . D5.5 F5.5 A5 . G5.5 E5.5 C5 . A4.5 C5.5 E5 . D5.5 E5.5 G5 . E5 . C5 .',bass:'C3 . G2 . A2 . E3 . F2 . C3 . G2 . C3 .'},
- beach:{bpm:96,mel:'E5 . G5.5 A5.5 G5 . E5 . D5.5 E5.5 D5 . C5 . . . A4.5 C5.5 D5 . E5.5 D5.5 C5 . A4 . . .',bass:'C3 . . . F3 . . . G2 . . . A2 . . .'},
- cave:{bpm:88,mel:'E4 . . . G4 . . . A#4 . A4 . G4 . . . E4 . . . D4 . . . A#3 . . . . . . .',bass:'E2 . . . E2 . . . A#1 . . . B1 . . . E2 . . . D2 . . . A#1 . . . B1 . . .'},
- snow:{bpm:100,mel:'G5 . E5 . C5 . . . A5 . F5 . D5 . . . G5.5 A5.5 B5 . C6 . G5 . E5 . . . . .',bass:'C3 . . . F3 . . . G3 . . . C3 . . .'},
- wild:{bpm:160,mel:'E5.25 E5.25 E5.5 C5.5 E5.5 G5 . C5.5 D5.5 E5.5 D5.5 C5 . A4.5 B4.5 C5.5 B4.5 A4 . G4.5 A4.5 B4.5 C5.5 D5 .',bass:'C3 C3 C3 C3 A2 A2 A2 A2 F2 F2 F2 F2 G2 G2 G2 G2'},
- legend:{bpm:128,mel:'C6 . B5 . C6 . G5 . A#5 . A5 . A#5 . F5 . G#5 . G5 . G#5 . D#5 . G5 . F5 . D5 . C5 .',bass:'C2 C2 G2 G2 A#1 A#1 F2 F2 G#1 G#1 D#2 D#2 G1 G1 G2 G2'},
- win:{bpm:130,mel:'C5.5 C5.5 C5.5 C5 A#4 C5 . D5.5 D5.5 D5.5 D5 C5 D5 . E5.5 E5.5 E5.5 E5 D5 E5 . G5 . . C6 . . .',bass:'C3 . . . F3 . . . C3 . . . G3 . . .'}};
-function parseSeq(s){return s.trim().split(/\s+/).map(tok=>{if(tok==='.')return[null,1];const m=tok.match(/^([A-G]#?\d)(?:\.(\d+))?$/);return[m[1],m[2]?parseInt(m[2])/10*2:1];});}
-for(const k in TRACKS){TRACKS[k].mel=parseSeq(TRACKS[k].mel);TRACKS[k].bass=parseSeq(TRACKS[k].bass);}
-function schedLoop(tr,t0){const spb=60/tr.bpm;let total=0;const bus=TRACKBUS;for(const[type,g,seq]of[['square',.03,tr.mel],['triangle',.05,tr.bass]]){let t=t0;for(const[n,b]of seq){const d=b*spb;if(n)tone(freq(n),t,d*.85,type,g,null,bus);t+=d;}total=Math.max(total,t-t0);}return total;}
-function musicLoop(){if(!curTrack||!AC||!TRACKBUS)return;if(TRACKBUS._osc.length>400)TRACKBUS._osc.splice(0,TRACKBUS._osc.length-200);if(AC.state==='suspended')AC.resume();const len=schedLoop(curTrack,musicNext);musicNext+=len;clearTimeout(musicTimer);musicTimer=setTimeout(musicLoop,Math.max(50,(musicNext-AC.currentTime-.4)*1000));}
-function playTrack(name){if(curName===name)return;stopMusic();curTrack=TRACKS[name];curName=name;if(!AC)return;TRACKBUS=AC.createGain();TRACKBUS.gain.value=1;TRACKBUS._osc=[];TRACKBUS.connect(MUSICBUS||MASTER);musicNext=AC.currentTime+.05;musicLoop();}
+/* ---- music: four-voice handheld engine (pulse 1 lead, pulse 2 harmony/echo, triangle bass, noise drums) ----
+   Songs are written in 8th-note steps. 'C5' = one step, 'C5:3' = three steps, '.' / '.:2' = rest, '|' = bar line.
+   ch = one chord per 8-step bar ('F/G' splits the bar). bass/har name a pattern built from the chords, or a note string.
+   drm = one character per step: k kick, s snare, h hat, x kick+hat, o open hat, '.' rest (loops).
+   Every song is built on the same main theme (THEME) or a variation of it. */
+const THEME='G4 C5 E5 G5:2 E5 F5 G5|A5:3 G5 F5:2 E5:2|D5 E5 F5 A5:2 G5 F5 E5|D5:4 . G4 B4 D5|G4 C5 E5 G5:2 E5 F5 G5|C6:3 B5 A5:2 G5:2|F5 A5 G5 F5 E5:2 D5:2|C5:6 .:2';
+const THEME_MIN='E4 A4 C5 E5:2 C5 D5 E5|F5:3 E5 D5:2 C5:2|B4 C5 D5 F5:2 E5 D5 C5|B4:4 . E4 G#4 B4|E4 A4 C5 E5:2 C5 D5 E5|A5:3 G5 F5:2 E5:2|D5 F5 E5 D5 C5:2 B4:2|A4:6 .:2';
+const SONGS={
+ title:{bpm:116,lead:THEME,ch:'C F Dm G C Am F/G C',bass:'walk',har:'arp',drm:'k.h.s.h.k.h.s.hh'},
+ town:{bpm:104,duty:.25,lead:THEME+'|A4 C5 F5:2 E5 C5 A4:2|G4 B4 D5:2 C5 B4 G4:2|E4 G4 C5:2 B4 C5 E5:2|F5:2 E5 D5 C5:2 B4:2',
+  ch:'C F Dm G C Am F/G C F G Am Dm/G',bass:'half',har:'echo',drm:'k...s...k.k.s...'},
+ route:{bpm:138,lead:'D4 G4 B4 D5:2 B4 C5 D5|E5:2 D5 C5 B4 A4 G4:2|A4 B4 C5 A4 B4:2 G4:2|F#4 G4 A4 D4:4 .|D4 G4 B4 D5:2 B4 C5 D5|E5:2 G5 E5 D5:2 B4:2|C5 B4 A4 G4 A4:2 F#4:2|G4:6 .:2',
+  ch:'G C D D G C Am/D G',bass:'oct',har:'arp',duty2:.125,drm:'k.h.s.hkk.h.s.hh'},
+ battle:{bpm:164,lead:THEME_MIN+'|A5 A5 G5 A5 . A5 G5 E5|G5 G5 F5 G5 . G5 F5 D5|E5 E5 D5 E5 . E5 F5 G5|G#5:2 B5:2 E6:2 D6 B5',
+  ch:'Am F Dm E Am F Dm/E Am F G C E',bass:'oct',har:'arp',drm:'kxsxkksx'},
+ wild:{bpm:168,lead:'A4 D5 F5 A5:2 F5 G5 A5|A#5:3 A5 G5:2 F5:2|E5 F5 G5 A#5:2 A5 G5 F5|E5:4 . A4 C#5 E5|A4 D5 F5 A5:2 F5 G5 A5|D6:2 C6 A#5 A5:2 G5:2|G5 A#5 A5 G5 F5:2 E5:2|D5:6 .:2',
+  ch:'Dm A# C A Dm A# Gm/A Dm',bass:'oct',har:'arp',drm:'kxsxkxsk'},
+ win:{bpm:140,lead:'G4 C5 E5 G5:2 E5 F5 G5|A5:2 B5:2 C6:4|F5 G5 A5 F5 G5 A5 B5 G5|C6:6 .:2',ch:'C F/G F/G C',bass:'oct',har:'arp',drm:'x.h.s.hsx.h.s.ss'},
+ mall:{bpm:112,duty:.25,lead:'E5:2 G5 B5:3 A5:2|G5:2 E5 D5:3 C5:2|D5:2 F5 A5:3 G5:2|F5:2 E5 D5:5|E5:2 G5 B5:3 C6:2|A5:2 G5 E5:3 G5:2|F5 E5 D5 F5 E5 D5 C5 D5|C5:6 .:2',
+  ch:'C Am Dm G C Am Dm/G C',bass:'walk',har:'stab',drm:'k.hhs.h.'},
+ inside:{bpm:96,duty:.25,lead:'E5:2 C5:2 D5:2 G4:2|E5:2 C5:2 D5 E5 G5:2|A5:2 G5 E5 F5:2 D5:2|C5:6 .:2',ch:'C/G Am/G F/G C',bass:'half',har:'echo',drm:'k...h...'},
+ hang:{bpm:140,lead:'A4 A4 C5 A4 D5 A4 E5:2|G5 E5 D5 C5 A4:4|F5 F5 E5 D5 C5 D5 E5:2|A5 G5 E5 D5 E5:4',ch:'Am F Dm E',bass:'pulse',har:'echo',drm:'kshskshs'},
+ tower:{bpm:116,duty:.125,lead:'E4 E4 G4 E4 A#4:2 G4:2|E4 E4 D4 E4 A#3:4|F4 F4 A#4 F4 C5:2 A#4:2|G4 F4 E4 D4 E4:4',ch:'Em A# F Em',bass:'half',har:'echo',drm:'k...s..h'},
+ boss:{bpm:172,lead:'E5 E5 E5 D#5 E5 G5:2 .|F5 E5 D5 C5 B4 C5:2 .|A#4 A#4 A#4 A4 A#4 D5:2 .|C5 A#4 A4 G4 F#4 G4:2 .|B4 E5 G5 B5:2 G5 A5 B5|C6:3 B5 A5:2 G5:2|F#5 G5 A5 C6:2 B5 A5 G5|F#5:4 . B4 D#5 F#5',
+  ch:'Em C A# B Em C Am B',bass:'oct',har:'arp',drm:'kskskshs'},
+ beach:{bpm:92,duty:.25,lead:'E5:2 G5 A5 G5:2 E5:2|D5 E5 D5:2 C5:4|A4 C5 D5:2 E5 D5 C5:2|G4:6 .:2',ch:'C F Am G',bass:'half',har:'stab',drm:'k..hs.h.'},
+ cave:{bpm:84,duty:.125,lead:'E4:4 G4:4|A#4:2 A4:2 G4:4|E4:4 D4:4|A#3:4 B3:4',ch:'Em C Em/D A#/B',bass:'half',har:'echo',drm:'h.......'},
+ snow:{bpm:100,duty:.125,lead:'G5:2 E5:2 C5:4|A5:2 F5:2 D5:4|G5 A5 B5:2 C6:2 G5:2|E5:6 .:2',ch:'C F G/C C',bass:'half',har:'arp',drm:'k.h.h.h.'},
+ legend:{bpm:126,lead:'C6:2 B5:2 C6:2 G5:2|A#5:2 A5:2 A#5:2 F5:2|G#5:2 G5:2 G#5:2 D#5:2|G5:2 F5:2 D5:2 B4:2|G4 C5 D#5 G5:2 D#5 F5 G5|G#5:3 G5 F5:2 D#5:2|D5 D#5 F5 G#5:2 G5 F5 D#5|D5:4 . G4 B4 D5',
+  ch:'Cm A# G# G Cm G# Fm G',bass:'walk',har:'arp',drm:'k...s...k.k.s..h'}};
+function midi(n){const m=n.match(/^([A-G])(#?)(\d)$/);return NOTE[m[1]]+(m[2]?1:0)+(parseInt(m[3])+1)*12;}
+function mfreq(m){return 440*Math.pow(2,(m-69)/12);}
+function seqOf(s){const out=[];for(const tok of s.replace(/\|/g,' ').trim().split(/\s+/)){const[n,d]=tok.split(':');out.push([n==='.'?null:midi(n),d?parseFloat(d):1]);}return out;}
+function chordOf(c){const m=c.match(/^([A-G]#?)(m?)(7?)$/),r=midi(m[1]+'3');return{root:r,tri:[0,m[2]?3:4,7]};}
+function barChords(ch){return ch.trim().split(/\s+/).map(b=>b.split('/').map(chordOf));}
+function bassFrom(style,bars){const out=[];for(const cs of bars){const w=8/cs.length;for(const c of cs){let r=c.root;while(r>56)r-=12;while(r<45)r+=12;const f=r+7>58?r-5:r+7;
+  if(style==='oct')for(let i=0;i<w;i++)out.push([i%2?r+12:r,1]);else if(style==='walk'){if(w===8)out.push([r,2],[f,2],[r+12,2],[f,2]);else out.push([r,2],[f,2]);}
+  else if(style==='pulse')for(let i=0;i<w;i++)out.push([r,1]);else{if(w===8)out.push([r,4],[f,4]);else out.push([r,4]);}}}return out;}
+function harFrom(style,bars){const out=[];for(const cs of bars){const w=8/cs.length;for(const c of cs){let b=c.root+12;const t=c.tri.map(x=>b+x);
+  if(style==='arp'){const cyc=[t[0],t[1],t[2],t[1]];for(let i=0;i<w;i++)out.push([cyc[i%4],1]);}else if(style==='stab'){for(let i=0;i<w;i++)out.push(i%2?[t[1+(i>>1)%2],1]:[null,1]);}else out.push([t[1],w]);}}return out;}
+function mkPulse(d){const n=48,re=new Float32Array(n),im=new Float32Array(n);for(let i=1;i<n;i++)re[i]=4/(i*Math.PI)*Math.sin(i*Math.PI*d);return AC.createPeriodicWave(re,im);}
+const PULSE={};function pulseWave(d){return PULSE[d]||(PULSE[d]=mkPulse(d));}
+/* compile each song once: per-bar event lists so the scheduler can work a bar at a time */
+function compileSong(s){const bars=barChords(s.ch),steps=bars.length*8,lead=seqOf(s.lead);let har;
+  const voices=[['p1',lead,0],['tri',typeof s.bass==='string'&&/[A-G]/.test(s.bass)?seqOf(s.bass):bassFrom(s.bass,bars),0]];
+  if(s.har==='echo')voices.push(['echo',lead,.5]);else voices.push(['p2',typeof s.har==='string'&&/[A-G]/.test(s.har)?seqOf(s.har):harFrom(s.har,bars),0]);
+  const per=Array.from({length:bars.length},()=>[]);
+  for(const[v,seq,off]of voices){let p=0;for(const[m,d]of seq){if(m!==null){const st=p+off,bi=Math.floor(st/8)%bars.length;per[bi].push([v,m,st-Math.floor(st/8)*8,d]);}p+=d;}
+    if(Math.abs(p-steps)>.01)console.warn('song length mismatch',v,p,steps);}
+  const dr=s.drm||'';if(dr)for(let i=0;i<steps;i++){const c=dr[i%dr.length];if(c!=='.')per[Math.floor(i/8)].push(['dr',c,i%8,1]);}
+  return{bpm:s.bpm,duty:s.duty||.5,duty2:s.duty2||.25,bars:per,steps};}
+const TRACKS={};for(const k in SONGS)TRACKS[k]=compileSong(SONGS[k]);
+function mnote(m,t,d,duty,g,vib,bus){const o=AC.createOscillator(),a=AC.createGain();o.setPeriodicWave(pulseWave(duty));o.frequency.setValueAtTime(mfreq(m),t);
+  a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.005);a.gain.setTargetAtTime(g*.6,t+.02,.12);a.gain.setTargetAtTime(0,t+Math.max(.03,d-.03),.015);
+  if(vib&&d>.3){const l=AC.createOscillator(),lg=AC.createGain();l.frequency.value=5.5;lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(14,t+Math.min(.35,d*.6));l.connect(lg);lg.connect(o.detune);l.start(t);l.stop(t+d+.05);bus._osc.push(l);}
+  o.connect(a);a.connect(bus);o.start(t);o.stop(t+d+.08);bus._osc.push(o);}
+function mbass(m,t,d,bus){const o=AC.createOscillator(),a=AC.createGain();o.type='triangle';o.frequency.setValueAtTime(mfreq(m),t);a.gain.setValueAtTime(.07,t);a.gain.setTargetAtTime(0,t+Math.max(.03,d*.85),.02);o.connect(a);a.connect(bus);o.start(t);o.stop(t+d+.08);bus._osc.push(o);}
+function mdrum(c,t,bus){if(!NOISE){NOISE=AC.createBuffer(1,AC.sampleRate,AC.sampleRate);const ch=NOISE.getChannelData(0);for(let i=0;i<ch.length;i++)ch[i]=Math.random()*2-1;}
+  const hit=(d,g,ft,f)=>{const s=AC.createBufferSource(),fl=AC.createBiquadFilter(),a=AC.createGain();s.buffer=NOISE;fl.type=ft;fl.frequency.value=f;a.gain.setValueAtTime(g,t);a.gain.exponentialRampToValueAtTime(.0005,t+d);s.connect(fl);fl.connect(a);a.connect(bus);s.start(t,Math.random()*.5);s.stop(t+d+.02);bus._osc.push(s);};
+  if(c==='k'||c==='x'){const o=AC.createOscillator(),a=AC.createGain();o.type='triangle';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(45,t+.12);a.gain.setValueAtTime(.16,t);a.gain.exponentialRampToValueAtTime(.0005,t+.14);o.connect(a);a.connect(bus);o.start(t);o.stop(t+.16);bus._osc.push(o);}
+  if(c==='s')hit(.13,.05,'bandpass',1900);if(c==='h'||c==='x')hit(.035,.018,'highpass',7000);if(c==='o')hit(.14,.016,'highpass',6000);}
+let musicBar=0;
+function schedBar(tr,bi,t0){const sd=30/tr.bpm,bus=TRACKBUS;for(const[v,m,st,d]of tr.bars[bi]){const t=t0+st*sd,dur=d*sd;
+  if(v==='p1')mnote(m,t,dur*.92,tr.duty,.028,true,bus);else if(v==='p2')mnote(m,t,dur*.8,tr.duty2,.013,false,bus);else if(v==='echo')mnote(m,t,dur*.85,tr.duty2,.011,false,bus);
+  else if(v==='tri')mbass(m,t,dur,bus);else mdrum(m,t,bus);}return 8*sd;}
+function musicLoop(){if(!curTrack||!AC||!TRACKBUS)return;if(TRACKBUS._osc.length>500)TRACKBUS._osc.splice(0,TRACKBUS._osc.length-250);if(AC.state==='suspended')AC.resume();
+  while(musicNext<AC.currentTime+.6){musicNext+=schedBar(curTrack,musicBar,musicNext);musicBar=(musicBar+1)%curTrack.bars.length;}
+  clearTimeout(musicTimer);musicTimer=setTimeout(musicLoop,Math.max(50,(musicNext-AC.currentTime-.45)*1000));}
+function playTrack(name){if(curName===name)return;stopMusic();curTrack=TRACKS[name];curName=name;if(!AC)return;TRACKBUS=AC.createGain();TRACKBUS.gain.value=1;TRACKBUS._osc=[];TRACKBUS.connect(MUSICBUS||MASTER);musicNext=AC.currentTime+.05;musicBar=0;musicLoop();}
 function stopMusic(){clearTimeout(musicTimer);musicTimer=null;curTrack=null;curName=null;if(TRACKBUS&&AC){const old=TRACKBUS;TRACKBUS=null;old.gain.setTargetAtTime(0,AC.currentTime,0.02);const t=AC.currentTime+0.08;for(const o of old._osc){try{o.stop(t);}catch(e){}}old._osc=[];setTimeout(()=>{try{old.disconnect();}catch(e){}},300);}}
 function initAudio(){if(AC){if(AC.state==='suspended')AC.resume().catch(()=>{});return;}AC=new(window.AudioContext||window.webkitAudioContext)();MASTER=AC.createGain();MASTER.gain.value=soundOn?1:0;MASTER.connect(AC.destination);MUSICBUS=AC.createGain();MUSICBUS.gain.value=VOLS[SET.music]??.75;MUSICBUS.connect(MASTER);SFXBUS=AC.createGain();SFXBUS.gain.value=VOLS[SET.sfx]??.75;SFXBUS.connect(MASTER);if(AC.state==='suspended')AC.resume();document.addEventListener('visibilitychange',()=>{if(document.hidden){MASTER.gain.setTargetAtTime(0,AC.currentTime,0.02);}else{if(AC.state==='suspended')AC.resume();MASTER.gain.setTargetAtTime(soundOn?1:0,AC.currentTime,0.02);if(curTrack&&AC.currentTime>musicNext-0.2){clearTimeout(musicTimer);musicNext=AC.currentTime+.05;musicLoop();}}});const want=curName||(mode==='title'?'title':null);curName=null;curTrack=null;if(want)playTrack(want);}
 /* start sound as soon as it's allowed: right away in the iOS app (no tap needed there), otherwise on the first touch/click/key anywhere */
