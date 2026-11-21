@@ -59,6 +59,47 @@ Strong: the names and dex jokes. Most concepts already pair a 90s thing with an 
    ("the hair is now load-bearing" becomes an actual tree with a bird nest).
 9. **Keep one flaw** that makes it lovable (the smirk, the never-working luck, the dial-up scream).
 
+## Make people want one (plush / figure appeal) — added after pilot v1
+
+Pilot v1 fixed shape but leaned "cool": angry brows, fangs, scowls. That reads as an enemy, not
+something you want to hug. Research on cuteness and toys:
+
+- **Baby proportions trigger "cute".** Lorenz's baby schema: big head, big eyes, high forehead,
+  round cheeks, small nose and mouth, short thick limbs, plump body. A controlled study found faces
+  with more of these traits were rated cuter and made people want to take care of them.
+- **Kawaii practice:** big head on a small round body, organic ovals not perfect circles, slight
+  asymmetry or a 3/4 angle, a texture or highlight, and a name plus backstory.
+- **Toys need a reason to collect and a "promise in the premise":** an accessory or gear, a
+  feature that suggests play, and a world that supports many characters.
+- **Plush survives only simple shapes:** flat color zones (no gradients), thick parts (thin horns,
+  antennae, tails flop), a silhouette that works from every side, eyes big enough to embroider,
+  a body that can sit or stand on its own.
+- **Personality sells:** Squishmallows' team designs every character "with purpose", with a short
+  relatable background people get invested in.
+
+### Rules added
+
+10. **Base forms are babies:** head about half the total height, eyes 4x5 with a 2x2 highlight set
+    LOW and WIDE on the face, tiny mouth, blush, stubby limbs, plump body. No angry brows.
+11. **Evolutions are action figures:** chunky legs that could stand on a shelf, confident (not mean)
+    face, keep big eyes, the signature accessory grows (plug held up like a trophy, CD as a shield).
+12. **One huggable accessory per line** that could be a separate toy piece: the phone-cord plug,
+    the floppy bill, the gem belly button, the bird in the nest.
+13. **Plush test:** no needle-thin parts (flames are soft curls, cords are chunky), 2 to 4 flat
+    colors, would still make sense from the back.
+14. **Lovable flaw in the face or pose**, never meanness: the one goofy fang, the bent disk corner,
+    the sleepy giant who never moves, the troll whose luck never works.
+15. **Give it a one-line personality** in the Binder entry that a kid would repeat.
+
+v2 lives in `tools/sprites/pilot48v2.py`; `pilot_sheet.py` shows now / v1 / v2 / silhouette.
+
+### More sources
+- [Baby schema in infant faces induces cuteness perception (Glocker et al., 2009)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3260535)
+- [10 tips for kawaii character design (Creative Bloq)](https://www.creativebloq.com/character-design/10-tips-kawaii-character-design-514833)
+- [Character building: designing for toy potential (Mojo Nation)](https://www.mojo-nation.com/character-building/)
+- [Squishmallows' brand SVP on designing with purpose (Mojo Nation)](https://mojo-nation.com/?p=36445)
+- [Why a 2D sketch can fail in 3D: merch checklist](https://dev.to/mingyue_li_dcb369b1a73125/the-2026-collector-grade-merch-checklist-why-your-2d-sketch-might-fail-in-3d-22km)
+
 ## Pilot (tools/sprites/pilot48.py)
 
 Six starter-line redesigns at 48x48, shown next to the current sprites with silhouettes:

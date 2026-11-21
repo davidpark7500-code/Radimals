@@ -4,7 +4,9 @@ import json, os, re, sys
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(__file__))
-from pilot48 import P48, PAL48, render48  # noqa: E402
+import pilot48 as V1  # noqa: E402
+import pilot48v2 as V2  # noqa: E402
+P48, PAL48 = V2.P48, V2.PAL48
 from preview import PAL, SPEC, hx  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -40,21 +42,23 @@ def main(out):
         f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf', 18)
     except Exception:
         f = ImageFont.load_default()
-    for i, h in enumerate(['NOW (24px x2)', 'PILOT (48px)', 'NOW silhouette', 'PILOT silhouette']):
+    for i, h in enumerate(['NOW (24px x2)', 'PILOT v1', 'PILOT v2 (plush)', 'v2 silhouette']):
         d.text((20 + i * (cell + 20), 20), h, fill=(182, 255, 59), font=f)
     for row, n in enumerate(names):
         y = 60 + row * (cell + 40)
         pal_old = dict(PAL); pal_old.update(SPEC.get(n, {}).get('colors', {}))
         pal_new = dict(PAL); pal_new.update(EXTRA); pal_new.update(PAL48[n])
         old = current24(n)
-        new = render48(n)
+        v1 = V1.render48(n)
+        new = V2.render48(n)
+        pal_v1 = dict(PAL); pal_v1.update(EXTRA); pal_v1.update(V1.PAL48[n])
         for col in range(4):
             x = 20 + col * (cell + 20)
             d.rectangle([x, y, x + cell - 1, y + cell - 1], fill=(206, 240, 176))
         if old:
             draw(img, old, pal_old, 20, y, 2 * Z)
-            draw(img, old, pal_old, 20 + 2 * (cell + 20), y, 2 * Z, sil=True)
-        draw(img, new, pal_new, 20 + (cell + 20), y, Z)
+        draw(img, v1, pal_v1, 20 + (cell + 20), y, Z)
+        draw(img, new, pal_new, 20 + 2 * (cell + 20), y, Z)
         draw(img, new, pal_new, 20 + 3 * (cell + 20), y, Z, sil=True)
         d.text((20, y + cell + 8), n.upper(), fill=(255, 255, 255), font=f)
     img.save(out)
