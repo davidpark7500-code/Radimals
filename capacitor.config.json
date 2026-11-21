@@ -4,8 +4,9 @@
   "webDir": "www",
   "bundledWebRuntime": false,
   "ios": {
-    "contentInset": "always",
-    "backgroundColor": "#141416"
+    "contentInset": "never",
+    "backgroundColor": "#141416",
+    "scrollEnabled": false
   },
   "server": {
     "iosScheme": "capacitor"
