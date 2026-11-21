@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 import time,os
 with sync_playwright() as p:
     b=p.chromium.launch(); pg=b.new_page(viewport={'width':390,'height':844}); errs=[]; pg.on('pageerror',lambda e:errs.append(str(e))); pg.goto('file://'+os.path.abspath('www/index.html')); time.sleep(1)
-    pg.evaluate("()=>{window.typeText=async t=>{tbText.textContent=t;};window.tween=(o,k,v)=>{o[k]=v;return Promise.resolve();};}")
+    pg.evaluate("()=>{SET.anim=false;window.typeText=async t=>{tbText.textContent=t;};window.tween=(o,k,v)=>{o[k]=v;return Promise.resolve();};}")
     pg.keyboard.press('z'); time.sleep(0.3); pg.evaluate("()=>{menuState&&menuState.a();}"); time.sleep(0.3)
     for _ in range(6): pg.keyboard.press('z'); time.sleep(0.05)
     pg.evaluate("()=>{closeText();mode='map';}")
