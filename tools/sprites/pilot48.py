@@ -1,4 +1,4 @@
-"""PILOT: 48x48 redesigns of the three starter lines, applying the design principles in
+"""SUPERSEDED by pilot48v2.py (kept for history). PILOT v1: 48x48 redesigns of the three starter lines, applying the design principles in
 art/CREATURE-DESIGN-GUIDE.md. Not wired into the game. Render: python tools/sprites/pilot_sheet.py OUT.png
 
 Palette letters for 48px sprites: a main, d main-shadow, b light/belly, c accent, plus the globals.

@@ -34,7 +34,7 @@ def main(out):
     Z = 4                          # zoom: 48 screen px -> 192 px
     cell = 48 * Z
     names = list(P48)
-    W = 20 + 4 * (cell + 20)
+    W = 20 + 3 * (cell + 20)
     H = 60 + len(names) * (cell + 40)
     img = Image.new('RGB', (W, H), (34, 34, 40))
     d = ImageDraw.Draw(img)
@@ -42,7 +42,7 @@ def main(out):
         f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf', 18)
     except Exception:
         f = ImageFont.load_default()
-    for i, h in enumerate(['NOW (24px x2)', 'PILOT v1', 'PILOT v2 (plush)', 'v2 silhouette']):
+    for i, h in enumerate(['NOW (24px x2)', 'REDESIGN (48px)', 'SILHOUETTE']):
         d.text((20 + i * (cell + 20), 20), h, fill=(182, 255, 59), font=f)
     for row, n in enumerate(names):
         y = 60 + row * (cell + 40)
@@ -52,14 +52,13 @@ def main(out):
         v1 = V1.render48(n)
         new = V2.render48(n)
         pal_v1 = dict(PAL); pal_v1.update(EXTRA); pal_v1.update(V1.PAL48[n])
-        for col in range(4):
+        for col in range(3):
             x = 20 + col * (cell + 20)
             d.rectangle([x, y, x + cell - 1, y + cell - 1], fill=(206, 240, 176))
         if old:
             draw(img, old, pal_old, 20, y, 2 * Z)
-        draw(img, v1, pal_v1, 20 + (cell + 20), y, Z)
-        draw(img, new, pal_new, 20 + 2 * (cell + 20), y, Z)
-        draw(img, new, pal_new, 20 + 3 * (cell + 20), y, Z, sil=True)
+        draw(img, new, pal_new, 20 + (cell + 20), y, Z)
+        draw(img, new, pal_new, 20 + 2 * (cell + 20), y, Z, sil=True)
         d.text((20, y + cell + 8), n.upper(), fill=(255, 255, 255), font=f)
     img.save(out)
     print('wrote', out)

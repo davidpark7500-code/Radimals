@@ -48,18 +48,29 @@ def soft_flame(c, x, y, h, lean=0, col='f', core='F'):
     return c
 
 
-def chunky_cord(c, pts, col='c'):
+def coil(c, pts, col='c', hi='e'):
+    """Phone cord drawn as open, overlapping loops (reads as a spiral, never as a solid shaft).
+    Call AFTER outline(): the dark cord color is its own outline."""
     for x, y in pts:
-        c.ell(x, y, 2.2, 2.0, col)
+        c.ring(x, y, 2, 2.4, 1, col)
+    for x, y in pts:
+        c.px(x - 1, y - 2, hi)
+    return c
+
+
+def plug(c, x, y, facing=1):
+    """Small square clear RJ11 plug lying flat, gold pins on the end, clip on top."""
+    c.rect(x, y, x + 4, y + 3, '#')
+    c.rect(x + 1, y + 1, x + 3, y + 2, 'q')
+    pin = x + 3 if facing > 0 else x + 1
+    c.px(pin, y + 1, 'y'); c.px(pin, y + 2, 'y')
+    c.px(x + 2, y, 'e')
     return c
 
 
 # ================================================================ FIRE
-@sprite48('Dialupine', {'a': '#ff6a2e', 'd': '#c8461f', 'b': '#ffe6bf', 'c': '#efe3c4'})
+@sprite48('Dialupine', {'a': '#ff6a2e', 'd': '#c8461f', 'b': '#ffe6bf', 'c': '#33384a', 'e': '#8a93ab'})
 def dialupine(c):
-    # chunky coiled cord tail with its plug (the collectible "accessory")
-    chunky_cord(c, [(35, 38), (38, 36), (40, 33), (41, 30), (40, 27)])
-    c.rect(37, 21, 43, 25, 'w'); c.rect(39, 19, 41, 20, 'e')
     # small round body, stubby legs
     c.ell(25, 37, 9, 7, 'a')
     c.ell(18, 43, 3, 2, 'b'); c.ell(26, 44, 3, 2, 'b'); c.ell(33, 43, 3, 2, 'b')
@@ -81,6 +92,10 @@ def dialupine(c):
     c.rect(7, 25, 8, 26, 'k')                      # little nose
     c.ell(12, 29, 1.2, 1.2, 'k'); c.px(12, 30, 'r')  # tiny screech
     blush(c, 9, 25); blush(c, 27, 25)
+    # coiled cord tail trailing along the ground, plug resting at the end
+    coil(c, [(35, 40), (38, 41), (41, 41), (44, 40)])
+    plug(c, 42, 34)
+    c.line(44, 38, 44, 38, 'c')
     # status LEDs as freckles on the shoulder
     for x, y in [(28, 33), (31, 34), (34, 36)]:
         c.px(x, y, 'z')
@@ -88,11 +103,8 @@ def dialupine(c):
     c.line(1, 27, 3, 27, 'k'); c.line(1, 31, 3, 30, 'k'); c.line(2, 24, 3, 25, 'k')
 
 
-@sprite48('Modemauler', {'a': '#f2512a', 'd': '#a8301a', 'b': '#ffdcae', 'c': '#efe3c4'})
+@sprite48('Modemauler', {'a': '#f2512a', 'd': '#a8301a', 'b': '#ffdcae', 'c': '#33384a', 'e': '#8a93ab'})
 def modemauler(c):
-    # cord tail swept up, plug held high like a trophy
-    chunky_cord(c, [(41, 31), (43, 28), (44, 24), (44, 20), (43, 16)])
-    c.rect(40, 9, 46, 13, 'w'); c.rect(42, 7, 44, 8, 'e')
     # chunky stump legs (stands up as a figure)
     for x, y, col in [(36, 41, 'd'), (21, 41, 'd'), (16, 42, 'a'), (41, 41, 'a')]:
         c.ell(x, y, 4, 4, col)
@@ -118,6 +130,9 @@ def modemauler(c):
     c.line(3, 31, 9, 31, 'k'); c.px(2, 30, 'k'); c.px(10, 30, 'k')
     c.rect(5, 32, 5, 33, 'w')
     c.rect(11, 28, 13, 28, 'm')
+    # coiled cord tail: a loose spiral sweeping back and down to the plug on the ground
+    coil(c, [(42, 31), (44, 34), (45, 37), (44, 40)])
+    plug(c, 42, 43)
     # LED strip on the flank (line signature, grown up)
     c.rect(26, 33, 39, 34, 'k')
     for i, col in enumerate('zzgzyz'):
