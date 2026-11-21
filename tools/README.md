@@ -9,3 +9,7 @@ Playwright test scripts used during development. Run from the project root:
 Sprite authoring (all 101 non-legacy sprites):
   python tools/sprites/preview.py out.png Name1 Name2   # review sheet from designs.py
   python tools/sprites/build.py                         # inject designs.py into www/index.html
+
+48px creature art:
+  python tools/sprites/build48.py              # inject designs48_*.py into the game
+  python tools/sprites/sheet48.py out.png Name # old | new | silhouette review sheet

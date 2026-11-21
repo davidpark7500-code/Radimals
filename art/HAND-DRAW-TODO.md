@@ -1,3 +1,10 @@
+# Sprite status
+
+Nov 2026: all 151 redrawn at 48x48 under the rules in `art/CREATURE-DESIGN-GUIDE.md`
+(designs in `tools/sprites/designs48_*.py`). Polish candidates flagged during the redraw:
+Twistorm, Kitedelic (object-heavy), Parachutie (pants read weakly), Sproutpup (sprouts small),
+Springstretch, Foamfalcon. Older notes below are about the retired 24px art.
+
 # Sprite status: all 151 hand-drawn
 
 - 50 original sprites live as raw 24x24 strings in `MON_ART` / `HAND_ART` inside `www/index.html`.

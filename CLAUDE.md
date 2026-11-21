@@ -19,17 +19,21 @@ tracks, and an App Store legal pass.
 - All art/music/text must be original. Keep the in-app disclaimer and the (C) line.
 
 ## Art rules
-- Creatures: 24x24 pixel art, palette letters: `#` outline (#181818), `a` main, `b` light/belly,
-  `c` accent, `w` white, `k` black, plus globals (`f`/`F` flame, `l`/`L` leaf, `z` spark,
-  `y` yellow, `q` light blue, `m` pink). Stored as 24 strings of 24 chars in `MON_ART`/`HAND_ART`.
-- ALL 151 ARE HAND-DRAWN (Nov 2026). 50 are raw strings in `MON_ART`/`HAND_ART`; the other 101 are
-  authored in `tools/sprites/designs.py` (one function per creature, shapes + auto-outline via
-  `tools/sprites/lib.py`) and injected with `python tools/sprites/build.py` between the
-  `/*HAND_ART2_START*/` and `/*HAND_ART2_END*/` markers. Edit the Python and rebuild; never hand-edit
-  that block. Preview: `python tools/sprites/preview.py out.png Name ...`. Status notes:
-  `art/HAND-DRAW-TODO.md`; roster sheet: `art/all-151-radimals.png`.
-  Quality bar: clear silhouette, a face with attitude (brows/smirk/shades/tongue), and a prop or
-  feature that sells the pun. No blobs.
+- Creatures: ALL 151 ARE 48x48 (Nov 2026 redesign), drawn at 1x so they fill the same on-screen box
+  the old 24px art did at 2x; the player's back view is the front flipped, drawn at 2x and cut off
+  by the text box. Design rules (silhouette, base animal + one 90s object fused into a body part,
+  baby proportions for base forms, chunky figure-like evolutions, plush test, look-alike check):
+  `art/CREATURE-DESIGN-GUIDE.md`. READ IT before drawing or changing a creature.
+- 48px art is authored in `tools/sprites/designs48_*.py` (one function per creature, helpers in
+  `tools/sprites/kit48.py`: bigeye, blush, soft_flame, coil, plug) and injected with
+  `python tools/sprites/build48.py` between `/*ART48_START*/` and `/*ART48_END*/`. Never hand-edit
+  that block. Palette letters: `a` main, `d` main shadow, `b` light/belly, `c` accent, `e` metal,
+  plus globals (`#` outline, `k`, `w`, `f`/`F`, `l`/`L`/`G`, `t`, `z`, `y`, `q`, `m`, `r`/`R`, `n`, `v`, `o`, `g`).
+  Review: `python tools/sprites/sheet48.py out.png Name ...` (old | new | silhouette);
+  roster: `python tools/sheet.py` -> `art/all-151-radimals.png`.
+- The old 24px art (`MON_ART`/`HAND_ART`/`HAND_ART2`, `tools/sprites/designs.py`) is kept as a
+  fallback for anything without 48px art (e.g. Glitchy) and frozen in `art/legacy-24px-art.json`.
+  `drawMon()`/battle/title/Binder/party code handles either size.
 - People: 16x16 base + hat/body/shades overlays (`HERO_BASE`, `HATS`, `BODIES`); 24x24 battle
   portraits (`PORTRAIT`, `PHATS`, `PBODIES`). Eyes are 2px with highlight, close-set, smile, bangs.
 - Screen is 160x144 rendered at an integer scale; in-canvas text uses a 3x5 pixel font (`FONT`).
@@ -89,5 +93,5 @@ See README-SHIP.md (Capacitor → Xcode), PRIVACY-POLICY.md, APP-STORE-LISTING.m
 1. `git init`, commit as-is ("v2.0 from chat handoff").
 2. Split `www/index.html` into `src/` modules + a build script that emits the single file
    (verify byte-for-byte behavior with the test scripts).
-3. ~~Hand-draw the remaining sprites~~ — done (all 151).
+3. ~~Hand-draw the remaining sprites~~ — done (all 151, redrawn at 48px Nov 2026).
 4. Optional: name change (owner is considering "Y2Kritters", "Tubulars", "Dial-Up Monsters").
