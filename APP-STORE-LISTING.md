@@ -23,5 +23,6 @@ Fed. Cleaned. Loved. Then forgotten in a drawer. It remembers.
 
 **What's New (1.0):** Initial release.
 
-**Support URL / Privacy URL:** (host PRIVACY-POLICY.md somewhere and paste the links)
+**Support URL:** https://holisticcreativestudios.com/studio/support/  
+**Privacy URL:** https://holisticcreativestudios.com/studio/radimals/privacy/
 **Copyright:** © 2026 Holistic Creative Studios LLC
