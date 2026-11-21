@@ -61,6 +61,16 @@ tracks, and an App Store legal pass.
   settings; each track plays through its own bus (`TRACKBUS` → MUSICBUS) and
   switching tracks fades+stops the old bus (fixes layering). Sound toggle is volume-only.
   iOS: resume on gesture, mute on background.
+- SFX use two voices like the original handheld: `tone()` (pulse/saw/triangle) and `noise()` (filtered
+  white-noise channel). Each move type has a wind-up sound (`sfxMove`); hits are 'thud', super
+  effective 'crunch', crits add 'crit'; low HP plays a short 'lowhp' alarm once when crossing 25%.
+- Every Radimal has its own cry, `cry(name,pitch,slow)`, generated deterministically from its name
+  (evolved forms lower). Played on appear/send-out, faint (low+slow), evolution and Binder tap.
+
+## Battle animation decisions
+- Per-type particles (`spawnFx`/`drawFx`, colors in `FXCOL`), white impact flash (`whiteOf`),
+  hit-pause (60ms, 110ms on super/crit), screen shake on super effective (`B.quake`), stat arrows
+  (`spawnRise`), idle bob while a menu waits. All respect SETTINGS > BATTLE ANIMS.
 
 ## Game logic decisions
 - Catch: `catchChance()` = rarity x ball x HP factor x level factor + small rarity floor, cap

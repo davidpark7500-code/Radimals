@@ -914,7 +914,32 @@ function musicLoop(){if(!curTrack||!AC||!TRACKBUS)return;if(TRACKBUS._osc.length
 function playTrack(name){if(curName===name)return;stopMusic();curTrack=TRACKS[name];curName=name;if(!AC)return;TRACKBUS=AC.createGain();TRACKBUS.gain.value=1;TRACKBUS._osc=[];TRACKBUS.connect(MUSICBUS||MASTER);musicNext=AC.currentTime+.05;musicLoop();}
 function stopMusic(){clearTimeout(musicTimer);musicTimer=null;curTrack=null;curName=null;if(TRACKBUS&&AC){const old=TRACKBUS;TRACKBUS=null;old.gain.setTargetAtTime(0,AC.currentTime,0.02);const t=AC.currentTime+0.08;for(const o of old._osc){try{o.stop(t);}catch(e){}}old._osc=[];setTimeout(()=>{try{old.disconnect();}catch(e){}},300);}}
 function initAudio(){if(AC){if(AC.state==='suspended')AC.resume();return;}AC=new(window.AudioContext||window.webkitAudioContext)();MASTER=AC.createGain();MASTER.gain.value=soundOn?1:0;MASTER.connect(AC.destination);MUSICBUS=AC.createGain();MUSICBUS.gain.value=VOLS[SET.music]??.75;MUSICBUS.connect(MASTER);SFXBUS=AC.createGain();SFXBUS.gain.value=VOLS[SET.sfx]??.75;SFXBUS.connect(MASTER);if(AC.state==='suspended')AC.resume();document.addEventListener('visibilitychange',()=>{if(document.hidden){MASTER.gain.setTargetAtTime(0,AC.currentTime,0.02);}else{if(AC.state==='suspended')AC.resume();MASTER.gain.setTargetAtTime(soundOn?1:0,AC.currentTime,0.02);if(curTrack&&AC.currentTime>musicNext-0.2){clearTimeout(musicTimer);musicNext=AC.currentTime+.05;musicLoop();}}});const want=curName||(mode==='title'?'title':null);curName=null;curTrack=null;if(want)playTrack(want);}
+/* noise channel (like the handheld's 4th channel): filtered white-noise bursts for impacts and whooshes */
+let NOISE=null;
+function noise(t,d,g,f0,f1,type='lowpass'){if(!AC)return;if(!NOISE){NOISE=AC.createBuffer(1,AC.sampleRate,AC.sampleRate);const ch=NOISE.getChannelData(0);for(let i=0;i<ch.length;i++)ch[i]=Math.random()*2-1;}
+  const src=AC.createBufferSource(),flt=AC.createBiquadFilter(),a=AC.createGain();src.buffer=NOISE;flt.type=type;flt.frequency.setValueAtTime(f0,t);if(f1)flt.frequency.exponentialRampToValueAtTime(f1,t+d);
+  a.gain.setValueAtTime(g,t);a.gain.exponentialRampToValueAtTime(.0005,t+d);src.connect(flt);flt.connect(a);a.connect(SFXBUS||MASTER);src.start(t);src.stop(t+d+.02);}
+/* each move type gets its own wind-up sound */
+function sfxMove(type){if(!AC||!soundOn)return;const t=AC.currentTime;switch(type){
+  case 'Fire':noise(t,.35,.09,400,3200);tone(180,t,.3,'sawtooth',.025,420);break;
+  case 'Water':[880,740,620,520].forEach((f,i)=>tone(f,t+i*.05,.07,'triangle',.06,f*.7));break;
+  case 'Grass':noise(t,.3,.05,2400,5200,'highpass');tone(520,t,.12,'triangle',.04,700);tone(700,t+.1,.12,'triangle',.04,520);break;
+  case 'Techno':for(let i=0;i<7;i++)tone([1046,1568,2093][i%3],t+i*.035,.04,'square',.025);break;
+  case 'Rock':noise(t,.35,.12,240,80);tone(90,t,.3,'square',.04,50);break;
+  case 'Air':noise(t,.32,.07,600,3000,'bandpass');break;
+  case 'Bug':for(let i=0;i<6;i++)tone(330+(i%2)*40,t+i*.04,.045,'sawtooth',.025);break;
+  default:noise(t,.12,.05,1800,600,'bandpass');}}
+/* creature cries: every Radimal gets its own, generated from its name (stable forever). Evolved forms cry lower. */
+function cry(name,pitch=1,slow=1){if(!AC||!soundOn||!SPECIES[name])return;let h=2166136261;for(const ch of name){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}
+  const rnd2=()=>{h^=h<<13;h>>>=0;h^=h>>17;h^=h<<5;h>>>=0;return h/4294967296;};const evolved=!!Object.keys(SPECIES).find(k=>SPECIES[k].evo&&SPECIES[k].evo[1]===name);
+  const base=(evolved?220:380)*(1+rnd2()*.9)*pitch,segs=2+Math.floor(rnd2()*3),wave=['square','sawtooth','triangle'][Math.floor(rnd2()*3)];let t=AC.currentTime+.02;
+  for(let i=0;i<segs;i++){const d=(.07+rnd2()*.12)*slow,f0=base*(0.7+rnd2()*0.9),f1=f0*(0.6+rnd2()*0.9);tone(f0,t,d,wave,.045,f1);if(rnd2()<.35)noise(t,d*.6,.03,f0*3,f0*1.5,'bandpass');t+=d*.85;}}
 function sfx(n){if(!AC||!soundOn)return;const t=AC.currentTime;switch(n){
+  case 'thud':noise(t,.18,.14,1200,90);tone(120,t,.14,'square',.05,45);break;
+  case 'crunch':noise(t,.28,.18,3000,120);tone(160,t,.22,'square',.06,40);tone(660,t+.02,.08,'square',.03,330);break;
+  case 'crit':tone(1568,t,.06,'square',.04);tone(2093,t+.06,.1,'square',.04);break;
+  case 'lowhp':for(let i=0;i<4;i++)tone(1046,t+i*.22,.1,'square',.03);break;
+  case 'sparkle':[1318,1568,2093,2637].forEach((f,i)=>tone(f,t+i*.05,.08,'triangle',.03));break;
   case 'tick':tone(1200,t,.02,'square',.012);break;case 'select':tone(880,t,.06,'square',.03);tone(1320,t+.06,.06,'square',.03);break;case 'bump':tone(110,t,.07,'square',.03);break;
   case 'hit':tone(220,t,.15,'sawtooth',.05,60);break;case 'hit2':tone(440,t,.12,'sawtooth',.06,90);tone(300,t+.1,.12,'sawtooth',.06,60);break;case 'miss':tone(300,t,.15,'square',.03,200);break;
   case 'faint':tone(400,t,.45,'square',.04,60);break;case 'heal':[523,659,784,1046].forEach((f,i)=>tone(f,t+i*.08,.12,'square',.035));break;
@@ -1038,13 +1063,39 @@ const FONT={A:['.#.','#.#','###','#.#','#.#'],B:['##.','#.#','##.','#.#','##.'],
  '0':['###','#.#','#.#','#.#','###'],'1':['.#.','##.','.#.','.#.','###'],'2':['##.','..#','.#.','#..','###'],'3':['###','..#','.##','..#','###'],'4':['#.#','#.#','###','..#','..#'],'5':['###','#..','##.','..#','##.'],'6':['.##','#..','###','#.#','###'],'7':['###','..#','.#.','.#.','.#.'],'8':['###','#.#','###','#.#','###'],'9':['###','#.#','###','..#','##.'],
  '.':['...','...','...','...','.#.'],':':['...','.#.','...','.#.','...'],'/':['..#','..#','.#.','#..','#..'],'-':['...','...','###','...','...'],"'":['.#.','.#.','...','...','...'],'!':['.#.','.#.','.#.','...','.#.'],'?':['##.','..#','.#.','...','.#.'],'(':['.#.','#..','#..','#..','.#.'],')':['.#.','..#','..#','..#','.#.'],',':['...','...','...','.#.','#..'],' ':['...','...','...','...','...'],'*':['#.#','.#.','###','.#.','#.#'],'+':['...','.#.','###','.#.','...']};
 function txt(s,x,y,c='#181818',sc=1){ctx.fillStyle=c;s=String(s).toUpperCase();for(let i=0;i<s.length;i++){const g=FONT[s[i]]||FONT['?'];for(let r=0;r<5;r++)for(let k=0;k<3;k++)if(g[r][k]==='#')ctx.fillRect(x+(i*4+k)*sc,y+r*sc,sc,sc);}}
+/* battle particles: B.fx holds short-lived sparks drawn over the sprites */
+const FXCOL={Fire:['#ff8c2a','#ffe66a','#ff3f5f'],Water:['#3ae0ff','#7ee6ff','#2e7dff'],Grass:['#57d65a','#8cf05a','#1f9a48'],Techno:['#b6ff3b','#ffe03a','#fbfbf4'],
+  Rock:['#8a8a94','#55555e','#c9ced8'],Air:['#fbfbf4','#c8e6ff','#7ee6ff'],Bug:['#2c2444','#57d65a','#8a5a2c'],Basic:['#fbfbf4','#ffe03a','#ff9a2a']};
+function fxCenter(side){return side==='en'?[B.enX+24,B.enY+22]:[B.meX+30,B.meY+30];}
+function spawnFx(type,side,n){if(!SET.anim)return;B.fx=B.fx||[];const[cx,cy]=fxCenter(side),cols=FXCOL[type]||FXCOL.Basic;n=Math.round((n||14)*1.4);
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=.4+Math.random()*1.2,p={x:cx+(Math.random()-.5)*20,y:cy+(Math.random()-.5)*16,vx:0,vy:0,life:28+Math.random()*16,col:cols[i%cols.length],sz:2+Math.floor(Math.random()*2),kind:type};
+    if(type==='Fire'){p.vy=-sp;p.vx=(Math.random()-.5)*.6;p.y+=10;}
+    else if(type==='Water'){p.y=cy-24-Math.random()*8;p.vy=1+Math.random();p.vx=(Math.random()-.5)*1.2;}
+    else if(type==='Grass'){p.ang=a;p.r=14+Math.random()*6;p.vr=.12;}
+    else if(type==='Rock'){p.y=cy-30-Math.random()*10;p.vy=1.6+Math.random();p.sz=3+Math.floor(Math.random()*2);}
+    else if(type==='Air'){p.x=cx-30;p.vx=2.5+Math.random()*2;p.sz=1;p.len=8+Math.random()*8;}
+    else if(type==='Bug'){p.ang=a;p.r=6+Math.random()*12;p.vr=.25+Math.random()*.2;}
+    else if(type==='Techno'){p.bolt=true;p.life=16;}
+    else{p.vx=Math.cos(a)*sp*2;p.vy=Math.sin(a)*sp*2;p.x=cx;p.y=cy;}
+    B.fx.push(p);}}
+function spawnRise(side,col,up=true,n=8){if(!SET.anim)return;B.fx=B.fx||[];const[cx,cy]=fxCenter(side);for(let i=0;i<n;i++)B.fx.push({x:cx-14+i*4,y:cy+(up?12:-16)+(i%2)*4,vx:0,vy:up?-.8:.8,life:34,col,sz:1,arrow:up?1:-1});}
+function drawFx(){if(!B.fx||!B.fx.length)return;const[ecx,ecy]=fxCenter('en'),[mcx,mcy]=fxCenter('me');
+  for(const p of B.fx){p.life--;if(p.ang!==undefined){p.ang+=p.vr;const[cx,cy]=p.side==='me'?[mcx,mcy]:[p.x0??(p.x0=p.x),p.y0??(p.y0=p.y)];p.x=p.x0+Math.cos(p.ang)*p.r*.5;p.y=p.y0+Math.sin(p.ang)*p.r*.35;}else{p.x+=p.vx;p.y+=p.vy;}
+    ctx.fillStyle=p.col;
+    if(p.bolt){const x0=Math.round(p.x),y0=Math.round(p.y)-14;ctx.fillRect(x0,y0,2,5);ctx.fillRect(x0+1,y0+5,3,2);ctx.fillRect(x0+3,y0+6,2,5);ctx.fillRect(x0+1,y0+11,3,2);ctx.fillRect(x0,y0+12,2,5);}
+    else if(p.len)ctx.fillRect(Math.round(p.x),Math.round(p.y),Math.round(p.len),2);
+    else if(p.arrow){const x=Math.round(p.x),y=Math.round(p.y);ctx.fillRect(x,y,1,3);ctx.fillRect(x-1,y+(p.arrow>0?1:1),3,1);}
+    else ctx.fillRect(Math.round(p.x),Math.round(p.y),p.sz,p.sz);}
+  B.fx=B.fx.filter(p=>p.life>0);}
+/* white impact flash: a cached white silhouette of a sprite */
+const WHITE=new Map();function whiteOf(cv){if(WHITE.has(cv))return WHITE.get(cv);const o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const g=o.getContext('2d');g.drawImage(cv,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#ffffff';g.fillRect(0,0,o.width,o.height);WHITE.set(cv,o);return o;}
 function stChip(s,x,y){const[t,c]=STATUS_TAG[s];ctx.fillStyle='#181818';ctx.fillRect(x-2,y-2,17,9);ctx.fillStyle=c;ctx.fillRect(x-1,y-1,15,7);txt(t,x+1,y);}
 function drawBattle(){ctx.save();if(B.quake>0){B.quake--;ctx.translate(rnd(-3,3),rnd(-2,2));}ctx.fillStyle='#fbfbf4';ctx.fillRect(-4,-4,168,152);ctx.fillStyle=B.boss?'#e0c8ff':'#c8f0a8';ctx.fillRect(96,44,62,6);ctx.fillRect(4,88,78,6);
   const en=B.en,me=B.me;
   if(B.portrait){ctx.save();ctx.translate(B.enX+24,B.enY+22);ctx.scale(2,2);ctx.drawImage(B.portrait,-12,-12);ctx.restore();}
-  if(en&&B.enVis&&!B.portrait&&!(B.enBlink&&Math.floor(frameCount/4)%2)){ctx.save();const se=spr(en),ke=48/se.width;ctx.translate(B.enX+24,B.enY+22);ctx.scale(ke,ke);ctx.globalAlpha=B.enA;ctx.drawImage(se,-se.width/2,-se.height/2);ctx.restore();}
-  if(me&&B.meVis&&!(B.meBlink&&Math.floor(frameCount/4)%2)){ctx.save();const sb=spr(me).back,big=sb.width>24;ctx.translate(B.meX+(big?30:36),B.meY+(big?22:12));ctx.scale(big?2:3,big?2:3);ctx.globalAlpha=B.meA;ctx.drawImage(sb,-sb.width/2,-sb.height/2);ctx.restore();}
-  ctx.globalAlpha=1;
+  if(en&&B.enVis&&!B.portrait&&!(B.enBlink&&Math.floor(frameCount/4)%2)){ctx.save();let se=spr(en);const ke=48/se.width;if(B.enFlash>0){B.enFlash--;se=whiteOf(se);}const bobE=SET.anim&&menuState?(Math.floor(frameCount/28)%2):0;ctx.translate(B.enX+24,B.enY+22+bobE);ctx.scale(ke,ke);ctx.globalAlpha=B.enA;ctx.drawImage(se,-se.width/2,-se.height/2);ctx.restore();}
+  if(me&&B.meVis&&!(B.meBlink&&Math.floor(frameCount/4)%2)){ctx.save();let sb=spr(me).back;const big=sb.width>24;if(B.meFlash>0){B.meFlash--;sb=whiteOf(sb);}const bobM=SET.anim&&menuState?((Math.floor(frameCount/28)+1)%2):0;ctx.translate(B.meX+(big?30:36),B.meY+(big?22:12)+bobM);ctx.scale(big?2:3,big?2:3);ctx.globalAlpha=B.meA;ctx.drawImage(sb,-sb.width/2,-sb.height/2);ctx.restore();}
+  ctx.globalAlpha=1;drawFx();
   if(B.portrait){txt(B.trainerName||'',8,3);}
   if(en&&B.enVis&&!B.portrait){txt((en.holo?'*':'')+en.name,8,3);txt('LV'+en.lv,8,10);if(en.sts)stChip(en.sts,32,10);bar(8,18,52,B.enHp/en.st.hp);ctx.fillStyle='#181818';ctx.fillRect(4,22,62,1);}
   if(me&&B.meVis){txt((me.holo?'*':'')+me.name,90,52);txt('LV'+me.lv,90,59);if(me.sts)stChip(me.sts,114,59);bar(92,67,60,B.meHp/me.st.hp);txt(Math.round(B.meHp)+'/'+me.st.hp,108,71);const need=(me.lv+1)**3-me.lv**3;bar(92,80,60,(me.exp-me.lv**3)/need,'#4878d8');ctx.fillStyle='#181818';ctx.fillRect(88,84,68,1);}
@@ -1065,28 +1116,30 @@ async function doMove(a,d,mv,aSide){const[mt,pow,acc,fx]=MOVES[mv];const dSide=a
   if(a.sts==='par'&&Math.random()<.25){await say(`${AN} is on hold. Please stay on the line. It can't move!`);return;}
   await say(`${AN} used ${mv.toUpperCase()}!`);
   await lunge(aSide);if(Math.random()*100>acc){sfx('miss');await say(`${a.name.toUpperCase()}'s attack missed!`);return;}
-  if(fx){const tgt=fx.self?a:d,ch=fx.self||fx.foe;tgt.stg=tgt.stg||{};for(const k in ch){const cur=tgt.stg[k]||0;const nv=Math.max(-4,Math.min(4,cur+ch[k]));if(nv===cur){await say(`${tgt.name.toUpperCase()}'s ${k==='atk'?'ATTACK':'DEFENSE'} won't go any ${ch[k]>0?'higher':'lower'}!`);continue;}tgt.stg[k]=nv;sfx(ch[k]>0?'stat':'statdn');
+  if(fx){const tgt=fx.self?a:d,ch=fx.self||fx.foe;tgt.stg=tgt.stg||{};for(const k in ch){const cur=tgt.stg[k]||0;const nv=Math.max(-4,Math.min(4,cur+ch[k]));if(nv===cur){await say(`${tgt.name.toUpperCase()}'s ${k==='atk'?'ATTACK':'DEFENSE'} won't go any ${ch[k]>0?'higher':'lower'}!`);continue;}tgt.stg[k]=nv;sfx(ch[k]>0?'stat':'statdn');spawnRise(tgt===a?aSide:dSide,ch[k]>0?'#57d65a':'#3a6cff',ch[k]>0);
       if(ch[k]<0)blink(fx.self?aSide:dSide);await say(`${tgt.name.toUpperCase()}'s ${k==='atk'?'ATTACK':'DEFENSE'} ${ch[k]>0?'rose':'fell'}!`);}return;}
   const e=eff(mt,SPECIES[d.name].type);const stab=mt===SPECIES[a.name].type?1.3:1;const crit=Math.random()<.07?1.5:1;
   if(pow){G.seenEff=G.seenEff||{};G.seenEff[mt+'>'+SPECIES[d.name].type]=1;}
   let dmg=e===0?0:Math.floor(((2*a.lv/5+2)*pow*(a.st.atk*stg(a,'atk')*(a.sts==='brn'?.75:1))/(d.st.def*stg(d,'def'))/50+2)*e*stab*crit*(0.85+Math.random()*0.15));
-  d.hp=Math.max(0,d.hp-dmg);if(e>0){sfx(e>1?'hit2':'hit');buzz(e>1||crit>1?'heavy':'med');blink(dSide);await shake(dSide);}await drainHp(dSide);
+  if(pow&&e>0){sfxMove(mt);spawnFx(mt,dSide,e>1?22:14);if(SET.anim)await sleep(260);}
+  const hpBefore=d.hp;d.hp=Math.max(0,d.hp-dmg);if(e>0){sfx(e>1?'crunch':'thud');if(crit>1)sfx('crit');buzz(e>1||crit>1?'heavy':'med');B[dSide+'Flash']=4;if(SET.anim)await sleep(e>1||crit>1?110:60);if(e>1)B.quake=Math.max(B.quake||0,8);blink(dSide);await shake(dSide);}await drainHp(dSide);
+  if(dSide==='me'&&d.hp>0&&hpBefore>d.st.hp*.25&&d.hp<=d.st.hp*.25)sfx('lowhp');
   if(crit>1&&e>0){B.quake=14;await say('A critical hit! Radical.');}if(e===0)await say(`It doesn't affect ${d.name.toUpperCase()}... at all.`);else if(e>1)await say("It's super effective! Booyah!");else if(e<1)await say("It's not very effective... weak sauce.");
   if(dmg>0&&d.hp>0){if(d.sts==='frz'&&mt==='Fire'){d.sts=null;d.frzT=0;await say(`${DN} thawed out! Thanks, I guess.`);}
-    const sf=STATUS_FX[mv];if(sf&&!d.sts&&!STATUS_IMMUNE[sf[0]].includes(SPECIES[d.name].type)&&Math.random()*100<sf[1]){d.sts=sf[0];d.frzT=0;sfx('statdn');blink(dSide);await say(STATUS_MSG[sf[0]](DN));}}}
-async function statusTick(m,side){if(!m||m.hp<=0||(m.sts!=='brn'&&m.sts!=='sour'))return;const dmg=Math.max(1,Math.floor(m.st.hp/(m.sts==='brn'?12:10)));m.hp=Math.max(0,m.hp-dmg);sfx('hit');blink(side);await drainHp(side);await say(m.sts==='brn'?`${m.name.toUpperCase()} is hurt by its burn!`:`${m.name.toUpperCase()} is puckering from the sour!`);}
+    const sf=STATUS_FX[mv];if(sf&&!d.sts&&!STATUS_IMMUNE[sf[0]].includes(SPECIES[d.name].type)&&Math.random()*100<sf[1]){d.sts=sf[0];d.frzT=0;sfx('statdn');spawnFx({brn:'Fire',frz:'Water',par:'Techno',sour:'Grass'}[sf[0]],dSide,10);blink(dSide);await say(STATUS_MSG[sf[0]](DN));}}}
+async function statusTick(m,side){if(!m||m.hp<=0||(m.sts!=='brn'&&m.sts!=='sour'))return;const dmg=Math.max(1,Math.floor(m.st.hp/(m.sts==='brn'?12:10)));m.hp=Math.max(0,m.hp-dmg);sfx('thud');spawnFx(m.sts==='brn'?'Fire':'Grass',side,8);blink(side);await drainHp(side);await say(m.sts==='brn'?`${m.name.toUpperCase()} is hurt by its burn!`:`${m.name.toUpperCase()} is puckering from the sour!`);}
 function effHint(mv,foe){const[mt,pow]=MOVES[mv];if(!pow||!foe)return '';const dt=SPECIES[foe.name].type;if(!(G.seenEff||{})[mt+'>'+dt])return '';const e=eff(mt,dt);return e===0?' ✕':e>1?' ▲':e<1?' ▼':' =';}
 async function learnMove(m,mv){if(m.moves.includes(mv))return;if(m.moves.length<4){m.moves.push(mv);await say(`${m.name.toUpperCase()} learned ${mv.toUpperCase()}!`);return;}
   await say(`${m.name.toUpperCase()} wants to learn ${mv.toUpperCase()}, but it already knows 4 moves.`);
   const i=await pickMenu(m.moves.map(x=>({label:x.toUpperCase(),sub:MOVES[x][0]})).concat([{label:'DON\'T LEARN',sub:mv}]),{text:`Forget which move for ${mv.toUpperCase()}?`,cols:1,cancel:false});
   if(i<4){await say(`1, 2, 3... POOF! ${m.name.toUpperCase()} forgot ${m.moves[i].toUpperCase()} and learned ${mv.toUpperCase()}!`);m.moves[i]=mv;}else await say(`${m.name.toUpperCase()} did not learn ${mv.toUpperCase()}.`);}
 async function gainExp(m,en,mult){if(m.hp<=0)return;const g=Math.floor(en.lv*24*mult)+10;m.exp+=g;await say(`${m.name.toUpperCase()} gained ${g} EXP. points!`);
-  while(m.lv<50&&m.exp>=(m.lv+1)**3){m.lv++;const old=m.st.hp;calcStats(m);m.hp+=m.st.hp-old;B.meHp=m.hp;sfx('levelup');await say(`${m.name.toUpperCase()} grew to level ${m.lv}!`);for(const mv of movesAt(m,m.lv))await learnMove(m,mv);}}
+  while(m.lv<50&&m.exp>=(m.lv+1)**3){m.lv++;const old=m.st.hp;calcStats(m);m.hp+=m.st.hp-old;B.meHp=m.hp;sfx('levelup');spawnRise('me','#ffe03a',true,10);await say(`${m.name.toUpperCase()} grew to level ${m.lv}!`);for(const mv of movesAt(m,m.lv))await learnMove(m,mv);}}
 async function checkEvolve(m){const ev=SPECIES[m.name].evo;if(!ev||m.lv<ev[0])return;const old=m.name;B.me=m;B.meHp=m.hp;B.enVis=false;B.meVis=true;B.meX=44;B.meY=40;
   await say(`What? ${old.toUpperCase()} is changing!`);sfx('evolve');
   for(let i=0;i<8;i++){B.white=.8;m.name=i%2?old:ev[1];await tween(B,'white',0,140-i*12);}
   m.name=ev[1];B.white=1;await tween(B,'white',0,500);calcStats(m);m.hp=Math.min(m.st.hp,m.hp+10);B.meHp=m.hp;G.seen[m.name]=1;G.caught[m.name]=1;
-  sfx('catch');await say(`${old.toUpperCase()} evolved into ${ev[1].toUpperCase()}! Totally tubular.`);for(const mv of movesAt(m,m.lv))await learnMove(m,mv);}
+  cry(ev[1]);sfx('sparkle');await say(`${old.toUpperCase()} evolved into ${ev[1].toUpperCase()}! Totally tubular.`);for(const mv of movesAt(m,m.lv))await learnMove(m,mv);}
 async function chooseSwitch(forced){return await pickMenu(G.party.map(m=>({label:m.name.toUpperCase(),sub:`L${m.lv} ${Math.max(0,m.hp)}/${m.st.hp}`,disabled:m.hp<=0||m===B.me})),{text:forced?'Choose the next Radimal.':'Switch to which Radimal?',cols:2,cancel:!forced});}
 async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;const fightMoney={v:0};
   await battleTransition();playTrack(opts.music||(opts.trainer?'battle':'wild'));
@@ -1095,9 +1148,9 @@ async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;con
   G.party.forEach(m=>{m.stg={};m.sts=null;m.frzT=0;});B.enHp=B.en.hp;B.meHp=B.me.hp;fade=0;busy=false;
   if(opts.look){B.portrait=portrait(opts.look);B.trainerName=opts.trainer;}
   tween(B,'meX',6,700);await tween(B,'enX',106,700);
-  await say(opts.glitch?'A wild ????? appeared! Its name is ####. Its level is a symbol. The music skipped.':opts.trainer?(opts.boss?`${opts.trainer} attacks!`:opts.legend?`${opts.trainer}...`:`${opts.trainer} wants to battle!`):`A wild ${B.en.name.toUpperCase()} appeared!`);if(B.en.holo){sfx('catch');await say('Whoa. It\'s HOLOGRAPHIC. Its colors shimmer like a foil trading card. Catch it. CATCH IT.');}
+  await say(opts.glitch?'A wild ????? appeared! Its name is ####. Its level is a symbol. The music skipped.':opts.trainer?(opts.boss?`${opts.trainer} attacks!`:opts.legend?`${opts.trainer}...`:`${opts.trainer} wants to battle!`):`A wild ${B.en.name.toUpperCase()} appeared!`,cry(B.en.name));if(B.en.holo){sfx('catch');await say('Whoa. It\'s HOLOGRAPHIC. Its colors shimmer like a foil trading card. Catch it. CATCH IT.');}
   if(B.portrait){await tween(B,'enX',170,300);B.portrait=null;B.enX=170;await say(`${opts.trainer} sends out ${B.en.name.toUpperCase()}!`);await tween(B,'enX',106,400);}
-  await say(`Go, ${B.me.name.toUpperCase()}!`);
+  cry(B.me.name);await say(`Go, ${B.me.name.toUpperCase()}!`);
   const evolvers=new Set();
   while(true){const me=B.me,en=B.en;
     const main=await pickMenu([{label:'FIGHT'},{label:'BACKPACK'},{label:'SWITCH'},{label:'RUN',disabled:!!opts.trainer&&!opts.legend}],{text:`What will ${me.name.toUpperCase()} do?`,cols:2,cancel:false});
@@ -1116,14 +1169,14 @@ async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;con
       else{await say(`You threw a ${it.name}!`);sfx('orb');B.orb={x:40,y:70};const p1=tween(B.orb,'x',130,500);await tween(B.orb,'y',24,500);await p1;
         await tween(B,'enA',0,250);B.enVis=false;const p=catchChance(en,it.ball);const ok=Math.random()<p;const wig=ok?3:(p>0.5?2:p>0.2?1:0);
         for(let i=0;i<wig;i++){await sleep(350);sfx('wiggle');await tween(B.orb,'x',124,80);await tween(B.orb,'x',136,120);await tween(B.orb,'x',130,80);}
-        if(ok){await sleep(300);sfx('catch');buzz('heavy');G.caught[en.name]=1;if(en.holo){G.holo=G.holo||{};G.holo[en.name]=1;}await say(`Gotcha! ${en.name.toUpperCase()} was slammed!`);en.stg={};en.sts=null;en.frzT=0;if(G.party.length<6){G.party.push(en);await say(`${en.name.toUpperCase()} joined your party.`);}else{G.box.push(en);await say(`Party's full. ${en.name.toUpperCase()} was sent to the TOY BOX.`);}return end('catch');}
+        if(ok){await sleep(300);sfx('catch');buzz('heavy');spawnFx('Basic','en',18);G.caught[en.name]=1;if(en.holo){G.holo=G.holo||{};G.holo[en.name]=1;}await say(`Gotcha! ${en.name.toUpperCase()} was slammed!`);en.stg={};en.sts=null;en.frzT=0;if(G.party.length<6){G.party.push(en);await say(`${en.name.toUpperCase()} joined your party.`);}else{G.box.push(en);await say(`Party's full. ${en.name.toUpperCase()} was sent to the TOY BOX.`);}return end('catch');}
         await sleep(300);B.orb=null;B.enVis=true;B.enA=1;await say(wig===0?'It broke free at once! Rude.':wig===1?'It wriggled free!':'So close! It broke free!');}}
     else if(act.type==='switch'){await say(`${me.name.toUpperCase()}, come back!`);await tween(B,'meX',-80,250);B.me=G.party[act.i];B.me.stg={};B.meHp=B.me.hp;await tween(B,'meX',6,350);await say(`Go, ${B.me.name.toUpperCase()}!`);}
     else if(act.type==='move'){const meFirst=me.st.spd*(me.sts==='par'?.5:1)>=en.st.spd*(en.sts==='par'?.5:1);
       if(meFirst){await doMove(me,en,act.mv,'me');if(en.hp>0)await doMove(en,me,emv,'en');}else{await doMove(en,me,emv,'en');if(me.hp>0)await doMove(me,en,act.mv,'me');}}
     if(act.type!=='move'&&en.hp>0&&B.me.hp>0)await doMove(en,B.me,emv,'en');
     await statusTick(B.me,'me');await statusTick(en,'en');
-    if(en.hp<=0){sfx('faint');await tween(B,'enY',75,400);B.enVis=false;await say(`${opts.trainer?'Enemy':'Wild'} ${en.name.toUpperCase()} fainted!`);await gainExp(B.me,en,opts.trainer?1.5:1);if(SPECIES[B.me.name].evo&&B.me.lv>=SPECIES[B.me.name].evo[0])evolvers.add(B.me);B.ei++;
+    if(en.hp<=0){cry(en.name,.7,1.6);sfx('faint');await tween(B,'enY',75,400);B.enVis=false;await say(`${opts.trainer?'Enemy':'Wild'} ${en.name.toUpperCase()} fainted!`);await gainExp(B.me,en,opts.trainer?1.5:1);if(SPECIES[B.me.name].evo&&B.me.lv>=SPECIES[B.me.name].evo[0])evolvers.add(B.me);B.ei++;
       if(B.ei>=enemies.length){if(opts.trainer&&!opts.boss)await say(`You defeated ${opts.trainer}!`);return end('win');}
       B.en=enemies[B.ei];B.enHp=B.en.hp;B.enY=2;B.enX=170;B.enA=1;B.enVis=true;await say(`${opts.trainer} sends out ${B.en.name.toUpperCase()}!`);await tween(B,'enX',106,500);}
     if(B.me.hp<=0){sfx('faint');await tween(B,'meY',110,400);B.meVis=false;await say(`${B.me.name.toUpperCase()} fainted!`);
@@ -1168,7 +1221,7 @@ function renderMenu(){$('#mmoney').textContent='$'+G.money;$('#tabD').textConten
       r.appendChild(a);d.appendChild(r);}
     if(!d.children.length)d.innerHTML='<div class="row"><div class="info">Empty. Just crumbs.</div></div>';return;}
   if(tab==='D'){const g=document.createElement('div');g.className='dex';DEX.forEach(n=>{const c=document.createElement('div');const known=G.seen[n];c.className=known?'':'unk';const cv2=document.createElement('canvas');cv2.width=MONSPR[n].width;cv2.height=MONSPR[n].height;cv2.getContext('2d').drawImage(MONSPR[n],0,0);if(!known)cv2.style.filter='brightness(0)';c.appendChild(cv2);const lb=document.createElement('div');lb.textContent=`#${String(SPECIES[n].n).padStart(3,'0')} ${known?n.toUpperCase():'???'}${G.caught[n]?' ✓':''}${(G.holo||{})[n]?' ✦':''}`;c.appendChild(lb);
-      c.onclick=async()=>{if(!known)return;closeMenu();await say(`#${SPECIES[n].n} ${n.toUpperCase()} (${SPECIES[n].type})\n${SPECIES[n].desc}\n${habitat(n)}`);closeText();};g.appendChild(c);});d.appendChild(g);
+      c.onclick=async()=>{if(!known)return;closeMenu();cry(n);await say(`#${SPECIES[n].n} ${n.toUpperCase()} (${SPECIES[n].type})\n${SPECIES[n].desc}\n${habitat(n)}`);closeText();};g.appendChild(c);});d.appendChild(g);
     const s=document.createElement('div');s.style.cssText='font-size:11px;margin-top:8px';s.textContent=`Seen ${Object.keys(G.seen).length} · Caught ${Object.keys(G.caught).length} of ${DEX.length}`+(G.flags.tamaCaught?' · PIXELGODCHI ✦':'');d.appendChild(s);return;}
   if(!G.party.length){d.innerHTML='<div class="row"><div class="info">No Radimals yet. PROF. DIALTONE is in the lab (north-west, pink roof).</div></div>';return;}
   G.party.forEach((m,i)=>{const f=Math.max(0,m.hp/m.st.hp);const r=document.createElement('div');r.className='row'+(i===0?' lead':'')+(m.hp<=0?' dead':'');const c=document.createElement('canvas');c.width=spr(m).width;c.height=spr(m).height;c.getContext('2d').drawImage(spr(m),0,0);r.appendChild(c);
