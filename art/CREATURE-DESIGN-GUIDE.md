@@ -92,6 +92,9 @@ something you want to hug. Research on cuteness and toys:
     Dialupine cord fix).
 14. **Lovable flaw in the face or pose**, never meanness: the one goofy fang, the bent disk corner,
     the sleepy giant who never moves, the troll whose luck never works.
+16. **Look-alike check (legal):** compare against the famous originals before shipping a design.
+    Common traps we hit: a yellow cat/mouse with colored ear tips and cheek circles; an orange
+    lizard with a cream belly and a flame tail. Change the base animal or the palette, not just a detail.
 15. **Give it a one-line personality** in the Binder entry that a kid would repeat.
 
 v2 lives in `tools/sprites/pilot48v2.py`; `pilot_sheet.py` shows now / v1 / v2 / silhouette.
