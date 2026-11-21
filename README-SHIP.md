@@ -23,6 +23,11 @@ In Xcode: set your Team, change the Bundle Identifier in capacitor.config.json
 (`com.yourcompany.radimals98`) to your own reverse-domain id, set Deployment Target to
 iOS 15, lock orientation to Portrait, then Product > Archive > Distribute > App Store Connect.
 
+Haptics: `@capacitor/haptics` is in package.json, so `npm install` + `npx cap sync ios` registers
+the native plugin. The game calls it through `window.Capacitor.Plugins.Haptics` (no bundler
+needed); in a plain browser it falls back to `navigator.vibrate` or does nothing. Players can turn
+it off in MENU > HELP > SETTINGS.
+
 ## App Store Connect checklist
 - Category: Games > Role Playing (secondary: Adventure). Age rating questionnaire:
   "Cartoon or Fantasy Violence: Infrequent/Mild" → 9+. No IAP, no ads, no data collection.

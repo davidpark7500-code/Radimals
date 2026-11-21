@@ -43,10 +43,18 @@ tracks, and an App Store legal pass.
   Battle layout is shifted up to leave it clear. Move menu is single-column.
 - SAVE/MENU pills sit below the d-pad/AB cluster. Controls must never be cramped.
 - Menu is a paper card inside the shell with tabs PARTY / BACKPACK / BINDER / HELP; HELP holds
-  controls, type chart, and the ABOUT/legal text.
+  SETTINGS (text speed, music vol, SFX vol, battle anims, haptics; localStorage
+  `radimals98_settings`), controls, type chart, and the ABOUT/legal text.
+- The text box NEVER scrolls or overflows: `say()` pages long text to fit (`paginate()`), and
+  `pickMenu()` shows a window of rows with ▲/▼ markers. Box height = 34% of the screen
+  (`--tbh`, set in `fitScreen`). Keep menu labels short; subs are one line with ellipsis.
+  Menus can take `desc:i=>text` (prompt follows the cursor, used by the shop) and `id` (test hook).
+- Battle HUD: enemy info top-left (y3-22), player info right (y52-84), clear of the text box
+  (canvas y≥95). Back sprite is drawn under the box.
 
 ## Audio decisions
-- Web Audio only. MASTER gain for mute; each track plays through its own bus (`TRACKBUS`) and
+- Web Audio only. MASTER gain for mute, with MUSICBUS and SFXBUS under it for the volume
+  settings; each track plays through its own bus (`TRACKBUS` → MUSICBUS) and
   switching tracks fades+stops the old bus (fixes layering). Sound toggle is volume-only.
   iOS: resume on gesture, mute on background.
 
@@ -54,6 +62,12 @@ tracks, and an App Store legal pass.
 - Catch: `catchChance()` = rarity x ball x HP factor x level factor + small rarity floor, cap
   95%; Golden Slammer (one per game, from the Prof at 4 Caps) = 100%. Trainers' Radimals not
   catchable; legendaries are; Glitchy (#000, fishing at the pier tip) is not.
+- Status effects are battle-only (cleared when a battle ends): BRN/FRZ/PAR/SOUR, rolled by the
+  moves in `STATUS_FX`, type immunities in `STATUS_IMMUNE`; JUICE POUCH cures. Move list shows
+  ▲/▼/✕/= once that move-type vs defender-type matchup has been seen (`G.seenEff`).
+- Autosave on background/pagehide and after every warp (`autosave()`, only once a starter exists).
+- Haptics: `buzz()` → Capacitor Haptics on iOS (`@capacitor/haptics`), navigator.vibrate elsewhere.
+- Binder detail shows habitat (`habitat()`: map wild/fish tables, else specials, else evolution).
 - Run chance clamped 15–95%. Exp = level^3, cap 50. Evolutions at level (and via Sour Bomb).
 - Gating: can't leave town without a starter; trainers refuse an empty party; rival fights are
   in tree-walled chokepoints and must be done in order; bouncer needs 4 Caps; Marv needs the
@@ -62,10 +76,11 @@ tracks, and an App Store legal pass.
 ## Testing (already written — reuse them)
 `tools/` has Playwright scripts: `audit.py` (warps/edges/NPCs/species/items), `playthrough.py`
 (scripted full arc: starter → all leaders → tower → boss → legendary), `fuzz.py` (random
-battles + rule checks), `sheet.py` (renders all 151 with hand/generated tags), `shots.py`.
+battles + rule checks), `textfit.py` (text box never overflows at 3 screen widths; optional
+screenshot dir arg), `sheet.py` (renders all 151 with hand/generated tags), `shots.py`.
 Run `pip install playwright && playwright install chromium` first (in the cloud sandbox, set
 `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` instead of installing). Every change should pass
-audit + playthrough + fuzz before it ships.
+audit + playthrough + fuzz + textfit before it ships.
 
 ## Build / ship
 See README-SHIP.md (Capacitor → Xcode), PRIVACY-POLICY.md, APP-STORE-LISTING.md, LEGAL-REVIEW.md.

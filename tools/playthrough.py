@@ -1,7 +1,7 @@
 """Scripted full-arc run: starter -> leaders -> tower -> boss -> Internet -> legendary. Usage: python tools/playthrough.py"""
 from playwright.sync_api import sync_playwright
 import time,os
-def st(pg): return pg.evaluate("()=>({mode:mode,m:!!menuState,t:textOpen,ty:typing,r:!!textResolve,busy:busy,txt:document.querySelector('#tbtext').textContent.slice(0,40)})")
+def st(pg): return pg.evaluate("()=>({mode:mode,m:!!menuState,t:textOpen,ty:typing,r:!!textResolve,busy:busy,txt:document.querySelector('#tbtext').textContent.slice(0,40),mv:!!menuState&&document.querySelector('#tbopts').dataset.menu==='moves'})")
 def drive(pg,limit=900,pref=None):
     last=None;same=0
     for i in range(limit):
@@ -10,7 +10,7 @@ def drive(pg,limit=900,pref=None):
         key=(s['txt'],s['m'],s['r']); same=same+1 if key==last else 0; last=key
         if same>60: print('  STUCK',s); return False
         if s['m']:
-            if s['txt'].startswith('Choose a move'): pg.evaluate("()=>{menuState.move('down');menuState.a();}")
+            if s.get('mv'): pg.evaluate("()=>{menuState.move('down');menuState.a();}")
             elif pref and s['txt'].startswith(pref[0]): pg.evaluate("(n)=>{for(let i=0;i<n;i++)menuState.move('down');menuState.a();}",pref[1])
             else: pg.keyboard.press('z')
         elif s['ty'] or s['r']: pg.keyboard.press('z')
