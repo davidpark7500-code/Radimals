@@ -82,6 +82,10 @@ tracks, and an App Store legal pass.
 - Autosave on background/pagehide and after every warp (`autosave()`, only once a starter exists).
 - Haptics: `buzz()` → Capacitor Haptics on iOS (`@capacitor/haptics`), navigator.vibrate elsewhere.
 - Binder detail shows habitat (`habitat()`: map wild/fish tables, else specials, else evolution).
+- Collection loop (no timers, no streaks, no pay hooks: kids play this): catch CHAINS of the same
+  species raise holo odds (`holoOdds`: 1/64, 1/32 at 3, 1/20 at 6, 1/12 at 10); pager SWARM alerts
+  (`maybeSwarm`, 1/7 on entering a route, lasts that visit only); BINDER milestones (`MILES`, prizes
+  at 10/25/50/80/120/151 caught); 12 STICKERS (`STICKERS`, checked in `rewardsCheck()` at battle end).
 - Run chance clamped 15–95%. Exp = level^3, cap 50. Evolutions at level (and via Sour Bomb).
 - Gating: can't leave town without a starter; trainers refuse an empty party; rival fights are
   in tree-walled chokepoints and must be done in order; bouncer needs 4 Caps; Marv needs the

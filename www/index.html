@@ -65,6 +65,8 @@ body{overscroll-behavior:none;padding-bottom:env(safe-area-inset-bottom)}
 .row canvas{width:48px;height:48px;image-rendering:pixelated;flex:none;background:#c8f0a8;border:2px solid var(--ink)}
 .row .info{flex:1;min-width:0;line-height:1.5;font-size:12px}
 .row .info b{font-size:13px;letter-spacing:.04em}
+.binderprog{position:relative;border:2px solid var(--ink);padding:6px 8px 10px;margin-bottom:8px;font-size:11px;background:var(--paper)}.binderprog b{display:block;font-size:13px}.binderprog span{display:block}.binderprog i{position:absolute;left:0;bottom:0;height:4px;background:var(--pink)}
+.stickers{margin-top:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.stickers b{grid-column:1/-1}.stk{border:2px dashed #9a9aa4;padding:6px;font-size:10px;color:#8a8a94;min-height:30px}.stk small{display:block;font-size:9px}.stk.on{border:2px solid var(--ink);background:#b6ff3b;color:var(--ink);font-weight:bold;box-shadow:2px 2px 0 var(--ink);transform:rotate(-1.5deg)}
 .row .setbtn{margin-left:auto;flex:none;min-width:92px;background:var(--paper);border:2px solid var(--ink);font:inherit;font-size:12px;padding:4px 8px;color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
 .row .setbtn:active{transform:translateY(2px);box-shadow:none}
 .row .acts{display:flex;flex-direction:column;gap:4px;flex:none}
@@ -961,10 +963,10 @@ function updateMove(dt){if(!P.moving)return;P.walkT+=dt;const t=Math.min(1,P.wal
 Object.defineProperty(window,'_f',{get:()=>fade,set:v=>fade=v});
 async function fadeOut(){busy=true;await tween(window,'_f',1,220);}async function fadeIn(){await tween(window,'_f',0,220);busy=false;}
 function mapMusic(){return M().music||'town';}
-async function warpTo(w){sfx('door');await fadeOut();G.map=w.map;if(!MAPS[w.map].outdoor&&G.bike){G.bike=false;heroSpr=personSet(PLAYER_LOOK);}G.x=w.x;G.y=w.y;if(w.dir)G.dir=w.dir;playTrack(mapMusic());await fadeIn();autosave();}
+async function warpTo(w){sfx('door');await fadeOut();G.map=w.map;if(!MAPS[w.map].outdoor&&G.bike){G.bike=false;heroSpr=personSet(PLAYER_LOOK);}G.x=w.x;G.y=w.y;if(w.dir)G.dir=w.dir;playTrack(mapMusic());await fadeIn();await maybeSwarm();autosave();}
 async function edgeWarp(dir){const m=M();const e=m.edges&&m.edges[{down:'bottom',up:'top',left:'left',right:'right'}[dir]];if(!e)return;
   if(!G.party.length){await say("MOM (yelling from the window): Not without a Radimal, you're not! PROF. DIALTONE. Pink roof. GO.");closeText();return;}const T2=MAPS[e];busy=true;await fadeOut();G.map=e;
-  if(dir==='down')G.y=0;else if(dir==='up')G.y=T2.h-1;else if(dir==='right')G.x=0;else G.x=T2.w-1;playTrack(mapMusic());await fadeIn();autosave();}
+  if(dir==='down')G.y=0;else if(dir==='up')G.y=T2.h-1;else if(dir==='right')G.x=0;else G.x=T2.w-1;playTrack(mapMusic());await fadeIn();await maybeSwarm();autosave();}
 async function onArrive(){const t=tileAt(G.x,G.y);const m=M();const w=m.warps&&m.warps[G.x+','+G.y];
   if(w&&'DEU'.includes(t)){await warpTo(w);return;}
   for(const n of npcs()){if(n.trainer&&n.watch&&!G.flags[n.flag]){const[dx,dy]=DIRS[n.dir];for(let i=1;i<=n.watch;i++){const sx=n.x+dx*i,sy=n.y+dy*i;if(SOLID.includes(tileAt(sx,sy)))break;if(sx===G.x&&sy===G.y){await trainerApproach(n,i);return;}}}}
@@ -1124,6 +1126,7 @@ async function doMove(a,d,mv,aSide){const[mt,pow,acc,fx]=MOVES[mv];const dSide=a
   if(pow&&e>0){sfxMove(mt);spawnFx(mt,dSide,e>1?22:14);if(SET.anim)await sleep(260);}
   const hpBefore=d.hp;d.hp=Math.max(0,d.hp-dmg);if(e>0){sfx(e>1?'crunch':'thud');if(crit>1)sfx('crit');buzz(e>1||crit>1?'heavy':'med');B[dSide+'Flash']=4;if(SET.anim)await sleep(e>1||crit>1?110:60);if(e>1)B.quake=Math.max(B.quake||0,8);blink(dSide);await shake(dSide);}await drainHp(dSide);
   if(dSide==='me'&&d.hp>0&&hpBefore>d.st.hp*.25&&d.hp<=d.st.hp*.25)sfx('lowhp');
+  if(aSide==='me'&&e>0){G.stats=G.stats||{};if(crit>1)G.stats.crit=(G.stats.crit||0)+1;if(e>1)G.stats.sup=(G.stats.sup||0)+1;}
   if(crit>1&&e>0){B.quake=14;await say('A critical hit! Radical.');}if(e===0)await say(`It doesn't affect ${d.name.toUpperCase()}... at all.`);else if(e>1)await say("It's super effective! Booyah!");else if(e<1)await say("It's not very effective... weak sauce.");
   if(dmg>0&&d.hp>0){if(d.sts==='frz'&&mt==='Fire'){d.sts=null;d.frzT=0;await say(`${DN} thawed out! Thanks, I guess.`);}
     const sf=STATUS_FX[mv];if(sf&&!d.sts&&!STATUS_IMMUNE[sf[0]].includes(SPECIES[d.name].type)&&Math.random()*100<sf[1]){d.sts=sf[0];d.frzT=0;sfx('statdn');spawnFx({brn:'Fire',frz:'Water',par:'Techno',sour:'Grass'}[sf[0]],dSide,10);blink(dSide);await say(STATUS_MSG[sf[0]](DN));}}}
@@ -1138,7 +1141,7 @@ async function gainExp(m,en,mult){if(m.hp<=0)return;const g=Math.floor(en.lv*24*
 async function checkEvolve(m){const ev=SPECIES[m.name].evo;if(!ev||m.lv<ev[0])return;const old=m.name;B.me=m;B.meHp=m.hp;B.enVis=false;B.meVis=true;B.meX=44;B.meY=40;
   await say(`What? ${old.toUpperCase()} is changing!`);sfx('evolve');
   for(let i=0;i<8;i++){B.white=.8;m.name=i%2?old:ev[1];await tween(B,'white',0,140-i*12);}
-  m.name=ev[1];B.white=1;await tween(B,'white',0,500);calcStats(m);m.hp=Math.min(m.st.hp,m.hp+10);B.meHp=m.hp;G.seen[m.name]=1;G.caught[m.name]=1;
+  m.name=ev[1];G.stats=G.stats||{};G.stats.evo=(G.stats.evo||0)+1;B.white=1;await tween(B,'white',0,500);calcStats(m);m.hp=Math.min(m.st.hp,m.hp+10);B.meHp=m.hp;G.seen[m.name]=1;G.caught[m.name]=1;
   cry(ev[1]);sfx('sparkle');await say(`${old.toUpperCase()} evolved into ${ev[1].toUpperCase()}! Totally tubular.`);for(const mv of movesAt(m,m.lv))await learnMove(m,mv);}
 async function chooseSwitch(forced){return await pickMenu(G.party.map(m=>({label:m.name.toUpperCase(),sub:`L${m.lv} ${Math.max(0,m.hp)}/${m.st.hp}`,disabled:m.hp<=0||m===B.me})),{text:forced?'Choose the next Radimal.':'Switch to which Radimal?',cols:2,cancel:!forced});}
 async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;const fightMoney={v:0};
@@ -1169,7 +1172,9 @@ async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;con
       else{await say(`You threw a ${it.name}!`);sfx('orb');B.orb={x:40,y:70};const p1=tween(B.orb,'x',130,500);await tween(B.orb,'y',24,500);await p1;
         await tween(B,'enA',0,250);B.enVis=false;const p=catchChance(en,it.ball);const ok=Math.random()<p;const wig=ok?3:(p>0.5?2:p>0.2?1:0);
         for(let i=0;i<wig;i++){await sleep(350);sfx('wiggle');await tween(B.orb,'x',124,80);await tween(B.orb,'x',136,120);await tween(B.orb,'x',130,80);}
-        if(ok){await sleep(300);sfx('catch');buzz('heavy');spawnFx('Basic','en',18);G.caught[en.name]=1;if(en.holo){G.holo=G.holo||{};G.holo[en.name]=1;}await say(`Gotcha! ${en.name.toUpperCase()} was slammed!`);en.stg={};en.sts=null;en.frzT=0;if(G.party.length<6){G.party.push(en);await say(`${en.name.toUpperCase()} joined your party.`);}else{G.box.push(en);await say(`Party's full. ${en.name.toUpperCase()} was sent to the TOY BOX.`);}return end('catch');}
+        if(ok){await sleep(300);sfx('catch');buzz('heavy');spawnFx('Basic','en',18);G.caught[en.name]=1;if(en.holo){G.holo=G.holo||{};G.holo[en.name]=1;}await say(`Gotcha! ${en.name.toUpperCase()} was slammed!`);
+        G.stats=G.stats||{};if(en.swarm)G.stats.swarm=1;delete en.swarm;if(!opts.trainer){if(G.chain&&G.chain.n===en.name)G.chain.c++;else G.chain={n:en.name,c:1};G.stats.chain=Math.max(G.stats.chain||0,G.chain.c);
+          if(G.chain.c>=2)await say(`CHAIN x${G.chain.c}: ${G.chain.c} ${en.name.toUpperCase()} in a row. ${G.chain.c>=3?'Holo odds are up!':'One more and holo odds go up.'}`);}en.stg={};en.sts=null;en.frzT=0;if(G.party.length<6){G.party.push(en);await say(`${en.name.toUpperCase()} joined your party.`);}else{G.box.push(en);await say(`Party's full. ${en.name.toUpperCase()} was sent to the TOY BOX.`);}return end('catch');}
         await sleep(300);B.orb=null;B.enVis=true;B.enA=1;await say(wig===0?'It broke free at once! Rude.':wig===1?'It wriggled free!':'So close! It broke free!');}}
     else if(act.type==='switch'){await say(`${me.name.toUpperCase()}, come back!`);await tween(B,'meX',-80,250);B.me=G.party[act.i];B.me.stg={};B.meHp=B.me.hp;await tween(B,'meX',6,350);await say(`Go, ${B.me.name.toUpperCase()}!`);}
     else if(act.type==='move'){const meFirst=me.st.spd*(me.sts==='par'?.5:1)>=en.st.spd*(en.sts==='par'?.5:1);
@@ -1182,13 +1187,35 @@ async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;con
     if(B.me.hp<=0){sfx('faint');await tween(B,'meY',110,400);B.meVis=false;await say(`${B.me.name.toUpperCase()} fainted!`);
       if(firstAlive(G.party)<0){await say('You have no Radimals left...');await say('You blacked out! Totally bogus.');return end('lose');}
       const i=await chooseSwitch(true);B.me=G.party[i];B.me.stg={};B.meHp=B.me.hp;B.meY=50;B.meX=-80;B.meVis=true;await say(`Go, ${B.me.name.toUpperCase()}!`);await tween(B,'meX',6,350);}}
-  async function end(r){for(const m of evolvers)if(m.hp>0)await checkEvolve(m);closeText();busy=true;await tween(window,'_f',1,250);mode='map';B.en=null;B.me=null;G.party.forEach(m=>{m.stg={};m.sts=null;m.frzT=0;});
+  async function end(r){for(const m of evolvers)if(m.hp>0)await checkEvolve(m);if(r!=='lose')await rewardsCheck();closeText();busy=true;await tween(window,'_f',1,250);mode='map';B.en=null;B.me=null;G.party.forEach(m=>{m.stg={};m.sts=null;m.frzT=0;});
     playTrack(prevTrack||mapMusic());await tween(window,'_f',0,250);busy=false;return r;}}
-function wildMon(name,lv){const m=makeMon(name,lv);if(Math.random()<1/64)m.holo=true;return m;}
-async function wildEncounter(){const m=M();const r=await battle([wildMon(pick(m.wild),rnd(m.lv[0],m.lv[1]))]);if(r==='lose')await blackout();}
+/* catch chains: catching the same species in a row raises holo odds (1/64 -> 1/32 at 3, 1/20 at 6, 1/12 at 10) */
+function holoOdds(name){const c=G.chain&&G.chain.n===name?G.chain.c:0;return c>=10?1/12:c>=6?1/20:c>=3?1/32:1/64;}
+function wildMon(name,lv){const m=makeMon(name,lv);if(Math.random()<holoOdds(name))m.holo=true;return m;}
+/* swarm alerts: entering a route sometimes pages you about a rare visitor for THIS visit only */
+const NO_SWARM=['Pixelgodchi','Y2Kraken','Glitchy'];
+async function maybeSwarm(){if(!G.flags.starter)return;if(G.swarm&&G.swarm.map!==G.map)G.swarm=null;const m=M();if(G.swarm||!m.wild||!m.lv||Math.random()>1/7)return;
+  const pool=[];for(const id in MAPS){const o=MAPS[id];if(!o.wild||!o.lv||o.lv[0]>m.lv[1]+4)continue;for(const n of o.wild)if(!m.wild.includes(n)&&!NO_SWARM.includes(n)&&SPECIES[n]&&!pool.includes(n))pool.push(n);}
+  if(!pool.length)return;const name=pick(pool);G.swarm={map:G.map,name,left:6};sfx('spot');buzz('light');
+  await say(`*BEEP BEEP* Your pager: "SWARM ALERT! Tons of ${name.toUpperCase()} spotted on ${(m.name||'this route').toUpperCase()}. Gone when you leave. 143."`);closeText();}
+/* Binder milestones + sticker book */
+const MILES=[[10,'mega',5,'5 MEGA SLAMMERS'],[25,'holo',3,'3 HOLO SLAMMERS'],[50,'warhead',3,'3 SOUR BOMBS'],[80,'holo',5,'5 HOLO SLAMMERS'],[120,'warhead',5,'5 SOUR BOMBS'],[151,'capri',10,'10 JUICE POUCHES and eternal glory']];
+const caughtN=()=>DEX.filter(n=>G.caught[n]).length;
+const STICKERS=[['FIRST SLAM','Catch a wild Radimal',()=>caughtN()>=2],['HOLO HUNTER','Catch a holographic Radimal',()=>Object.keys(G.holo||{}).length>0],
+  ['CHAIN GANG','Catch the same Radimal 5 times in a row',()=>(G.stats||{}).chain>=5],['SWARM CHASER','Catch a Radimal from a swarm',()=>(G.stats||{}).swarm>0],
+  ['FULL HOUSE','Have 6 Radimals in your party',()=>G.party.length>=6],['GLOW UP','Evolve 5 Radimals',()=>(G.stats||{}).evo>=5],
+  ['CRITICAL MASS','Land 10 critical hits',()=>(G.stats||{}).crit>=10],['BOOYAH','Land 25 super effective hits',()=>(G.stats||{}).sup>=25],
+  ['TYPE COLLECTOR','Catch one of every type',()=>['Basic','Fire','Water','Grass','Techno','Rock','Air','Bug'].every(t=>DEX.some(n=>G.caught[n]&&SPECIES[n].type===t))],
+  ['CAP COLLECTOR','Earn all four Caps',()=>(G.pogs||[]).length>=4],['MILLENNIUM SAVER','Become champion',()=>!!G.flags.champion],['BINDER BOSS','Catch all 151',()=>caughtN()>=151]];
+async function rewardsCheck(){G.flags.mile=G.flags.mile||0;const n=caughtN();
+  while(G.flags.mile<MILES.length&&n>=MILES[G.flags.mile][0]){const[at,item,qty,label]=MILES[G.flags.mile];G.bag[item]=bagN(item)+qty;G.flags.mile++;sfx('levelup');
+    await say(`BINDER MILESTONE: ${at} caught! PROF. DIALTONE mailed you ${label}.`);}
+  G.stickers=G.stickers||{};for(const[name,desc,ok]of STICKERS){if(!G.stickers[name]&&ok()){G.stickers[name]=1;sfx('sparkle');buzz('light');await say(`STICKER GET! "${name}": ${desc}. It's on the back of your BINDER.`);}}}
+async function wildEncounter(){const m=M();let name=pick(m.wild),sw=false;if(G.swarm&&G.swarm.map===G.map&&Math.random()<.45){name=G.swarm.name;sw=true;if(--G.swarm.left<=0)G.swarm=null;}
+  const w=wildMon(name,rnd(m.lv[0],m.lv[1]));w.swarm=sw;const r=await battle([w]);if(r==='lose')await blackout();}
 
 /* =============== menu =============== */
-let tab='P';const HELP=[['A','Talk to people, read signs, confirm menus, fish (facing water with the DISC ROD).'],['B','Open this menu on the map. Cancel or go back in menus. Hold B while walking to run.'],['D-PAD','Walk. Move the cursor in menus.'],['CAPS','Beat the four Hangout leaders (arcade, food court, roller rink, video vault) to earn Caps. Four Caps open Y2K Tower.'],['SLAMMERS','Weaken a wild Radimal first, then throw. Mega and Holo Slammers work better. The one GOLDEN SLAMMER never misses. Trainers\' Radimals can\'t be caught.'],['TYPES','Fire > Grass/Bug. Water > Fire/Rock. Grass > Water/Rock. Bug > Grass/Techno. Rock > Fire/Bug/Air. Air > Grass/Bug. Techno > Water/Air. Basic is plain.'],['HEALING','Sleepovers heal for free and store extra Radimals in the Toy Box. Mom heals too.'],['HOLO','About 1 in 64 wild Radimals is holographic. They shimmer. Catch them.'],['SAVING','SAVE anytime from the map. Three floppies on the title screen. The game also autosaves when you go through a door or the app goes to the background.'],['HINTS','In battle, a move marked ▲ is super effective on that foe, ▼ is weak, ✕ does nothing, = is normal. Hints show up after you have seen that matchup once.'],['STATUS','BRN: loses HP each turn, hits softer. FRZ: can\'t move until it thaws (fire thaws it). PAR (on hold): slower, sometimes can\'t move. SOR (sour): loses HP each turn. All wear off after battle. A JUICE POUCH cures it mid-fight.']];
+let tab='P';const HELP=[['A','Talk to people, read signs, confirm menus, fish (facing water with the DISC ROD).'],['B','Open this menu on the map. Cancel or go back in menus. Hold B while walking to run.'],['D-PAD','Walk. Move the cursor in menus.'],['CAPS','Beat the four Hangout leaders (arcade, food court, roller rink, video vault) to earn Caps. Four Caps open Y2K Tower.'],['SLAMMERS','Weaken a wild Radimal first, then throw. Mega and Holo Slammers work better. The one GOLDEN SLAMMER never misses. Trainers\' Radimals can\'t be caught.'],['TYPES','Fire > Grass/Bug. Water > Fire/Rock. Grass > Water/Rock. Bug > Grass/Techno. Rock > Fire/Bug/Air. Air > Grass/Bug. Techno > Water/Air. Basic is plain.'],['HEALING','Sleepovers heal for free and store extra Radimals in the Toy Box. Mom heals too.'],['HOLO','About 1 in 64 wild Radimals is holographic. They shimmer. Catch them.'],['SAVING','SAVE anytime from the map. Three floppies on the title screen. The game also autosaves when you go through a door or the app goes to the background.'],['COLLECTING','Catch the same Radimal several times in a row to start a CHAIN: holo odds go up at 3, 6 and 10. Your pager sometimes reports a SWARM of a rare Radimal on the route you just entered; it leaves when you do. The BINDER shows your next prize and your STICKERS.'],['HINTS','In battle, a move marked ▲ is super effective on that foe, ▼ is weak, ✕ does nothing, = is normal. Hints show up after you have seen that matchup once.'],['STATUS','BRN: loses HP each turn, hits softer. FRZ: can\'t move until it thaws (fire thaws it). PAR (on hold): slower, sometimes can\'t move. SOR (sour): loses HP each turn. All wear off after battle. A JUICE POUCH cures it mid-fight.']];
 const SETUI=[['TEXT SPEED','text',['slow','normal','fast','instant']],['MUSIC','music',[0,1,2,3,4]],['SOUND FX','sfx',[0,1,2,3,4]],['BATTLE ANIMS','anim',[true,false]],['HAPTICS','haptics',[true,false]]];
 const setLbl=(k,v)=>k==='music'||k==='sfx'?(v?VOLS[v]*100+'%':'OFF'):typeof v==='boolean'?(v?'ON':'OFF'):String(v).toUpperCase();
 /* Binder habitats: where a seen Radimal lives, derived from map wild/fishing tables and evolutions */
@@ -1221,7 +1248,10 @@ function renderMenu(){$('#mmoney').textContent='$'+G.money;$('#tabD').textConten
       r.appendChild(a);d.appendChild(r);}
     if(!d.children.length)d.innerHTML='<div class="row"><div class="info">Empty. Just crumbs.</div></div>';return;}
   if(tab==='D'){const g=document.createElement('div');g.className='dex';DEX.forEach(n=>{const c=document.createElement('div');const known=G.seen[n];c.className=known?'':'unk';const cv2=document.createElement('canvas');cv2.width=MONSPR[n].width;cv2.height=MONSPR[n].height;cv2.getContext('2d').drawImage(MONSPR[n],0,0);if(!known)cv2.style.filter='brightness(0)';c.appendChild(cv2);const lb=document.createElement('div');lb.textContent=`#${String(SPECIES[n].n).padStart(3,'0')} ${known?n.toUpperCase():'???'}${G.caught[n]?' ✓':''}${(G.holo||{})[n]?' ✦':''}`;c.appendChild(lb);
-      c.onclick=async()=>{if(!known)return;closeMenu();cry(n);await say(`#${SPECIES[n].n} ${n.toUpperCase()} (${SPECIES[n].type})\n${SPECIES[n].desc}\n${habitat(n)}`);closeText();};g.appendChild(c);});d.appendChild(g);
+      c.onclick=async()=>{if(!known)return;closeMenu();cry(n);await say(`#${SPECIES[n].n} ${n.toUpperCase()} (${SPECIES[n].type})\n${SPECIES[n].desc}\n${habitat(n)}`);closeText();};g.appendChild(c);});
+    {const cn=caughtN(),nm=MILES[G.flags.mile||0],pr=document.createElement('div');pr.className='binderprog';pr.innerHTML=`<b>CAUGHT ${cn}/151</b>`+(nm?`<span>Next prize at ${nm[0]}: ${nm[3]}</span><i style="width:${Math.min(100,cn/nm[0]*100)}%"></i>`:'<span>Every prize claimed. Legend.</span><i style="width:100%"></i>')+(G.chain&&G.chain.c>1?`<span>Chain: ${G.chain.c}x ${G.chain.n.toUpperCase()}</span>`:'');d.appendChild(pr);}
+    d.appendChild(g);
+    {const sh=document.createElement('div');sh.className='stickers';sh.innerHTML='<b>STICKERS</b>'+STICKERS.map(([nm,ds])=>(G.stickers||{})[nm]?`<div class="stk on">${nm}</div>`:`<div class="stk" title="${ds}">??? <small>${ds}</small></div>`).join('');d.appendChild(sh);}
     const s=document.createElement('div');s.style.cssText='font-size:11px;margin-top:8px';s.textContent=`Seen ${Object.keys(G.seen).length} · Caught ${Object.keys(G.caught).length} of ${DEX.length}`+(G.flags.tamaCaught?' · PIXELGODCHI ✦':'');d.appendChild(s);return;}
   if(!G.party.length){d.innerHTML='<div class="row"><div class="info">No Radimals yet. PROF. DIALTONE is in the lab (north-west, pink roof).</div></div>';return;}
   G.party.forEach((m,i)=>{const f=Math.max(0,m.hp/m.st.hp);const r=document.createElement('div');r.className='row'+(i===0?' lead':'')+(m.hp<=0?' dead':'');const c=document.createElement('canvas');c.width=spr(m).width;c.height=spr(m).height;c.getContext('2d').drawImage(spr(m),0,0);r.appendChild(c);
