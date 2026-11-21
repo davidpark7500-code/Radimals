@@ -1,0 +1,2250 @@
+[
+ {
+  "name": "Dialupine",
+  "n": 1,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ff7a3a",
+   "b": "#ffd9a8"
+  },
+  "evolves_to": "Modemauler",
+  "at_level": 16,
+  "desc": "It screeches like a 56k modem when startled. Nobody can hang up on it."
+ },
+ {
+  "name": "Modemauler",
+  "n": 2,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#d84a1e",
+   "b": "#ffc080"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Now with broadband spikes. It still takes 40 seconds to connect."
+ },
+ {
+  "name": "Floppuss",
+  "n": 3,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#3a6cff",
+   "b": "#ffffff"
+  },
+  "evolves_to": "CDRompuss",
+  "at_level": 16,
+  "desc": "Holds exactly 1.44 MB of memories. Do not bend, fold or get near magnets."
+ },
+ {
+  "name": "CDRompuss",
+  "n": 4,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#2a4cd8",
+   "b": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Its shiny belly makes rainbows. Scratches easily. Skips during the good part."
+ },
+ {
+  "name": "Trollsprout",
+  "n": 5,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#f0c890",
+   "b": "#fff0c0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Trolltree",
+  "at_level": 16,
+  "desc": "Rub its hair for luck. It has never once brought luck."
+ },
+ {
+  "name": "Trolltree",
+  "n": 6,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#d8a870",
+   "b": "#ffe8c0",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The hair is now load-bearing."
+ },
+ {
+  "name": "Milkwog",
+  "n": 7,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ff9a3a",
+   "b": "#ffe0a0"
+  },
+  "evolves_to": "Slammerog",
+  "at_level": 14,
+  "desc": "Flat, round, and worth trading three of your friend's for."
+ },
+ {
+  "name": "Slammerog",
+  "n": 8,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#e07a2a",
+   "b": "#ffd080"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Heavy. Metal. Banned at recess."
+ },
+ {
+  "name": "Slapbrace",
+  "n": 9,
+  "type": "Bug",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#b6ff3b",
+   "b": "#ff3fa4"
+  },
+  "evolves_to": "Snapviper",
+  "at_level": 12,
+  "desc": "Coils around your wrist with a satisfying THWACK. Also banned at recess."
+ },
+ {
+  "name": "Snapviper",
+  "n": 10,
+  "type": "Bug",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#7fe010",
+   "b": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Warning: contains a spring steel strip. Every parent was right."
+ },
+ {
+  "name": "Beanbuddy",
+  "n": 11,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#c9a86b",
+   "b": "#f0dcb0",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Keep the tag on. It'll be worth thousands one day. (It will not.)"
+ },
+ {
+  "name": "Fuzzbeak",
+  "n": 12,
+  "type": "Air",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#a04cff",
+   "b": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Learns words slowly. Cannot be turned off. Wakes at 3 AM to say hello."
+ },
+ {
+  "name": "Pagerpup",
+  "n": 13,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#6a6a7a",
+   "b": "#c8c8d8",
+   "c": "#181818"
+  },
+  "evolves_to": "Beeperhound",
+  "at_level": 18,
+  "desc": "143. 07734. It only speaks in numbers and expects you to call back."
+ },
+ {
+  "name": "Beeperhound",
+  "n": 14,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#404058",
+   "b": "#a8a8c0"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Clipped to the belt of every doctor and every kid pretending to be a doctor."
+ },
+ {
+  "name": "Y2Kroach",
+  "n": 15,
+  "type": "Bug",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#7a5a30",
+   "b": "#c8a060",
+   "c": "#3a2a10"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Will survive the apocalypse. Will also survive January 1st, 2000, like everything else."
+ },
+ {
+  "name": "VHSaur",
+  "n": 16,
+  "type": "Rock",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#4a4a5a",
+   "b": "#ffffff"
+  },
+  "evolves_to": "Rewindosaur",
+  "at_level": 20,
+  "desc": "Be kind. Rewind. It bites if you leave it in the sun."
+ },
+ {
+  "name": "Rewindosaur",
+  "n": 17,
+  "type": "Rock",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#5a4a40",
+   "b": "#a8a8b8"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Tracking is a little off. Adjust the tracking. No, the other tracking."
+ },
+ {
+  "name": "Gelpenguin",
+  "n": 18,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#2a2a48",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Writes in milky pastel on black paper. Smells faintly of grape."
+ },
+ {
+  "name": "Frostedtip",
+  "n": 19,
+  "type": "Air",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#8a6a3a",
+   "b": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Bleached the tips itself. Everyone can tell. Everyone is being polite."
+ },
+ {
+  "name": "Grungehog",
+  "n": 20,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#8a6a48",
+   "b": "#d8c0a0"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Flannel-patterned. Refuses to comb its quills. Says it's a statement."
+ },
+ {
+  "name": "Lavalamprey",
+  "n": 21,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffe66a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Takes an hour to warm up. Mesmerizing. Do not shake."
+ },
+ {
+  "name": "Skipmanta",
+  "n": 22,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#5a5aa8",
+   "b": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Anti-skip protection lasts 40 seconds. Then it skips."
+ },
+ {
+  "name": "Boppurr",
+  "n": 23,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#ff8c2a",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Bop. Twist. Pull. It yells all three instructions at once."
+ },
+ {
+  "name": "Frostingroo",
+  "n": 24,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#c88a50",
+   "b": "#ffe0b0"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Carries frosting in its pouch. Refuses to share the frosting."
+ },
+ {
+  "name": "Y2Kraken",
+  "n": 25,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#3a1a5a",
+   "b": "#ff3fa4",
+   "z": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Every computer was going to fail at midnight. Every computer was fine. It was not."
+ },
+ {
+  "name": "Hotpockit",
+  "n": 26,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ff7a3a",
+   "b": "#ffe0a0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Scorchpockit",
+  "at_level": 18,
+  "desc": "Molten inside, frozen outside. Every bite is a gamble."
+ },
+ {
+  "name": "Scorchpockit",
+  "n": 27,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#e0481e",
+   "b": "#ffd080",
+   "c": "#ffe66a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The crust is now weaponized. Blow on it. Still no."
+ },
+ {
+  "name": "Sparklerp",
+  "n": 28,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ffb040",
+   "b": "#fff0a0",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": "Fizzlerp",
+  "at_level": 14,
+  "desc": "Write your name in the air with it. Do NOT hold the hot end."
+ },
+ {
+  "name": "Fizzlerp",
+  "n": 29,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff8c2a",
+   "b": "#ffe66a",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Burns bright for nine seconds. Then sulks for an hour."
+ },
+ {
+  "name": "Flaminhawk",
+  "n": 30,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffc070",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": "Inflamingo",
+  "at_level": 30,
+  "desc": "Dusted in something red that never washes off your fingers."
+ },
+ {
+  "name": "Inflamingo",
+  "n": 31,
+  "type": "Fire",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffd0e0",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Stands on one leg. The other leg is on fire. It says it is fine."
+ },
+ {
+  "name": "Crimpede",
+  "n": 32,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#c8402a",
+   "b": "#ffb090",
+   "c": "#ffe66a"
+  },
+  "evolves_to": "Curlironx",
+  "at_level": 26,
+  "desc": "Crimped every hair on your head, then the carpet."
+ },
+ {
+  "name": "Curlironx",
+  "n": 33,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#a02020",
+   "b": "#ff9060",
+   "c": "#ffe66a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Left plugged in since 1994. Your mother is still worried."
+ },
+ {
+  "name": "Orangeglug",
+  "n": 34,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff8c0",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": "Glugdeluxe",
+  "at_level": 20,
+  "desc": "Ten percent juice. Ninety percent tang."
+ },
+ {
+  "name": "Glugdeluxe",
+  "n": 35,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#ffc020",
+   "b": "#fff0a0",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Ten percent juice, ninety percent attitude."
+ },
+ {
+  "name": "Sourbomb",
+  "n": 36,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#b6ff3b",
+   "b": "#ffe66a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Extreme sour. Your face folds in half. Worth it."
+ },
+ {
+  "name": "Kerosnail",
+  "n": 37,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "fish",
+  "colors": {
+   "a": "#8a6a48",
+   "b": "#ffd0a0",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Slow, greasy, flammable. The trifecta."
+ },
+ {
+  "name": "Minibagel",
+  "n": 38,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#e8b060",
+   "b": "#ffe8c0",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": "Pizzarolla",
+  "at_level": 16,
+  "desc": "Pizza in the morning. Pizza in the evening. Pizza at suppertime."
+ },
+ {
+  "name": "Pizzarolla",
+  "n": 39,
+  "type": "Fire",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#d89040",
+   "b": "#ffd090",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Cool on the outside, plasma on the inside. Wait two minutes. Nobody waits."
+ },
+ {
+  "name": "Pumpsoakra",
+  "n": 40,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#19e6d2",
+   "b": "#ffe03a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Hydrosoakra",
+  "at_level": 24,
+  "desc": "Pump it forty times. Aim at your sibling. Consequences."
+ },
+ {
+  "name": "Hydrosoakra",
+  "n": 41,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#0ea8a0",
+   "b": "#ffe03a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The backpack model. Banned from three neighborhoods."
+ },
+ {
+  "name": "Slipslug",
+  "n": 42,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff8c0",
+   "c": "#19e6d2"
+  },
+  "evolves_to": "Slidemander",
+  "at_level": 15,
+  "desc": "Requires a garden hose and zero regard for your knees."
+ },
+ {
+  "name": "Slidemander",
+  "n": 43,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#ffd020",
+   "b": "#fff0a0",
+   "c": "#19e6d2"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Hits every rock in the yard on the way down. Goes again."
+ },
+ {
+  "name": "Slurpeel",
+  "n": 44,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#3a6cff",
+   "b": "#a8e0ff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Brain freeze on contact. Blue raspberry flavor."
+ },
+ {
+  "name": "Bubbletapir",
+  "n": 45,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#ff8ccc",
+   "b": "#ffe0f0",
+   "c": "#ffffff"
+  },
+  "evolves_to": "Bubblewrapir",
+  "at_level": 20,
+  "desc": "Six feet of gum. Rolled up. Regret."
+ },
+ {
+  "name": "Bubblewrapir",
+  "n": 46,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#ff5fb0",
+   "b": "#ffe0f0",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Pop pop pop. You cannot stop. Nobody can stop."
+ },
+ {
+  "name": "Goopopus",
+  "n": 47,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#57d65a",
+   "b": "#c0ffb0",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Green, gooey, and makes that sound. THAT sound."
+ },
+ {
+  "name": "Dunktank",
+  "n": 48,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#2a8cff",
+   "b": "#a8e0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Dunkzilla",
+  "at_level": 22,
+  "desc": "Three balls for a dollar. Hit the target. Dunk the principal."
+ },
+ {
+  "name": "Dunkzilla",
+  "n": 49,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#1a5cc8",
+   "b": "#88c0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The principal did not sign up for this."
+ },
+ {
+  "name": "Brineape",
+  "n": 50,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff9a60",
+   "b": "#ffe0c0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Brinekong",
+  "at_level": 18,
+  "desc": "Advertised as a royal family. It is shrimp. Angry shrimp."
+ },
+ {
+  "name": "Brinekong",
+  "n": 51,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#e07030",
+   "b": "#ffc090",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Grew up in a plastic castle. Has opinions about it."
+ },
+ {
+  "name": "Fishtankamari",
+  "n": 52,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "fish",
+  "colors": {
+   "a": "#ff8c2a",
+   "b": "#ffe0a0",
+   "c": "#19e6d2"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Lives in the 32-bit aquarium on the office computer. Never fed."
+ },
+ {
+  "name": "Hangryhippo",
+  "n": 53,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#e0c0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "It is not a game. It has never been a game."
+ },
+ {
+  "name": "Snorkelot",
+  "n": 54,
+  "type": "Water",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#3a9bff",
+   "b": "#c0e8ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Snorkelord",
+  "at_level": 19,
+  "desc": "Breathes through a tube. Panics when the tube fills. Every time."
+ },
+ {
+  "name": "Snorkelord",
+  "n": 55,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#2060d0",
+   "b": "#a0d0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "King of the shallow end. Will not enter the deep end."
+ },
+ {
+  "name": "Yakkity",
+  "n": 56,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#8a6a48",
+   "b": "#d8c0a0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Records six seconds. Plays them back. Forever."
+ },
+ {
+  "name": "Sockpup",
+  "n": 57,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ffffff",
+   "b": "#ffe0e0",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": "Puppetmaster",
+  "at_level": 12,
+  "desc": "Made from a sock, a button, and a lonely afternoon."
+ },
+ {
+  "name": "Puppetmaster",
+  "n": 58,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#e0e0e0",
+   "b": "#ffd0d0",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Pulls its own strings now. Nobody asked it to."
+ },
+ {
+  "name": "Hamsterjam",
+  "n": 59,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#e8b060",
+   "b": "#fff0d0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Hamsterrave",
+  "at_level": 16,
+  "desc": "Dances to one looping song. It has never stopped. It will never stop."
+ },
+ {
+  "name": "Hamsterrave",
+  "n": 60,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ffd040",
+   "b": "#fff8d0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The song is stuck in your head now. That is its attack."
+ },
+ {
+  "name": "Binderling",
+  "n": 61,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#57d65a",
+   "b": "#c0ffb0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Binderbeast",
+  "at_level": 17,
+  "desc": "Holds everything. Loses everything. The rip is loud."
+ },
+ {
+  "name": "Binderbeast",
+  "n": 62,
+  "type": "Basic",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#2fa848",
+   "b": "#a0ffa0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Twelve subjects. Three pencils. One crushed juice box."
+ },
+ {
+  "name": "Fannypacker",
+  "n": 63,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#e0c0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Wears it in the front. Refuses to discuss it."
+ },
+ {
+  "name": "Goofyputt",
+  "n": 64,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ffb0c0",
+   "b": "#ffe0e8",
+   "c": "#ffffff"
+  },
+  "evolves_to": "Goofypuddle",
+  "at_level": 14,
+  "desc": "Copies the comics page. Bounces. Gets in the carpet."
+ },
+ {
+  "name": "Goofypuddle",
+  "n": 65,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#ff90b0",
+   "b": "#ffd0e0",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "It was left in the sun. It is everywhere now."
+ },
+ {
+  "name": "Springee",
+  "n": 66,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#c0c0d0",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Springstretch",
+  "at_level": 18,
+  "desc": "Walks down stairs alone. Never walks back up."
+ },
+ {
+  "name": "Springstretch",
+  "n": 67,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#909aa8",
+   "b": "#e8e8f0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Got tangled once in 1993. Still tangled."
+ },
+ {
+  "name": "Mallrat",
+  "n": 68,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#8a8a9a",
+   "b": "#e0e0e8",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Mallratking",
+  "at_level": 20,
+  "desc": "Lives in the food court. Loiters professionally."
+ },
+ {
+  "name": "Mallratking",
+  "n": 69,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#606070",
+   "b": "#d0d0e0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Has a key to the fountain. Owns every coin in it."
+ },
+ {
+  "name": "Couchpotato",
+  "n": 70,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#c8a070",
+   "b": "#f0e0c0",
+   "c": "#8cf05a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Has seen every episode. Will explain every episode."
+ },
+ {
+  "name": "Gooshpod",
+  "n": 71,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffc0d0",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Explodes when bitten. Also when not bitten."
+ },
+ {
+  "name": "Freshprints",
+  "n": 72,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#3a6cff",
+   "b": "#c0d8ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Freshroyal",
+  "at_level": 22,
+  "desc": "Leaves a paw print on every fresh cement sidewalk in town."
+ },
+ {
+  "name": "Freshroyal",
+  "n": 73,
+  "type": "Basic",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#2040c0",
+   "b": "#a0c0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Rules the block. Every block. Has a theme song about it."
+ },
+ {
+  "name": "Goosebumpy",
+  "n": 74,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#57d65a",
+   "b": "#c0ffb0",
+   "c": "#a04cff"
+  },
+  "evolves_to": "Goosepimple",
+  "at_level": 20,
+  "desc": "Comes with a warning label. The scare is mild."
+ },
+ {
+  "name": "Goosepimple",
+  "n": 75,
+  "type": "Air",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#2fa848",
+   "b": "#a0ffa0",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The twist ending is that it bites."
+ },
+ {
+  "name": "Papairplane",
+  "n": 76,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ffffff",
+   "b": "#e8e8f0",
+   "c": "#3a6cff"
+  },
+  "evolves_to": "Paperjet",
+  "at_level": 16,
+  "desc": "Folded in class. Confiscated in class. Flew anyway."
+ },
+ {
+  "name": "Paperjet",
+  "n": 77,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#e8f0ff",
+   "b": "#c0d0f0",
+   "c": "#3a6cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Thrown from the top bunk. Never landed."
+ },
+ {
+  "name": "Balloonatic",
+  "n": 78,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffb0d8",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Lets go of the string on purpose. Every time."
+ },
+ {
+  "name": "Foamfalcon",
+  "n": 79,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ff8c2a",
+   "b": "#ffd0a0",
+   "c": "#3a6cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Foam beak. Still hurts. Do not aim at the face."
+ },
+ {
+  "name": "Kitedelic",
+  "n": 80,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#ffe03a",
+   "c": "#19e6d2"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Only flies on windy days. Is always somehow tangled in a tree."
+ },
+ {
+  "name": "Dustbunnie",
+  "n": 81,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#c8c8d0",
+   "b": "#f0f0f0",
+   "c": "#ffffff"
+  },
+  "evolves_to": "Dustbeast",
+  "at_level": 15,
+  "desc": "Lives under the bed. Has a whole society under there."
+ },
+ {
+  "name": "Dustbeast",
+  "n": 82,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#909098",
+   "b": "#e0e0e8",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The vacuum fears it now."
+ },
+ {
+  "name": "Cloudsurf",
+  "n": 83,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ffffff",
+   "b": "#e0f0ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Totally airbrushed on a t-shirt at the boardwalk."
+ },
+ {
+  "name": "Aquanetta",
+  "n": 84,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff0a0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Its hair does not move. In a hurricane. Ever."
+ },
+ {
+  "name": "Parachutie",
+  "n": 85,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#19e6d2",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Parachuteor",
+  "at_level": 18,
+  "desc": "Pants so wide they catch wind. Twenty pockets. Zero contents."
+ },
+ {
+  "name": "Parachuteor",
+  "n": 86,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#0ea8a0",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Can you touch this? No. No you cannot."
+ },
+ {
+  "name": "Twistorm",
+  "n": 87,
+  "type": "Air",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#a8a8b8",
+   "b": "#e0e0f0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Right hand red. Left foot blue. Everybody falls down."
+ },
+ {
+  "name": "Moonbootle",
+  "n": 88,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#c0c0e0",
+   "b": "#ffffff",
+   "c": "#3a6cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Bounces four inches higher than regular shoes. Rolls every ankle."
+ },
+ {
+  "name": "Blowcart",
+  "n": 89,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#8a8a9a",
+   "b": "#c0c0c8",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Cartrolith",
+  "at_level": 24,
+  "desc": "Blow on it. Blow on it again. It works. It always works."
+ },
+ {
+  "name": "Cartrolith",
+  "n": 90,
+  "type": "Rock",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#606070",
+   "b": "#b0b0c0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Still has your save file from 1996. Guards it with its life."
+ },
+ {
+  "name": "Boomboxer",
+  "n": 91,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#2c2444",
+   "b": "#909098",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Carried on one shoulder. Deafens that side of the street."
+ },
+ {
+  "name": "Brickphone",
+  "n": 92,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#404050",
+   "b": "#a0a0b0",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": "Brickzilla",
+  "at_level": 20,
+  "desc": "Weighs three pounds. Battery lasts four calls. Immortal."
+ },
+ {
+  "name": "Brickzilla",
+  "n": 93,
+  "type": "Rock",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#303040",
+   "b": "#909098",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Survived being thrown across a parking lot. Twice."
+ },
+ {
+  "name": "Petrock",
+  "n": 94,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#8a7a68",
+   "b": "#c0b0a0",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Does nothing. Costs five dollars. The perfect pet."
+ },
+ {
+  "name": "Petrocksteady",
+  "n": 95,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#7a6a58",
+   "b": "#c0b0a0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Still does nothing. Now with sunglasses. Costs fifty."
+ },
+ {
+  "name": "Gargoylie",
+  "n": 96,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#606878",
+   "b": "#b0b8c8",
+   "c": "#ff3f5f"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Perched on the school roof. Judges the whole recess."
+ },
+ {
+  "name": "Cassettle",
+  "n": 97,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#3a3a4a",
+   "b": "#a0a0b0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Cassettitan",
+  "at_level": 16,
+  "desc": "Side A is fine. Side B is a mystery to everyone."
+ },
+ {
+  "name": "Cassettitan",
+  "n": 98,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#2a2a3a",
+   "b": "#909098",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Unspooled once. Was rewound with a pencil. Never forgave."
+ },
+ {
+  "name": "Blockstack",
+  "n": 99,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#19e6d2",
+   "b": "#ffe03a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Four in a row. Gone. It is the line piece. Everyone wanted the line piece."
+ },
+ {
+  "name": "Pixelpest",
+  "n": 100,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#b6ff3b",
+   "b": "#e0ffa0",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Beeps at 3 AM. Died because you went to school. Your fault."
+ },
+ {
+  "name": "Anklehop",
+  "n": 101,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffd0e0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": "Anklehopper",
+  "at_level": 14,
+  "desc": "Clips to your ankle. Counts. Trips you at 47."
+ },
+ {
+  "name": "Anklehopper",
+  "n": 102,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#e02090",
+   "b": "#ffb0d0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Counter reads 999. Ankle reads bruised."
+ },
+ {
+  "name": "Mothballer",
+  "n": 103,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#d0c8b0",
+   "b": "#f0e8d8",
+   "c": "#ffffff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Smells like a grandparent closet. Nests in your sweater."
+ },
+ {
+  "name": "Captula",
+  "n": 104,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff8c2a",
+   "b": "#ffe0a0",
+   "c": "#181818"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Eight legs. Eight pogs. Won them all fair and square."
+ },
+ {
+  "name": "Rantz",
+  "n": 105,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#c8402a",
+   "b": "#ffb0a0",
+   "c": "#181818"
+  },
+  "evolves_to": "Rantzilla",
+  "at_level": 13,
+  "desc": "Carries ten times its weight in complaints."
+ },
+ {
+  "name": "Rantzilla",
+  "n": 106,
+  "type": "Bug",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#a02020",
+   "b": "#ff9080",
+   "c": "#181818"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The colony elected it. The colony regrets it."
+ },
+ {
+  "name": "Butterclip",
+  "n": 107,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#ffe03a",
+   "c": "#19e6d2"
+  },
+  "evolves_to": "Flutterclip",
+  "at_level": 15,
+  "desc": "Twelve of them in your hair. Pulls out exactly one strand each."
+ },
+ {
+  "name": "Flutterclip",
+  "n": 108,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffe03a",
+   "c": "#19e6d2"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Sparkles. Snaps shut on fingers. A butterfly with a grudge."
+ },
+ {
+  "name": "Ladybugsy",
+  "n": 109,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffffff",
+   "c": "#181818"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Runs the playground protection racket. Pay in gummy worms."
+ },
+ {
+  "name": "Beeperbee",
+  "n": 110,
+  "type": "Bug",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff8c0",
+   "c": "#181818"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Buzzes in numbers. 911 means the picnic is over."
+ },
+ {
+  "name": "Spicearachnid",
+  "n": 111,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffe03a",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Five of them. Each has a nickname. Each thinks it is the leader."
+ },
+ {
+  "name": "Cicadaboom",
+  "n": 112,
+  "type": "Bug",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#57d65a",
+   "b": "#c0ffb0",
+   "c": "#8a6a48"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Silent for seventeen years. Then it found a boombox."
+ },
+ {
+  "name": "Sproutpup",
+  "n": 113,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#c8a070",
+   "b": "#8cf05a",
+   "c": "#2fa848"
+  },
+  "evolves_to": "Sprouthound",
+  "at_level": 17,
+  "desc": "Just add water. Wait three weeks. Mild disappointment."
+ },
+ {
+  "name": "Sprouthound",
+  "n": 114,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#a08050",
+   "b": "#8cf05a",
+   "c": "#2fa848"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Sheds sprouts every time it sneezes."
+ },
+ {
+  "name": "Footbaggle",
+  "n": 115,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#8a6a48",
+   "b": "#d8c0a0",
+   "c": "#57d65a"
+  },
+  "evolves_to": "Footbagsquatch",
+  "at_level": 19,
+  "desc": "Kicked in a circle by five guys who will not go to class."
+ },
+ {
+  "name": "Footbagsquatch",
+  "n": 116,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#6a4a28",
+   "b": "#b09070",
+   "c": "#57d65a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Blurry in every photo. Kicks like a legend."
+ },
+ {
+  "name": "Fuzzpuff",
+  "n": 117,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#19e6d2",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": "Fuzznado",
+  "at_level": 16,
+  "desc": "Ten thousand rubber hairs. All of them in your face."
+ },
+ {
+  "name": "Fuzznado",
+  "n": 118,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#19e6d2",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Thrown at a sibling. Came back around. Physics is a lie."
+ },
+ {
+  "name": "Cabbagebaby",
+  "n": 119,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#57d65a",
+   "b": "#c0ffb0",
+   "c": "#ffe0c0"
+  },
+  "evolves_to": "Cabbagelord",
+  "at_level": 21,
+  "desc": "Comes with adoption papers. Has never been adopted."
+ },
+ {
+  "name": "Cabbagelord",
+  "n": 120,
+  "type": "Grass",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#2fa848",
+   "b": "#a0ffa0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "The whole patch bows. Mostly because of the smell."
+ },
+ {
+  "name": "Dandylion",
+  "n": 121,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff8c0",
+   "c": "#57d65a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Make a wish. Blow. Now there are forty of them on your lawn."
+ },
+ {
+  "name": "Fruityfoot",
+  "n": 122,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffe03a",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Three feet long. Sticks to the roof of your mouth. Also to the couch."
+ },
+ {
+  "name": "Slimeon",
+  "n": 123,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#57d65a",
+   "b": "#b6ff3b",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Dumped from the ceiling. Green. Somehow still in your ears."
+ },
+ {
+  "name": "Weedwhack",
+  "n": 124,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#2fa848",
+   "b": "#8cf05a",
+   "c": "#8a6a48"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Set loose in the yard on a Saturday. Took out the tomatoes."
+ },
+ {
+  "name": "Fernbaby",
+  "n": 125,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#2fa848",
+   "b": "#a0ffa0",
+   "c": "#8a6a48"
+  },
+  "evolves_to": "Fernfury",
+  "at_level": 18,
+  "desc": "Cries when the forest is sad. The forest is often sad."
+ },
+ {
+  "name": "Fernfury",
+  "n": 126,
+  "type": "Grass",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#1f8a38",
+   "b": "#8cf05a",
+   "c": "#8a6a48"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Grew up. Grew teeth. Grew a whole opinion about bulldozers."
+ },
+ {
+  "name": "Zapdisk",
+  "n": 127,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#a04cff",
+   "b": "#e0c0ff",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": "Diskdrake",
+  "at_level": 18,
+  "desc": "Holds 100 MB. Makes the click of death. Ominous."
+ },
+ {
+  "name": "Diskdrake",
+  "n": 128,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#7020d0",
+   "b": "#c0a0ff",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "A dragon made of storage nobody used. Guards a hoard of nothing."
+ },
+ {
+  "name": "Roboruff",
+  "n": 129,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#c0c0d0",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Robowoof",
+  "at_level": 16,
+  "desc": "Sits. Stays. Runs out of batteries mid-trick."
+ },
+ {
+  "name": "Robowoof",
+  "n": 130,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#909098",
+   "b": "#e0e0e8",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Learned one new trick: static shock. Uses it on the mailman."
+ },
+ {
+  "name": "Laserpouncer",
+  "n": 131,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#ff3f5f",
+   "b": "#ffc0c8",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Chases the red dot. Has never caught the red dot. Will die trying."
+ },
+ {
+  "name": "Staticling",
+  "n": 132,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#b6ff3b",
+   "b": "#e0ffa0",
+   "c": "#a04cff"
+  },
+  "evolves_to": "Statickle",
+  "at_level": 17,
+  "desc": "Rubbed on a balloon. Stuck to the ceiling. Living up there now."
+ },
+ {
+  "name": "Statickle",
+  "n": 133,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#8cf05a",
+   "b": "#e0ffa0",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Touches the doorknob for you. You will not enjoy it."
+ },
+ {
+  "name": "Spellbot",
+  "n": 134,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "box",
+  "colors": {
+   "a": "#ff8c2a",
+   "b": "#ffe0a0",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Spells everything wrong in a robot voice. Confident."
+ },
+ {
+  "name": "Glowpeg",
+  "n": 135,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#181818",
+   "b": "#ffe03a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Glowpegger",
+  "at_level": 15,
+  "desc": "Made a picture of a clown out of pegs. The pegs are everywhere now."
+ },
+ {
+  "name": "Glowpegger",
+  "n": 136,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "tall",
+  "colors": {
+   "a": "#2c2444",
+   "b": "#ffe03a",
+   "c": "#19e6d2"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Glows in the dark. Also in the light. Never off."
+ },
+ {
+  "name": "Snakebyte",
+  "n": 137,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "serpent",
+  "colors": {
+   "a": "#181818",
+   "b": "#b6ff3b",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Eats pixels on a tiny gray screen. Grows. Bites its own tail. Game over."
+ },
+ {
+  "name": "Electricslide",
+  "n": 138,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "blob",
+  "colors": {
+   "a": "#3a6cff",
+   "b": "#a0c8ff",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Everybody at the wedding knows the steps. Nobody knows why."
+ },
+ {
+  "name": "Walkiehawkie",
+  "n": 139,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#ffe03a",
+   "b": "#fff0a0",
+   "c": "#181818"
+  },
+  "evolves_to": "Walkiehawker",
+  "at_level": 20,
+  "desc": "Over. Over. OVER. Copy? OVER."
+ },
+ {
+  "name": "Walkiehawker",
+  "n": 140,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "bird",
+  "colors": {
+   "a": "#e0c020",
+   "b": "#fff0a0",
+   "c": "#181818"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Range: two houses. Volume: the whole street."
+ },
+ {
+  "name": "Discodisc",
+  "n": 141,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#c0c0e0",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "A movie the size of a pizza. Spins. Reflects. Never sold."
+ },
+ {
+  "name": "Toastwing",
+  "n": 142,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#d8d8e0",
+   "b": "#8a8a98",
+   "c": "#ff8c2a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Flew across every idle office monitor in 1996. Still flying."
+ },
+ {
+  "name": "Screensaurus",
+  "n": 143,
+  "type": "Rock",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#3a1a5a",
+   "b": "#a04cff",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "A pipe maze with teeth. Bounces around the corners of your screen."
+ },
+ {
+  "name": "Slushpuppy",
+  "n": 144,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#7ee6ff",
+   "b": "#ffffff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": "Slushhound",
+  "at_level": 17,
+  "desc": "Half ice, half syrup, all brain freeze."
+ },
+ {
+  "name": "Slushhound",
+  "n": 145,
+  "type": "Water",
+  "status": "GENERATED",
+  "body_hint": "quad",
+  "colors": {
+   "a": "#3ab0ff",
+   "b": "#e0f8ff",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Bites cold. Melts slightly indoors. Drips on the carpet."
+ },
+ {
+  "name": "Abominabull",
+  "n": 146,
+  "type": "Rock",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#ffffff",
+   "b": "#e0f0ff",
+   "c": "#3a6cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Big, white, furry, and mad about the ski lift line."
+ },
+ {
+  "name": "Chatbrat",
+  "n": 147,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#ff3fa4",
+   "b": "#ffd0e8",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": "Chatroomer",
+  "at_level": 14,
+  "desc": "Types a/s/l and nothing else. Ever."
+ },
+ {
+  "name": "Chatroomer",
+  "n": 148,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "ghost",
+  "colors": {
+   "a": "#e02090",
+   "b": "#ffb0d8",
+   "c": "#b6ff3b"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Lurks. Occasionally types \"lol\". Has never laughed out loud."
+ },
+ {
+  "name": "Emailephant",
+  "n": 149,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "wide",
+  "colors": {
+   "a": "#8a8aa0",
+   "b": "#d0d0e0",
+   "c": "#ffe03a"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Never forgets. Never deletes. Inbox: 4,812 unread."
+ },
+ {
+  "name": "Bufferfly",
+  "n": 150,
+  "type": "Techno",
+  "status": "GENERATED",
+  "body_hint": "bug",
+  "colors": {
+   "a": "#19e6d2",
+   "b": "#ffffff",
+   "c": "#a04cff"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Loading... loading... loading... it moved one inch."
+ },
+ {
+  "name": "Pixelgodchi",
+  "n": 151,
+  "type": "Techno",
+  "status": "HAND-DRAWN",
+  "body_hint": null,
+  "colors": {
+   "a": "#fbfbf4",
+   "b": "#ffe03a",
+   "c": "#ff3fa4"
+  },
+  "evolves_to": null,
+  "at_level": null,
+  "desc": "Fed. Cleaned. Loved. Then forgotten in a drawer. It remembers everything."
+ }
+]

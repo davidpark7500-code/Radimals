@@ -1,0 +1,13 @@
+{
+  "appId": "com.yourcompany.radimals98",
+  "appName": "Totally Radimals '98",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#141416"
+  },
+  "server": {
+    "iosScheme": "capacitor"
+  }
+}
