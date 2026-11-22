@@ -643,8 +643,8 @@ MAPS.r1={name:'Slap Bracelet Trail',outdoor:true,music:'route',wild:['Milkwog','
 'T..TT....pp....TT..T','T..TT....pp....TT..T','T........pp........T','TTTTTTTTTppTTTTTTTTT'],
  signs:{'15,15':'SLAP BRACELET TRAIL\nTall grass ahead. Trainers ahead. Regret ahead.'},
  npcs:[T('chad1',9,10,'down',hero('#ffe03a','#ff3fa4','spiky',{shades:true}),'CHAD',()=>[makeMon(RIVAL_PICK(),5)],{show:()=>!G.flags.chad1,
-   before:['CHAD: Yo. Nice Radimal. Mine\'s cooler. My tips are frosted. My cargo shorts have 11 pockets. Let\'s go.'],after:['CHAD: Whatever! That was a warm-up. I\'m gonna go train in the grass like a normal person.'],lose:'CHAD: As if! Talk to the hand.',reward:{money:300}}),
-  T('todd',9,22,'down',hero('#19e6d2','#3a3a3a','backcap'),'SKATER TODD',()=>[makeMon('Slapbrace',4),makeMon('Milkwog',5)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
+   before:['CHAD: Yo. Nice Radimal. Mine\'s cooler. My tips are frosted. My cargo shorts have 11 pockets. Let\'s go.'],after:['CHAD: Whatever! That was a warm-up. I\'m gonna go train in the grass like a normal person.'],healAfter:'CHAD: Ugh, take a JUICE POUCH. My mom packs like ten. Your team is all healed up. NOT because I care.',lose:'CHAD: As if! Talk to the hand.',reward:{money:300}}),
+  T('todd',9,22,'down',hero('#19e6d2','#3a3a3a','backcap'),'SKATER TODD',()=>[makeMon('Hamsterjam',3),makeMon('Milkwog',5)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
   T('kenny',12,7,'left',hero('#57d65a','#ffe03a','cap'),'BUG KID KENNY',()=>[makeMon('Y2Kroach',5),makeMon('Slapbrace',4)],{watch:3,before:['BUG KID KENNY: My roach survived a microwave. What has your Radimal survived?'],after:['BUG KID KENNY: It also survived this, technically.'],lose:'BUG KID KENNY: Roaches: 1. You: 0.',reward:{money:180}})]};
 MAPS.t2={name:'Capville',outdoor:true,music:'town',wild:['Milkwog','Beanbuddy','Fuzzbeak'],lv:[4,6],edges:{bottom:'r1',right:'r2'},rows:[
 'TTTTTTTTTTTTTTTTTTTT','T..CCCCCC..........T','T..CCCCCC..YYYY....T','T..VWWDWV..YYYY....T','T....p.....VWDW....T','T....p.......p.....T','T....ppppppppp.....T','T........ppppppppppp',
@@ -1050,7 +1050,7 @@ async function onA(){if(busy||P.moving||mode!=='map')return;const[fx,fy]=facing(
 async function interact(n){if(n.special)return specials[n.special](n);
   if(n.trainer){if(n.requires&&!G.flags[n.requires]){await say(`${n.trainer}: ...Wait. We haven't had our LAST fight yet. Go back. Do it in order. I have a whole arc.`);closeText();return;}if(!G.party.length){await say(`${n.trainer}: You don't even HAVE a Radimal? Come back when you're worth my time.`);closeText();return;}if(G.flags[n.flag]){await sayAll(n.after);if(n.postChamp&&G.flags.champion)await n.postChamp();closeText();return;}
     await sayAll(n.before);closeText();const r=await battle(n.team(),{trainer:n.trainer,look:n.look});
-    if(r==='win'){G.flags[n.flag]=1;await giveReward(n.reward,n.trainer);await sayAll(n.after);closeText();save();}
+    if(r==='win'){G.flags[n.flag]=1;await giveReward(n.reward,n.trainer);await sayAll(n.after);if(n.healAfter){G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.healAfter);}closeText();save();}
     else{await say(n.lose);closeText();await blackout();}return;}
   await sayAll(n.lines);closeText();}
 async function giveReward(rw,who){if(!rw)return;const parts=[];if(rw.money){G.money+=rw.money;parts.push('$'+rw.money+' allowance');}for(const k in ITEMS)if(rw[k]){G.bag[k]=bagN(k)+rw[k];parts.push(rw[k]+' '+ITEMS[k].name);}
