@@ -20,10 +20,10 @@ launch; it's cheap relative to a takedown. Here is what's been done and what's l
 Names that were identical or near-identical to registered marks were renamed while keeping
 the joke. Examples: Pog → Cap, Skip-It → Anklehop, Trapper Keeper → Binderbeast,
 Koosh → Fuzzpuff, Rolodex → Binder, MapQuest → Route Printout, AOL Guy → Dial-Up Guy,
-Capri → Juice Pouch, Ring Pop → Candy Ring, Warheads → Sour Bomb, Tamagotchi → Pixelgodchi,
+Capri → Juice Pouch, Ring Pop → Candy Ring, Warheads → Sour Bomb, Tamagotchi → Keychainos,
 Sea-Monkeys → Brineape, Discman → CD player, Segway → golf cart, Velcro → "the rip",
-Super Soaker → Pumpsoakra, Hot Pocket → Lava Pocket, Chia → Sprout, Nerf → Foam,
-Hacky Sack → Footbag, Zip drive → Zapdisk, Lite-Brite → Glowpeg, Speak & Spell → Spellbot,
+Super Soaker → Pumpsplasha, Hot Pocket → Lava Pocket, Chia → Sprout, Nerf → Foam,
+Hacky Sack → Footbag, Zip drive → Clickdisk, Lite-Brite → Glowpeg, Speak & Spell → Spellbot,
 Bagel Bites → Minibagel, Cabbage Patch → Cabbagebaby, Slinky → Springee,
 Silly Putty → Goofyputt, Sunny D → Orangeglug, Hamster Dance → Hamsterjam.
 Song titles/lyrics that were quoted in NPC dialogue (boy band lines, "Macarena", "Reader
@@ -36,7 +36,7 @@ parody of 90s culture is the whole premise. I'd keep them, but flag them for you
 - Generic terms that are also brand-adjacent: "slammer", "milk cap", "beeper/pager",
   "boombox", "brick phone", "walkie-talkie", "lava lamp", "pet rock", "moon boots",
   "glow stick", "frosted tips", "troll" (dolls), "mix tape", "juice box", "pizza bagel".
-- Allusions without the mark: Goosebumpy (common word), Blockstack ("the line piece"),
+- Allusions without the mark: Creepskin (common word), Blockstack ("the line piece"),
   Snakebyte (phone snake game), Toastwing (flying-toaster screensaver), Shaky Cam Woods
   (found-footage horror), Mall Cop Marv, Y2Kraken.
 - "Y2K" and "Radimals" are not registered marks in this class as far as I know; run a

@@ -14,7 +14,7 @@ with sync_playwright() as p:
           else{let ok=0;for(let y=0;y<M.h;y++){const x=d==='left'?0:M.w-1;if(!SOLID.includes(M.rows[y][x])){ok++;if(walk(M.edges[d],d==='left'?o.w-1:0,y))out.push(k+' edge '+d+' y='+y);}}if(!ok)out.push(k+' edge '+d+' closed');}}
         for(const w of (M.wild||[]).concat(M.fish||[]))if(!SPECIES[w])out.push(k+' wild '+w);}
       for(const s in SPECIES){for(const l in SPECIES[s].learn)for(const mv of [].concat(SPECIES[s].learn[l]))if(!MOVES[mv])out.push(s+' move '+mv);if(SPECIES[s].evo&&!SPECIES[SPECIES[s].evo[1]])out.push(s+' evo');{const A=MON_ART[s],z=A&&A.length;if(!A||(z!==24&&z!==48)||A.some(r=>r.length!==z))out.push(s+' art size');}}
-      const avail=new Set();for(const k in MAPS)for(const w of (MAPS[k].wild||[]).concat(MAPS[k].fish||[]))avail.add(w);['Dialupine','Floppuss','Trollsprout','Y2Kraken','Pixelgodchi'].forEach(n=>avail.add(n));
+      const avail=new Set();for(const k in MAPS)for(const w of (MAPS[k].wild||[]).concat(MAPS[k].fish||[]))avail.add(w);['Dialupine','Floppuss','Trollsprout','Y2Kraken','Keychainos'].forEach(n=>avail.add(n));
       let grew=true;while(grew){grew=false;for(const n of DEX){const ev=SPECIES[n].evo;if(avail.has(n)&&ev&&!avail.has(ev[1])){avail.add(ev[1]);grew=true;}}}
       const miss=DEX.filter(n=>!avail.has(n));if(miss.length)out.push('UNOBTAINABLE: '+miss.join(','));
       out.push('species '+DEX.length+' hand-drawn '+DEX.filter(n=>!SPECIES[n].gen).length);return out;}""")

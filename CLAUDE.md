@@ -7,7 +7,7 @@ without asking.
 ## What the game is
 A complete Game-Boy-style creature-collecting RPG with a sarcastic late-90s theme. 151 original
 "Radimals", 5 towns, 5 routes, beach/woods/caverns/snow/"The Internet", 4 Cap (badge) leaders,
-a rival (Chad) fought 3 times, Y2K Tower, a boss (Y2Kraken), a legendary (Pixelgodchi) behind a
+a rival (Chad) fought 3 times, Y2K Tower, a boss (Y2Kraken), a legendary (Keychainos) behind a
 post-game unlock, shops, storage, fishing, bike, dark caves, Mix Tapes (TMs), Sour Bombs (rare
 candy), holographic shinies (1/64), leader rematches, 8 easter eggs, 3 save slots, 15 chiptune
 tracks, and an App Store legal pass.

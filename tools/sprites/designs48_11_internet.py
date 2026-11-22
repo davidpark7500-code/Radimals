@@ -179,8 +179,8 @@ def screensaurus(c):
     blush(c, 15, 16)
 
 
-# ---------------------------------------------------------------- Slushpuppy / Slushhound: half ice, half syrup
-@sprite48('Slushpuppy', {'a': '#8ae0ff', 'd': '#3aa8d8', 'b': '#e8faff', 'c': '#ff4a6a'})
+# ---------------------------------------------------------------- Slushmutt / Slushhound: half ice, half syrup
+@sprite48('Slushmutt', {'a': '#8ae0ff', 'd': '#3aa8d8', 'b': '#e8faff', 'c': '#ff4a6a'})
 def slushpuppy(c):
     c.ell(30, 36, 9, 7, 'a')
     for x in (23, 28, 34, 37):

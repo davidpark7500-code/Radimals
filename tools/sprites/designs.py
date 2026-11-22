@@ -54,7 +54,7 @@ def _(c):
     c.px(17, 11, 'q')
 
 
-@sprite('Flaminhawk')
+@sprite('Chilihawk')
 def _(c):
     c.poly([(15, 13), (22, 9), (21, 13), (23, 15), (20, 19), (15, 17)], 'c')
     c.ell(12, 14, 7, 6, 'a')
@@ -206,7 +206,7 @@ def _(c):
     c.px(4, 14, 'b').px(18, 15, 'b').px(6, 17, 'b')
 
 
-@sprite('Pizzarolla')
+@sprite('Pizzapod')
 def _(c):
     c.rect(0, 11, 2, 14, 'a')
     c.rect(21, 11, 23, 14, 'a')
@@ -246,7 +246,7 @@ def _(c):
     c.px(10, 12, 'w').px(14, 12, 'w')
 
 
-@sprite('Slidemander')
+@sprite('Slideagator')
 def _(c):
     c.line(17, 13, 21, 9, 'a', 2)
     c.line(21, 9, 21, 4, 'a', 2)
@@ -367,7 +367,7 @@ def _(c):
     c.px(2, 6, 'q').px(8, 1, 'q')
 
 
-@sprite('Hangryhippo')
+@sprite('Chompopotamus')
 def _(c):
     c.ell(4, 2.5, 2, 2, 'a')
     c.ell(19, 2.5, 2, 2, 'a')
@@ -729,7 +729,7 @@ def _(c):
 
 
 # ============================== AIR ==============================
-@sprite('Goosebumpy')
+@sprite('Creepskin')
 def _(c):
     c.ell(13.5, 15, 7.5, 5, 'a')
     c.poly([(19, 13), (23, 10), (22, 15)], 'a')
@@ -879,7 +879,7 @@ def _(c):
     c.px(23, 18, 'q').px(22, 20, 'q')
 
 
-@sprite('Aquanetta')
+@sprite('Bouffanta')
 def _(c):
     c.poly([(4, 9), (2, 3), (5, 5), (6, 0), (9, 3), (12, 0), (14, 3), (17, 0), (18, 4), (21, 2), (20, 8)], 'c')
     c.ell(11.5, 10, 5.5, 4.5, 'a')
@@ -1456,7 +1456,7 @@ def _(c):
         c.stamp(x, y, ['w', 'k'])
 
 
-@sprite('Fruityfoot')
+@sprite('Taffyard')
 def _(c):
     c.poly([(5, 2), (14, 2), (15, 12), (21, 14), (22, 19), (19, 21), (4, 21), (3, 14)], 'a')
     for i, x in enumerate((14, 16.5, 19, 21)):
@@ -1471,7 +1471,7 @@ def _(c):
     c.stamp(5, 22, ['a.a...a'])
 
 
-@sprite('Slimeon')
+@sprite('Slimeball')
 def _(c):
     c.poly([(5, 1), (18, 1), (16, 7), (7, 7)], 'c')
     c.ell(11.5, 15, 7, 6.5, 'a')
@@ -1537,7 +1537,7 @@ def _(c):
 
 
 # ============================== TECHNO ==============================
-@sprite('Zapdisk')
+@sprite('Clickdisk')
 def _(c):
     c.rect(4, 3, 19, 20, 'a')
     c.rect(6, 21, 7, 22, 'a').rect(16, 21, 17, 22, 'a')
@@ -1789,7 +1789,7 @@ def _(c):
     c.px(10, 15, 'a').px(15, 9, 'a')
 
 
-@sprite('Slushpuppy')
+@sprite('Slushmutt')
 def _(c):
     c.poly([(5, 11), (18, 11), (16, 22), (7, 22)], 'b')
     c.ell(11.5, 9.5, 7, 5, 'a')

@@ -266,7 +266,7 @@
   "desc": "Flannel-patterned. Refuses to comb its quills. Says it's a statement."
  },
  {
-  "name": "Lavalamprey",
+  "name": "Bloblamprey",
   "n": 21,
   "type": "Fire",
   "status": "HAND-DRAWN",
@@ -333,7 +333,7 @@
   "desc": "Every computer was going to fail at midnight. Every computer was fine. It was not."
  },
  {
-  "name": "Hotpockit",
+  "name": "Microwavern",
   "n": 26,
   "type": "Fire",
   "status": "HAND-DRAWN",
@@ -342,12 +342,12 @@
    "b": "#ffe0a0",
    "c": "#ff3fa4"
   },
-  "evolves_to": "Scorchpockit",
+  "evolves_to": "Magmawavern",
   "at_level": 18,
   "desc": "Molten inside, frozen outside. Every bite is a gamble."
  },
  {
-  "name": "Scorchpockit",
+  "name": "Magmawavern",
   "n": 27,
   "type": "Fire",
   "status": "HAND-DRAWN",
@@ -389,7 +389,7 @@
   "desc": "Burns bright for nine seconds. Then sulks for an hour."
  },
  {
-  "name": "Flaminhawk",
+  "name": "Chilihawk",
   "n": 30,
   "type": "Fire",
   "status": "HAND-DRAWN",
@@ -456,7 +456,7 @@
   },
   "evolves_to": "Glugdeluxe",
   "at_level": 20,
-  "desc": "Ten percent juice. Ninety percent tang."
+  "desc": "Ten percent juice. Ninety percent orange powder."
  },
  {
   "name": "Glugdeluxe",
@@ -510,12 +510,12 @@
    "b": "#ffe8c0",
    "c": "#ff3f5f"
   },
-  "evolves_to": "Pizzarolla",
+  "evolves_to": "Pizzapod",
   "at_level": 16,
-  "desc": "Pizza in the morning. Pizza in the evening. Pizza at suppertime."
+  "desc": "Pizza on a bagel. Frozen in the middle. Lava on top."
  },
  {
-  "name": "Pizzarolla",
+  "name": "Pizzapod",
   "n": 39,
   "type": "Fire",
   "status": "HAND-DRAWN",
@@ -529,7 +529,7 @@
   "desc": "Cool on the outside, plasma on the inside. Wait two minutes. Nobody waits."
  },
  {
-  "name": "Pumpsoakra",
+  "name": "Pumpsplasha",
   "n": 40,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -538,12 +538,12 @@
    "b": "#ffe03a",
    "c": "#ff3fa4"
   },
-  "evolves_to": "Hydrosoakra",
+  "evolves_to": "Hydrosplasha",
   "at_level": 24,
   "desc": "Pump it forty times. Aim at your sibling. Consequences."
  },
  {
-  "name": "Hydrosoakra",
+  "name": "Hydrosplasha",
   "n": 41,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -566,12 +566,12 @@
    "b": "#fff8c0",
    "c": "#19e6d2"
   },
-  "evolves_to": "Slidemander",
+  "evolves_to": "Slideagator",
   "at_level": 15,
   "desc": "Requires a garden hose and zero regard for your knees."
  },
  {
-  "name": "Slidemander",
+  "name": "Slideagator",
   "n": 43,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -585,7 +585,7 @@
   "desc": "Hits every rock in the yard on the way down. Goes again."
  },
  {
-  "name": "Slurpeel",
+  "name": "Freezeel",
   "n": 44,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -610,7 +610,7 @@
   },
   "evolves_to": "Bubblewrapir",
   "at_level": 20,
-  "desc": "Six feet of gum. Rolled up. Regret."
+  "desc": "A whole roll of gum. One sitting. Regret."
  },
  {
   "name": "Bubblewrapir",
@@ -650,12 +650,12 @@
    "b": "#a8e0ff",
    "c": "#ffe03a"
   },
-  "evolves_to": "Dunkzilla",
+  "evolves_to": "Dunkasaurus",
   "at_level": 22,
   "desc": "Three balls for a dollar. Hit the target. Dunk the principal."
  },
  {
-  "name": "Dunkzilla",
+  "name": "Dunkasaurus",
   "n": 49,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -711,7 +711,7 @@
   "desc": "Lives in the 32-bit aquarium on the office computer. Never fed."
  },
  {
-  "name": "Hangryhippo",
+  "name": "Chompopotamus",
   "n": 53,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -1005,7 +1005,7 @@
   "desc": "Rules the block. Every block. Has a theme song about it."
  },
  {
-  "name": "Goosebumpy",
+  "name": "Creepskin",
   "n": 74,
   "type": "Air",
   "status": "HAND-DRAWN",
@@ -1014,12 +1014,12 @@
    "b": "#c0ffb0",
    "c": "#a04cff"
   },
-  "evolves_to": "Goosepimple",
+  "evolves_to": "Shiverskin",
   "at_level": 20,
   "desc": "Comes with a warning label. The scare is mild."
  },
  {
-  "name": "Goosepimple",
+  "name": "Shiverskin",
   "n": 75,
   "type": "Air",
   "status": "HAND-DRAWN",
@@ -1145,7 +1145,7 @@
   "desc": "Totally airbrushed on a t-shirt at the boardwalk."
  },
  {
-  "name": "Aquanetta",
+  "name": "Bouffanta",
   "n": 84,
   "type": "Air",
   "status": "HAND-DRAWN",
@@ -1184,7 +1184,7 @@
   },
   "evolves_to": null,
   "at_level": null,
-  "desc": "Can you touch this? No. No you cannot."
+  "desc": "Twenty zippers. Every one of them is for show."
  },
  {
   "name": "Twistorm",
@@ -1266,12 +1266,12 @@
    "b": "#a0a0b0",
    "c": "#b6ff3b"
   },
-  "evolves_to": "Brickzilla",
+  "evolves_to": "Bricktron",
   "at_level": 20,
   "desc": "Weighs three pounds. Battery lasts four calls. Immortal."
  },
  {
-  "name": "Brickzilla",
+  "name": "Bricktron",
   "n": 93,
   "type": "Rock",
   "status": "HAND-DRAWN",
@@ -1436,7 +1436,7 @@
   },
   "evolves_to": null,
   "at_level": null,
-  "desc": "Eight legs. Eight pogs. Won them all fair and square."
+  "desc": "Eight legs. Eight milk caps. Won them all fair and square."
  },
  {
   "name": "Rantz",
@@ -1448,12 +1448,12 @@
    "b": "#ffb0a0",
    "c": "#181818"
   },
-  "evolves_to": "Rantzilla",
+  "evolves_to": "Rantasaurus",
   "at_level": 13,
   "desc": "Carries ten times its weight in complaints."
  },
  {
-  "name": "Rantzilla",
+  "name": "Rantasaurus",
   "n": 106,
   "type": "Bug",
   "status": "HAND-DRAWN",
@@ -1646,7 +1646,7 @@
   },
   "evolves_to": "Cabbagelord",
   "at_level": 21,
-  "desc": "Comes with adoption papers. Has never been adopted."
+  "desc": "Came with a birth certificate. Nobody has ever read it."
  },
  {
   "name": "Cabbagelord",
@@ -1677,7 +1677,7 @@
   "desc": "Make a wish. Blow. Now there are forty of them on your lawn."
  },
  {
-  "name": "Fruityfoot",
+  "name": "Taffyard",
   "n": 122,
   "type": "Grass",
   "status": "HAND-DRAWN",
@@ -1691,7 +1691,7 @@
   "desc": "Three feet long. Sticks to the roof of your mouth. Also to the couch."
  },
  {
-  "name": "Slimeon",
+  "name": "Slimeball",
   "n": 123,
   "type": "Grass",
   "status": "HAND-DRAWN",
@@ -1747,7 +1747,7 @@
   "desc": "Grew up. Grew teeth. Grew a whole opinion about bulldozers."
  },
  {
-  "name": "Zapdisk",
+  "name": "Clickdisk",
   "n": 127,
   "type": "Techno",
   "status": "HAND-DRAWN",
@@ -1985,7 +1985,7 @@
   "desc": "A pipe maze with teeth. Bounces around the corners of your screen."
  },
  {
-  "name": "Slushpuppy",
+  "name": "Slushmutt",
   "n": 144,
   "type": "Water",
   "status": "HAND-DRAWN",
@@ -2083,7 +2083,7 @@
   "desc": "Loading... loading... loading... it moved one inch."
  },
  {
-  "name": "Pixelgodchi",
+  "name": "Keychainos",
   "n": 151,
   "type": "Techno",
   "status": "HAND-DRAWN",

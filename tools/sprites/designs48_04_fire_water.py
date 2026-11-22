@@ -2,8 +2,8 @@
 from kit48 import sprite48, bigeye, blush, soft_flame, coil, plug  # noqa: F401
 
 
-# ---------------------------------------------------------------- Flaminhawk: hawk chick dusted in red snack powder
-@sprite48('Flaminhawk', {'a': '#e8402a', 'd': '#a42418', 'b': '#ffe0c8', 'c': '#ffb02e'})
+# ---------------------------------------------------------------- Chilihawk: hawk chick dusted in red snack powder
+@sprite48('Chilihawk', {'a': '#e8402a', 'd': '#a42418', 'b': '#ffe0c8', 'c': '#ffb02e'})
 def flaminhawk(c):
     c.poly([(34, 34), (46, 30), (46, 37), (36, 40)], 'd')           # tail feathers
     c.ell(25, 31, 12, 11, 'a')
@@ -190,7 +190,7 @@ def kerosnail(c):
         c.px(x, 45, 'n')                                                    # greasy trail
 
 
-# ---------------------------------------------------------------- Minibagel / Pizzarolla: pizza-snack rollers
+# ---------------------------------------------------------------- Minibagel / Pizzapod: pizza-snack rollers
 @sprite48('Minibagel', {'a': '#e8b46a', 'd': '#b8823a', 'b': '#fff0c8', 'c': '#ff5a3a'})
 def minibagel(c):
     # a little hamster curled into a bagel ring
@@ -210,7 +210,7 @@ def minibagel(c):
     blush(c, 8, 31); blush(c, 22, 31)
 
 
-@sprite48('Pizzarolla', {'a': '#e0a050', 'd': '#a86a24', 'b': '#fff0c8', 'c': '#ff5a3a'})
+@sprite48('Pizzapod', {'a': '#e0a050', 'd': '#a86a24', 'b': '#fff0c8', 'c': '#ff5a3a'})
 def pizzarolla(c):
     # armadillo whose plates are pizza rolls
     c.ell(27, 30, 16, 12, 'a')
@@ -233,8 +233,8 @@ def pizzarolla(c):
     blush(c, 15, 33)
 
 
-# ---------------------------------------------------------------- Pumpsoakra / Hydrosoakra: orcas with water guns built in
-@sprite48('Pumpsoakra', {'a': '#2a2f45', 'd': '#151a2a', 'b': '#ffffff', 'c': '#ffcf3a', 'e': '#3ae0ff'})
+# ---------------------------------------------------------------- Pumpsplasha / Hydrosplasha: orcas with water guns built in
+@sprite48('Pumpsplasha', {'a': '#2a2f45', 'd': '#151a2a', 'b': '#ffffff', 'c': '#ffcf3a', 'e': '#3ae0ff'})
 def pumpsoakra(c):
     c.poly([(34, 30), (46, 22), (44, 32), (46, 40), (36, 36)], 'a')      # tail
     c.ell(24, 31, 14, 11, 'a')
@@ -255,7 +255,7 @@ def pumpsoakra(c):
     c.px(0, 24, 'e'); c.px(1, 31, 'e')
 
 
-@sprite48('Hydrosoakra', {'a': '#262b40', 'd': '#12162a', 'b': '#ffffff', 'c': '#ffcf3a', 'e': '#3ae0ff'})
+@sprite48('Hydrosplasha', {'a': '#262b40', 'd': '#12162a', 'b': '#ffffff', 'c': '#ffcf3a', 'e': '#3ae0ff'})
 def hydrosoakra(c):
     c.poly([(38, 32), (47, 24), (46, 34), (47, 42), (40, 38)], 'a')
     c.ell(25, 32, 16, 12, 'a')
@@ -276,7 +276,7 @@ def hydrosoakra(c):
         c.px(x, y, 'e')
 
 
-# ---------------------------------------------------------------- Slipslug / Slidemander: backyard slide creatures
+# ---------------------------------------------------------------- Slipslug / Slideagator: backyard slide creatures
 @sprite48('Slipslug', {'a': '#ffe03a', 'd': '#d8a810', 'b': '#fff8c8', 'c': '#3ae0ff'})
 def slipslug(c):
     # long flat slug body = the slide mat
@@ -297,7 +297,7 @@ def slipslug(c):
     c.px(30, 34, 'w'); c.px(36, 36, 'w')                                     # splash
 
 
-@sprite48('Slidemander', {'a': '#ffd21a', 'd': '#c89400', 'b': '#fff4b0', 'c': '#3ae0ff'})
+@sprite48('Slideagator', {'a': '#ffd21a', 'd': '#c89400', 'b': '#fff4b0', 'c': '#3ae0ff'})
 def slidemander(c):
     # belly-sliding salamander, arms out, tail flicking up behind
     c.poly([(34, 36), (46, 28), (46, 33), (38, 40)], 'a')
@@ -320,8 +320,8 @@ def slidemander(c):
     blush(c, 14, 31)
 
 
-# ---------------------------------------------------------------- Slurpeel: an eel coiled in a blue-raspberry slushie
-@sprite48('Slurpeel', {'a': '#3a6cff', 'd': '#2244b0', 'b': '#c8f0ff', 'c': '#e8eef8', 'e': '#ff3f5f'})
+# ---------------------------------------------------------------- Freezeel: an eel coiled in a blue-raspberry slushie
+@sprite48('Freezeel', {'a': '#3a6cff', 'd': '#2244b0', 'b': '#c8f0ff', 'c': '#e8eef8', 'e': '#ff3f5f'})
 def slurpeel(c):
     # the cup
     c.poly([(12, 46), (36, 46), (39, 24), (9, 24)], 'c')

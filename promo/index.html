@@ -121,18 +121,18 @@ function shake(amt){if(amt>0)ctx.translate((Math.random()-.5)*amt*2,(Math.random
 
 // ---------- scenes ----------
 const TYPE_ROLL=[
- ['Fire',['Lavalamprey','Inflamingo','Hotpockit'],'Handle with oven mitts.'],
- ['Water',['Hangryhippo','Bubblewrapir','Goopopus'],'Pump it forty times.'],
+ ['Fire',['Bloblamprey','Inflamingo','Microwavern'],'Handle with oven mitts.'],
+ ['Water',['Chompopotamus','Bubblewrapir','Goopopus'],'Pump it forty times.'],
  ['Grass',['Grungehog','Cabbagelord','Dandylion'],'Just add water. Wait three weeks.'],
- ['Bug',['Y2Kroach','Ladybugsy','Rantzilla'],'Banned at recess.'],
- ['Rock',['VHSaur','Petrocksteady','Brickzilla'],'Be kind. Rewind.'],
- ['Air',['Fuzzbeak','Aquanetta','Parachuteor'],'Totally airbrushed.'],
+ ['Bug',['Y2Kroach','Ladybugsy','Rantasaurus'],'Banned at recess.'],
+ ['Rock',['VHSaur','Petrocksteady','Bricktron'],'Be kind. Rewind.'],
+ ['Air',['Fuzzbeak','Bouffanta','Parachuteor'],'Totally airbrushed.'],
  ['Techno',['Pagerpup','Toastwing','Bufferfly'],"You've got Radimals!"],
  ['Basic',['Milkwog','Hamsterrave','Mallratking'],'Worth thousands one day. (Not.)'],
 ];
 const STARTERS=['Dialupine','Floppuss','Trollsprout'];
 const MONTAGE=['Pagerpup','Boppurr','Rewindosaur','Blowcart','Petrock','Chatbrat','Parachuteor','Hamsterrave','Bufferfly'];
-const ORBIT=['Dialupine','Floppuss','Trollsprout','Pagerpup','Y2Kraken','Petrocksteady','Toastwing','Hamsterrave','Pixelgodchi','Boppurr'];
+const ORBIT=['Dialupine','Floppuss','Trollsprout','Pagerpup','Y2Kraken','Petrocksteady','Toastwing','Hamsterrave','Keychainos','Boppurr'];
 const VHS_LINES=[[1.4,'THE YEAR IS 1998.'],[2.5,'THE PHONE LINE IS TIED UP.'],[3.6,'SOMETHING IS DIALING IN...']];
 const BATTLE_MSG=[[.6,'A wild TROLLSPROUT appeared!'],[2.2,'Go! DIALUPINE!'],[3.6,'DIALUPINE used FLAME BROIL!'],[5.4,"It's TOTALLY effective!"],[6.6,'You threw a BINDER!'],[8.7,'RRRRIP! TROLLSPROUT was filed!']];
 
@@ -302,7 +302,7 @@ function sLegend(t,T){
     txt(typed('Every computer was going to fail at midnight...',1.3,t,.03),240,196,22,'#bbb',{f:'VT323',ol:0});
     return;
   }
-  const y2=t<5.6,n=y2?'Y2Kraken':'Pixelgodchi',lt=y2?t-4:t-5.6,r=BY[n];
+  const y2=t<5.6,n=y2?'Y2Kraken':'Keychainos',lt=y2?t-4:t-5.6,r=BY[n];
   ctx.save();if(y2)shake(6*(1-pr(lt,0,1.2)));hero(n,1.05+lt*.03);ctx.restore();
   if(!y2){const g=.25+Math.sin(t*5)*.12;const rg=ctx.createRadialGradient(240,120,0,240,120,160);rg.addColorStop(0,`rgba(255,240,160,${g})`);rg.addColorStop(1,'rgba(255,240,160,0)');ctx.fillStyle=rg;ctx.fillRect(0,0,W,H)}
   ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(0,0,W,40);
