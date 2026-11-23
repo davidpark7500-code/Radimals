@@ -644,8 +644,8 @@ MAPS.r1={name:'Slap Bracelet Trail',outdoor:true,music:'route',wild:['Milkwog','
  signs:{'15,15':'SLAP BRACELET TRAIL\nTall grass ahead. Trainers ahead. Regret ahead.'},
  npcs:[T('chad1',9,10,'down',hero('#ffe03a','#ff3fa4','spiky',{shades:true}),'CHAD',()=>[makeMon(RIVAL_PICK(),5)],{show:()=>!G.flags.chad1,
    before:['CHAD: Yo. Nice Radimal. Mine\'s cooler. My tips are frosted. My cargo shorts have 11 pockets. Let\'s go.'],after:['CHAD: Whatever! That was a warm-up. I\'m gonna go train in the grass like a normal person.'],healAfter:'CHAD: Ugh, take a JUICE POUCH. My mom packs like ten. Your team is all healed up. NOT because I care.',healBefore:'CHAD: Dude, your Radimal looks wrecked. Here, JUICE POUCH. When I win, you\'re not blaming THAT.',lose:'CHAD: As if! Talk to the hand.',reward:{money:300}}),
-  T('todd',9,22,'down',hero('#19e6d2','#3a3a3a','backcap'),'SKATER TODD',()=>[makeMon('Hamsterjam',3),makeMon('Milkwog',4)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
-  T('kenny',12,7,'left',hero('#57d65a','#ffe03a','cap'),'BUG KID KENNY',()=>[makeMon('Y2Kroach',5),makeMon('Slapbrace',3)],{watch:3,before:['BUG KID KENNY: My roach survived a microwave. What has your Radimal survived?'],after:['BUG KID KENNY: It also survived this, technically.'],lose:'BUG KID KENNY: Roaches: 1. You: 0.',reward:{money:180}})]};
+  T('todd',9,22,'down',hero('#19e6d2','#3a3a3a','backcap'),'SKATER TODD',()=>[makeMon('Hamsterjam',3),makeMon('Milkwog',4)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],healAfter:'SKATER TODD: Here, have my orange slices. Soccer practice was cancelled anyway. (Your team is all healed up!)',lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
+  T('kenny',12,7,'left',hero('#57d65a','#ffe03a','cap'),'BUG KID KENNY',()=>[makeMon('Slapbrace',3),makeMon('Y2Kroach',4)],{watch:3,before:['BUG KID KENNY: My roach survived a microwave. What has your Radimal survived?'],after:['BUG KID KENNY: It also survived this, technically.'],lose:'BUG KID KENNY: Roaches: 1. You: 0.',reward:{money:180}})]};
 MAPS.t2={name:'Capville',outdoor:true,music:'town',wild:['Milkwog','Beanbuddy','Fuzzbeak'],lv:[4,6],edges:{bottom:'r1',right:'r2'},rows:[
 'TTTTTTTTTTTTTTTTTTTT','T..CCCCCC..........T','T..CCCCCC..YYYY....T','T..VWWDWV..YYYY....T','T....p.....VWDW....T','T....p.......p.....T','T....ppppppppp.....T','T........ppppppppppp',
 'T........pppppppppFp','T..PPPP..pp....S...T','T..PPPP..pp........T','T..VDVW..pp..f.f...T','T...p....pp........T','T...ppppppp..,,,,..T','T........pp..,,,,..T','TTTTTTTTTppTTTTTTTTT'],
@@ -1053,6 +1053,15 @@ async function interact(n){if(n.special)return specials[n.special](n);
     if(r==='win'){G.flags[n.flag]=1;await giveReward(n.reward,n.trainer);await sayAll(n.after);if(n.healAfter){G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.healAfter);}closeText();save();}
     else{await say(n.lose);closeText();await blackout();}return;}
   await sayAll(n.lines);closeText();}
+/* the rival's first battle happens in the lab, right after you pick a starter (the tutorial fight) */
+async function rivalIntro(){const c=MAPS.r1.npcs.find(n=>n.id==='chad1');if(G.flags.chad1||!c)return;
+  await say('???: Yo, PROF! Is the new kid getting a Radimal before ME? Not happening.');await sayAll(c.before);
+  await say('PROF. DIALTONE: Chad. Fine. ONE battle. Inside voices. Tip: pick FIGHT, then a move.');closeText();
+  const r=await battle(c.team(),{trainer:c.trainer,look:c.look||c.pal});G.flags.chad1=1;
+  if(r==='win'){await giveReward(c.reward,c.trainer);await sayAll(c.after);}
+  else{await say(c.lose);await say('PROF. DIALTONE: Everybody loses their first one. Mostly Chad, usually. Next time, try a different move.');}
+  G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(r==='win'?c.healAfter:'PROF. DIALTONE: There. Your Radimal is all healed up. Go get him next time.');
+  await say('PROF. DIALTONE: Chad already ran north. He took the good bike. Of course he did.');closeText();}
 async function giveReward(rw,who){if(!rw)return;const parts=[];if(rw.money){G.money+=rw.money;parts.push('$'+rw.money+' allowance');}for(const k in ITEMS)if(rw[k]){G.bag[k]=bagN(k)+rw[k];parts.push(rw[k]+' '+ITEMS[k].name);}
   if(parts.length){sfx('buy');await say(`${who} coughed up ${parts.join(' and ')}!`);}}
 const specials={
@@ -1075,7 +1084,7 @@ const specials={
       PREVIEW=null;const m=makeMon(names[i],5);G.party.push(m);G.flags.starter=names[i];G.seen[names[i]]=1;G.caught[names[i]]=1;sfx('catch');
       await say(`PROF. DIALTONE: ${names[i].toUpperCase()} is yours. Here are 5 SLAMMERS to catch more, 3 JUICE BOXES, and $500. Don't spend it all on gel pens.`);
       await say('PROF. DIALTONE: Collect the four CAPS from the Hangout leaders. Then Y2K Tower. Something up there is... glitchy. Probably fine. Probably.');
-      await say('PROF. DIALTONE: Oh, and CHAD went north already. He took the good bike.');closeText();save();}
+      closeText();await rivalIntro();save();}
     else if(G.pogs.length>=4&&!G.flags.goldGiven){G.flags.goldGiven=1;await say('PROF. DIALTONE: Four Caps! I was saving this for... honestly I forgot what for. Take it.');G.bag.gold=bagN('gold')+1;sfx('catch');await say('You got the GOLDEN SLAMMER! It never misses. There is only one. Do not waste it on a Milkwog.');closeText();save();}
     else if(G.flags.champion&&G.key.cd){const i=await choose('PROF. DIALTONE: A FREE TRIAL CD! Want me to dial you in to THE INTERNET? It takes a while. Nobody pick up the phone.',['DIAL IN','NOT NOW']);
       if(i===0){closeText();sfx('modem');busy=true;await fadeOut();await sleep(900);G.map='net';G.x=11;G.y=21;G.dir='up';playTrack('boss');await fadeIn();await say('*SCREECH* *HISS* *BONG BONG* ...CONNECTED. Welcome to THE INTERNET. Population: everyone, somehow.');closeText();}else closeText();}
@@ -1224,7 +1233,7 @@ async function battle(enemies,opts={}){mode='battle';const prevTrack=curName;con
     else if(main===2){const i=await chooseSwitch(false);if(i<0)continue;act={type:'switch',i};}
     else act={type:'run'};
     const emv=aiMove(en,me);
-    if(act.type==='run'){const p=Math.max(0.15,Math.min(0.95,0.55+(me.st.spd-en.st.spd)/80));if(Math.random()<p){await say('Got away safely! Smell ya later.');return end('run');}await say("Can't escape! Not even close.");}
+    if(act.type==='run'){const p=Math.max(0.15,Math.min(0.95,0.55+(me.st.spd-en.st.spd)/80));if(Math.random()<p){await say('Got away safely! Later, dude.');return end('run');}await say("Can't escape! Not even close.");}
     else if(act.type==='item'){const it=ITEMS[act.k];G.bag[act.k]--;
       if(it.heal){const h=Math.min(it.heal,me.st.hp-me.hp);me.hp+=h;sfx('heal');await drainHp('me');if(h>0)await say(`${me.name.toUpperCase()} recovered ${h} HP. Yum.`);if(it.cure&&me.sts){me.sts=null;me.frzT=0;await say(`${me.name.toUpperCase()} feels normal again. Whatever normal is.`);}}
       else if(it.revive){const ri=await pickMenu(G.party.filter(m=>m.hp<=0).map(m=>({label:m.name.toUpperCase(),sub:'fainted'})),{text:'Revive which?',cols:2,cancel:false});const m=G.party.filter(m=>m.hp<=0)[ri];m.hp=Math.floor(m.st.hp/2);sfx('heal');await say(`${m.name.toUpperCase()} is back! The bling worked.`);}

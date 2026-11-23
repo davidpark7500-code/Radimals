@@ -1,5 +1,6 @@
 """Early-game difficulty check, in the order a player actually meets trainers on Route 1:
-Skater Todd (line of sight, first thing north of home) -> Chad 1 (HP carried over unless Chad's healBefore applies) -> Bug Kid Kenny.
+Chad 1 in the lab right after picking a starter (full HP; you are healed after, win or lose) ->
+Skater Todd (line of sight, first thing north of home) -> Bug Kid Kenny with HP carried over from Todd (and at full HP).
 Player only attacks: 'best' = strongest attack vs the foe, 'rand' = random attack. No items.
 Usage: python tools/earlygame_sim.py [N]"""
 from playwright.sync_api import sync_playwright
@@ -14,13 +15,12 @@ with sync_playwright() as p:
           const att=dm.filter(x=>x[1]>0);if(strat==='best'){att.sort((a,b)=>b[1]-a[1]);return att[0][0];}return att[Math.floor(Math.random()*att.length)][0];}
         const ok=items.map((it,i)=>it.disabled?-1:i).filter(i=>i>=0);return ok.length?ok[0]:-1;};
       const npc=id=>MAPS.r1.npcs.find(n=>n.id===id);const fight=async id=>{const r=await battle(npc(id).team(),{trainer:id,look:PLAYER_LOOK});closeText();mode='map';busy=false;return r==='win';};
-      const out={};for(const st of ['Dialupine','Floppuss','Trollsprout'])for(const s of ['best','rand']){strat=s;const c={todd:0,chadCarried:0,chadHealed:0,kenny:0};
+      const out={};for(const st of ['Dialupine','Floppuss','Trollsprout'])for(const s of ['best','rand']){strat=s;const c={chadLab:0,todd:0,kennyCarried:0,kennyFull:0};
         for(let i=0;i<N;i++){G.flags={starter:st};G.bag={};G.party=[makeMon(st,5)];
-          if(await fight('todd'))c.todd++;else G.party=[makeMon(st,5)];
-          const lv=G.party[0].lv,save=JSON.stringify(G.party[0]);
-          if(npc('chad1').healBefore)G.party[0].hp=G.party[0].st.hp;if(await fight('chad1'))c.chadCarried++;
-          G.party=[JSON.parse(save)];G.party[0].hp=G.party[0].st.hp;if(await fight('chad1'))c.chadHealed++;
-          G.party=[makeMon(st,G.party[0].lv)];if(await fight('kenny'))c.kenny++;}
+          if(await fight('chad1'))c.chadLab++;G.party.forEach(m=>m.hp=m.st.hp);
+          if(await fight('todd')){c.todd++;if(npc('todd').healAfter)G.party.forEach(m=>m.hp=m.st.hp);}else G.party.forEach(m=>m.hp=m.st.hp);
+          const save=JSON.stringify(G.party[0]);if(await fight('kenny'))c.kennyCarried++;
+          G.party=[JSON.parse(save)];G.party[0].hp=G.party[0].st.hp;if(await fight('kenny'))c.kennyFull++;}
         for(const k in c)c[k]=Math.round(100*c[k]/N)+'%';out[st+'/'+s]=c;}return out;}""", N)
     for k, v in r.items(): print(k, v)
     print('page errors:', errs[:3])
