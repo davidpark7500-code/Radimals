@@ -33,11 +33,11 @@ Strong: the names and dex jokes. Most concepts already pair a 90s thing with an 
 - **Silhouettes are mostly rectangles and circles.** The starters fail the black-silhouette test
   outright: all six read as boxes.
 - **All front-facing, symmetric mugshots.** No 3/4 views, no action.
-- **Evolutions are mostly "same thing, bigger and redder"** (Hotpockit to Scorchpockit,
-  Pumpsoakra to Hydrosoakra, Glowpeg to Glowpegger) and every stage uses the same 24px box,
+- **Evolutions are mostly "same thing, bigger and redder"** (Microwavern to Magmawavern,
+  Pumpsplasha to Hydrosplasha, Glowpeg to Glowpegger) and every stage uses the same 24px box,
   so the final form doesn't look stronger.
 - **Type doesn't read from the design** for several: Orangeglug/Glugdeluxe (a drink), Minibagel/
-  Pizzarolla, Sourbomb are Fire; Dialupine is Fire with no visible fire logic beyond the color.
+  Pizzapod, Sourbomb are Fire; Dialupine is Fire with no visible fire logic beyond the color.
 - **Busy palettes** on a few (Fuzzpuff, Fuzznado, Spicearachnid).
 
 ## Radimal rules (apply to every redesign)

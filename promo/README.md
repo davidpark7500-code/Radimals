@@ -22,6 +22,6 @@ Add `?t=SECONDS` to the URL to jump to a frame (e.g. `index.html?t=38.6`).
 | 0:34 | Battle: Dialupine vs. a wild Trollsprout, filed in the Binder |
 | 0:44 | Floppuss evolves into CDRompuss |
 | 0:50 | Catchphrase montage |
-| 1:00 | Y2K countdown: legendaries Y2Kraken and Pixelgodchi |
+| 1:00 | Y2K countdown: legendaries Y2Kraken and Keychainos |
 | 1:07 | Stampede of all 151 |
 | 1:13 | End card: "Blow on the cartridge. Play today!" |

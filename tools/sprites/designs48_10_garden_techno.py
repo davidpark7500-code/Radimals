@@ -32,8 +32,8 @@ def dandylion(c):
         c.px(x, y, 'w'); c.px(x - 1, y - 1, 'w'); c.px(x + 1, y - 1, 'w'); c.px(x, y + 1, 'd')
 
 
-# ---------------------------------------------------------------- Fruityfoot: a dachshund made of rolled fruit tape
-@sprite48('Fruityfoot', {'a': '#ff4a6a', 'd': '#c42444', 'b': '#ffd0d8', 'c': '#ffcf3a'})
+# ---------------------------------------------------------------- Taffyard: a dachshund made of rolled fruit tape
+@sprite48('Taffyard', {'a': '#ff4a6a', 'd': '#c42444', 'b': '#ffd0d8', 'c': '#ffcf3a'})
 def fruityfoot(c):
     c.rect(14, 28, 38, 36, 'a')
     c.ell(40, 32, 5, 5, 'a')                                                                       # rolled-up end (tail)
@@ -55,8 +55,8 @@ def fruityfoot(c):
     blush(c, 18, 26)
 
 
-# ---------------------------------------------------------------- Slimeon: a chameleon dumped in green slime
-@sprite48('Slimeon', {'a': '#7a5ae0', 'd': '#4a30a8', 'b': '#e8e0ff', 'c': '#7aff3a'})
+# ---------------------------------------------------------------- Slimeball: a chameleon dumped in green slime
+@sprite48('Slimeball', {'a': '#7a5ae0', 'd': '#4a30a8', 'b': '#e8e0ff', 'c': '#7aff3a'})
 def slimeon(c):
     # curled tail
     c.ring(38, 34, 6, 6, 3, 'a')
@@ -154,8 +154,8 @@ def fernfury(c):
         c.px(x, y, 'L')                                                                            # moss
 
 
-# ---------------------------------------------------------------- Zapdisk / Diskdrake
-@sprite48('Zapdisk', {'a': '#3a7aff', 'd': '#1e4cc0', 'b': '#d8e8ff', 'c': '#c9ced8'})
+# ---------------------------------------------------------------- Clickdisk / Diskdrake
+@sprite48('Clickdisk', {'a': '#3a7aff', 'd': '#1e4cc0', 'b': '#d8e8ff', 'c': '#c9ced8'})
 def zapdisk(c):
     c.poly([(34, 34), (46, 30), (45, 36), (36, 40)], 'a')
     c.ell(25, 33, 12, 8, 'a')
