@@ -27,7 +27,7 @@ def boomboxer(c):
         c.rect(x, y, x + 1, y + 1, 'k')                                                    # notes, loud
 
 
-# ---------------------------------------------------------------- Brickphone / Brickzilla: rhinos whose horn is the antenna
+# ---------------------------------------------------------------- Brickphone / Bricktron: rhinos whose horn is the antenna
 @sprite48('Brickphone', {'a': '#5a6070', 'd': '#363b48', 'b': '#c9d0dc', 'c': '#b6ff3b'})
 def brickphone(c):
     c.ell(28, 32, 13, 10, 'a')
@@ -49,7 +49,7 @@ def brickphone(c):
     blush(c, 14, 30)
 
 
-@sprite48('Brickzilla', {'a': '#4a5060', 'd': '#2a2e3a', 'b': '#c0c8d4', 'c': '#b6ff3b'})
+@sprite48('Bricktron', {'a': '#4a5060', 'd': '#2a2e3a', 'b': '#c0c8d4', 'c': '#b6ff3b'})
 def brickzilla(c):
     c.ell(28, 29, 17, 12, 'a')
     for x, col in [(16, 'd'), (38, 'd'), (21, 'a'), (42, 'a')]:

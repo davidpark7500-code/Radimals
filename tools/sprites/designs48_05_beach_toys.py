@@ -67,7 +67,7 @@ def goopopus(c):
     blush(c, 13, 25); blush(c, 31, 25)
 
 
-# ---------------------------------------------------------------- Dunktank / Dunkzilla: walruses with a target on the belly
+# ---------------------------------------------------------------- Dunktank / Dunkasaurus: walruses with a target on the belly
 @sprite48('Dunktank', {'a': '#8a6a5a', 'd': '#5e4438', 'b': '#e8d4c4', 'c': '#ff3f5f', 'e': '#9fd6ff'})
 def dunktank(c):
     # water tank it sits in
@@ -88,7 +88,7 @@ def dunktank(c):
     blush(c, 12, 22); blush(c, 33, 22)
 
 
-@sprite48('Dunkzilla', {'a': '#7a5a4a', 'd': '#4a3228', 'b': '#e4ccb8', 'c': '#ff3f5f', 'e': '#9fd6ff'})
+@sprite48('Dunkasaurus', {'a': '#7a5a4a', 'd': '#4a3228', 'b': '#e4ccb8', 'c': '#ff3f5f', 'e': '#9fd6ff'})
 def dunkzilla(c):
     c.ell(24, 30, 18, 15, 'a')
     c.ell(8, 44, 6, 2, 'a'); c.ell(40, 44, 6, 2, 'a')
@@ -177,8 +177,8 @@ def fishtankamari(c):
     c.rect(38, 41, 45, 46, 'e'); c.rect(38, 39, 39, 41, 'e'); c.rect(44, 39, 45, 41, 'e'); c.px(41, 44, 'k')
 
 
-# ---------------------------------------------------------------- Hangryhippo: a purple hippo, mouth always open
-@sprite48('Hangryhippo', {'a': '#9a6aff', 'd': '#6a3ed0', 'b': '#efe4ff', 'c': '#ff5a8a'})
+# ---------------------------------------------------------------- Chompopotamus: a purple hippo, mouth always open
+@sprite48('Chompopotamus', {'a': '#9a6aff', 'd': '#6a3ed0', 'b': '#efe4ff', 'c': '#ff5a8a'})
 def hangryhippo(c):
     c.ell(30, 32, 14, 11, 'a')
     for x in (22, 28, 35, 40):

@@ -159,8 +159,8 @@ def cloudsurf(c):
         c.px(x, y, 'q')
 
 
-# ---------------------------------------------------------------- Aquanetta: a cockatoo whose hair does not move. Ever.
-@sprite48('Aquanetta', {'a': '#ffd0e8', 'd': '#e090b8', 'b': '#fff4fa', 'c': '#a04cff'})
+# ---------------------------------------------------------------- Bouffanta: a cockatoo whose hair does not move. Ever.
+@sprite48('Bouffanta', {'a': '#ffd0e8', 'd': '#e090b8', 'b': '#fff4fa', 'c': '#a04cff'})
 def aquanetta(c):
     # enormous teased bouffant
     c.ell(24, 13, 16, 12, 'c')

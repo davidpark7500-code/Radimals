@@ -77,8 +77,8 @@ def rewindosaur(c):
     blush(c, 15, 25)
 
 
-# ---------------------------------------------------------------- Lavalamprey: an eel rising out of a lava lamp
-@sprite48('Lavalamprey', {'a': '#ff5a8a', 'd': '#c43464', 'b': '#ffe0ec', 'c': '#ffb02e', 'e': '#8a93ab'})
+# ---------------------------------------------------------------- Bloblamprey: an eel rising out of a lava lamp
+@sprite48('Bloblamprey', {'a': '#ff5a8a', 'd': '#c43464', 'b': '#ffe0ec', 'c': '#ffb02e', 'e': '#8a93ab'})
 def lavalamprey(c):
     # lamp base
     c.poly([(14, 46), (34, 46), (30, 38), (18, 38)], 'e')
@@ -177,8 +177,8 @@ def y2kraken(c):
     c.ell(24, 30, 6, 2, 'b')
 
 
-# ---------------------------------------------------------------- Pixelgodchi (legendary): a forgotten virtual-pet egg, now divine
-@sprite48('Pixelgodchi', {'a': '#ffe9f4', 'd': '#e0b0cc', 'b': '#ffffff', 'c': '#ff3fa4', 'e': '#c9ced8'})
+# ---------------------------------------------------------------- Keychainos (legendary): a forgotten virtual-pet egg, now divine
+@sprite48('Keychainos', {'a': '#ffe9f4', 'd': '#e0b0cc', 'b': '#ffffff', 'c': '#ff3fa4', 'e': '#c9ced8'})
 def pixelgodchi(c):
     # keychain loop as a halo
     c.ring(24, 4, 6, 2, 1, 'y')
@@ -202,8 +202,8 @@ def pixelgodchi(c):
         c.px(x, y, 'y'); c.px(x - 1, y, 'F'); c.px(x + 1, y, 'F'); c.px(x, y - 1, 'F'); c.px(x, y + 1, 'F')
 
 
-# ---------------------------------------------------------------- Hotpockit / Scorchpockit: hermit crabs living in pastry pockets
-@sprite48('Hotpockit', {'a': '#e8a64a', 'd': '#b87420', 'b': '#ffe0a8', 'c': '#ff5a3a', 'e': '#9fd6ff'})
+# ---------------------------------------------------------------- Microwavern / Magmawavern: hermit crabs living in pastry pockets
+@sprite48('Microwavern', {'a': '#e8a64a', 'd': '#b87420', 'b': '#ffe0a8', 'c': '#ff5a3a', 'e': '#9fd6ff'})
 def hotpockit(c):
     # pastry-pocket shell
     c.rect(20, 18, 42, 38, 'a')
@@ -233,7 +233,7 @@ def hotpockit(c):
     blush(c, 9, 33)
 
 
-@sprite48('Scorchpockit', {'a': '#d8782a', 'd': '#9c4a14', 'b': '#ffd08a', 'c': '#ff3a2a', 'e': '#ffe66a'})
+@sprite48('Magmawavern', {'a': '#d8782a', 'd': '#9c4a14', 'b': '#ffd08a', 'c': '#ff3a2a', 'e': '#ffe66a'})
 def scorchpockit(c):
     c.rect(18, 12, 44, 38, 'a')
     c.ell(16, 32, 11, 9, 'c')

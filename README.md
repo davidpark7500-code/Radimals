@@ -1,6 +1,6 @@
 # Totally Radimals '98
 
-A complete Game Boy-style creature-collecting RPG with a sarcastic late-90s theme: 151 original
+A complete handheld-style creature-collecting RPG with a sarcastic late-90s theme: 151 original
 Radimals, four Hangout leaders, a frosted-tipped rival, Y2K Tower, and a legendary hiding on
 The Internet.
 

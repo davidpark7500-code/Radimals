@@ -2,7 +2,7 @@
 
 **Name (30):** Totally Radimals '98
 **Subtitle (30):** Catch 151. Survive Y2K.
-**Keywords (100):** monster,collect,rpg,retro,pixel,90s,nostalgia,turn based,creature,gameboy,offline,funny
+**Keywords (100):** monster,collect,rpg,retro,pixel,90s,nostalgia,turn based,creature,handheld,offline,funny
 **Category:** Games / Role Playing · Secondary: Adventure
 **Age rating:** 9+ (Infrequent/Mild Cartoon or Fantasy Violence)
 **Price:** your call — $2.99 one-time is typical for an offline retro RPG with no IAP.
@@ -17,7 +17,7 @@ TOTALLY RADIMALS '98 is a complete, offline, turn-based creature-collecting RPG 
 • A full region: five towns, five routes, a boardwalk, haunted woods, dark caverns, a snowy peak, and Y2K Tower.
 • Four Hangout leaders (arcade, food court, roller rink, video store) with Caps to earn, a rival with frosted tips, 30+ trainers, and post-game rematches.
 • Real RPG depth: 8 types with strengths and weaknesses, 40 moves, stat boosts, critical hits, evolutions, Mix Tapes that teach moves, fishing, a bike, dark caves that need a glow stick, rare holographic Radimals, and a 151-entry Binder to fill.
-• Authentic Game Boy-style pixel art, chiptune soundtrack, a typewriter text box and a d-pad. No ads, no accounts, no in-app purchases, no internet needed.
+• Authentic handheld-style pixel art, chiptune soundtrack, a typewriter text box and a d-pad. No ads, no accounts, no in-app purchases, no internet needed.
 
 Fed. Cleaned. Loved. Then forgotten in a drawer. It remembers.
 

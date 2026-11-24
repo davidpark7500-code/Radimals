@@ -2,8 +2,8 @@
 from kit48 import sprite48, bigeye, blush, soft_flame, coil, plug  # noqa: F401
 
 
-# ---------------------------------------------------------------- Rantzilla: the elected (regretted) queen ant
-@sprite48('Rantzilla', {'a': '#d8302a', 'd': '#8e1a14', 'b': '#ffd0c8', 'c': '#ffcf3a'})
+# ---------------------------------------------------------------- Rantasaurus: the elected (regretted) queen ant
+@sprite48('Rantasaurus', {'a': '#d8302a', 'd': '#8e1a14', 'b': '#ffd0c8', 'c': '#ffcf3a'})
 def rantzilla(c):
     c.ell(35, 35, 11, 9, 'a')
     c.ell(22, 31, 6, 6, 'a')

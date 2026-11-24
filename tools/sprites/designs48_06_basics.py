@@ -286,8 +286,8 @@ def freshroyal(c):
     c.px(13, 24, 'c')                                                                        # gold tooth
 
 
-# ---------------------------------------------------------------- Goosebumpy / Goosepimple: mildly scary geese
-@sprite48('Goosebumpy', {'a': '#a0d860', 'd': '#6a9c30', 'b': '#f0ffd8', 'c': '#ffb02e'})
+# ---------------------------------------------------------------- Creepskin / Shiverskin: mildly scary geese
+@sprite48('Creepskin', {'a': '#a0d860', 'd': '#6a9c30', 'b': '#f0ffd8', 'c': '#ffb02e'})
 def goosebumpy(c):
     c.ell(27, 35, 12, 9, 'a')
     c.ell(37, 32, 5, 6, 'd')                                                                  # wing
@@ -309,7 +309,7 @@ def goosebumpy(c):
         c.px(x, y, 'q')                                                                        # sweat
 
 
-@sprite48('Goosepimple', {'a': '#7ac43a', 'd': '#4a8a1a', 'b': '#e8ffd0', 'c': '#ffb02e'})
+@sprite48('Shiverskin', {'a': '#7ac43a', 'd': '#4a8a1a', 'b': '#e8ffd0', 'c': '#ffb02e'})
 def goosepimple(c):
     # a vampire-caped goose
     c.poly([(26, 16), (46, 22), (44, 44), (20, 40)], 'v')
