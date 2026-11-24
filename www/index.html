@@ -125,79 +125,237 @@ table:['................','................','.##############.','.#cccccccccccc#
 arcade:['.##############.','.#nnnnnnnnnnnn#.','.#n##########n#.','.#n#qqqqqqqq#n#.','.#n#qmmqqooq#n#.','.#n#qqqqqqqq#n#.','.#n#qqzzqqqq#n#.','.#n##########n#.','.#nnnnnnnnnnnn#.','.#nn#rr#nn#yy#n#','.#nnnnnnnnnnnn#.','.#nnnnnnnnnnnn#.','.#nnnnnnnnnnnn#.','.#nnnnnnnnnnnn#.','.##############.','................'],
 stairs:['################','#cccccccccccccc#','#c############c#','#cc##########cc#','#ccc########ccc#','#cccc######cccc#','#ccccc####ccccc#','#cccccc##cccccc#','#ccccccccccccccc','#cccccccccccccc#','#cccccc##cccccc#','#ccccc####ccccc#','#cccc######cccc#','#ccc########ccc#','#cc##########cc#','################'],
 };
-/* =============== people: base body + hat/hair overlays (16x16) =============== */
-const HERO_BASE={
-down:[['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#...','..#shhhssshhs#..','..#sswksswkss#..','..#ssskkkssss#..','...#ssssssss#...','....#bbbbbb#....','...#bbbbbbbb#...','..#sbbbbbbbbs#..','..#s#bbbbbb#s#..','...##nnnnnn##...','....#nn##nn#....','....#nn##nn#....','....###..###....'],
-      ['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#...','..#shhhssshhs#..','..#sswksswkss#..','..#ssskkkssss#..','...#ssssssss#...','....#bbbbbb#....','...#bbbbbbbb#...','..#sbbbbbbbbs#..','..#s#bbbbbb#s#..','...##nnnnnn##...','....#nn##nn#....','....#nn#.###....','....###.........']],
-up:[['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#...','..#hhhhhhhhhh#..','..#hhhhhhhhhh#..','..#hhhhhhhhhh#..','...#hhhhhhhh#...','....#bbbbbb#....','...#bbbbbbbb#...','..#sbbbbbbbbs#..','..#s#bbbbbb#s#..','...##nnnnnn##...','....#nn##nn#....','....#nn##nn#....','....###..###....'],
-    ['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#...','..#hhhhhhhhhh#..','..#hhhhhhhhhh#..','..#hhhhhhhhhh#..','...#hhhhhhhh#...','....#bbbbbb#....','...#bbbbbbbb#...','..#sbbbbbbbbs#..','..#s#bbbbbb#s#..','...##nnnnnn##...','....#nn##nn#....','....###.#nn#....','.........###....']],
-left:[['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','..#hhhhhhhhhh#..','..#hhssssss##...','..#ssssswks#....','..#ssssskks#....','...#ssssss#.....','....#bbbbb#.....','...#bbbbbbb#....','...#sbbbbbbs#...','...#s#bbbbb#....','....##nnnnn#....','.....#nnnnn#....','.....#nn#nn#....','.....###.###....'],
-      ['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','..#hhhhhhhhhh#..','..#hhssssss##...','..#ssssswks#....','..#ssssskks#....','...#ssssss#.....','....#bbbbb#.....','...#bbbbbbb#....','...#sbbbbbbs#...','...#s#bbbbb#....','....##nnnnn#....','.....#nnnn#.....','....#nn#nn#.....','....###.###.....']]};
-/* overlays: '.' keep base, other chars replace. rows start at y=0 */
+/* =============== people ===============
+   Map sprites are 16x20: the body sits in the bottom 16 rows (one tile), the top 4 rows are headroom
+   for hair and hats. Everything is drawn per direction (down / up / left; right is left mirrored).
+   Palette letters: s/S skin + shade, M mouth, h/H/i hair + shade + highlight, a/A top, L sleeve
+   (skin for short sleeves), p/P legs, g/G lower leg (skin for shorts), e shoes, r/R hat, d/D detail. */
+const P_HEAD={
+down:['.....######.....','....#ssssss#....','...#ssssssss#...','...#ssssssss#...','..#ssssssssss#..','..#sswksswkss#..','..#ssssMMssss#..','...#SssssssS#...'],
+up:  ['.....######.....','....#ssssss#....','...#ssssssss#...','...#ssssssss#...','..#ssssssssss#..','..#ssssssssss#..','..#sSSSSSSSSs#..','...#SSSSSSSS#...'],
+left:['.....######.....','....#ssssss#....','...#ssssssss#...','...#ssssssss#...','..#ssssssssss#..','..#skwsssSsss#..','..#sMsssssss#...','...#Sssssss#....']};
+/* 3 frames each: stand, step A, step B */
+const P_BODY={
+down:[['....#aaaaaa#....','...#aaaaaaaA#...','..#LaaaaaaaAL#..','..#s#aaaaaA#s#..','...##ppppPP##...','....#gg##gG#....','....#ee##ee#....','....###..###....'],
+      ['....#aaaaaa#....','...#aaaaaaaA#...','..#LaaaaaaaAL#..','..#s#aaaaaA###..','...##ppppPP#....','....#gg##gG#....','....#ee#.###....','....###.........'],
+      ['....#aaaaaa#....','...#aaaaaaaA#...','..#LaaaaaaaAL#..','..###aaaaaA#s#..','....#ppppPP##...','....#gg##gG#....','....###.#ee#....','.........###....']],
+left:[['.....#aaaaa#....','....#aaAAaaA#...','....#aaLLaaA#...','....#aassaaA#...','.....#pppPP#....','.....#gggGG#....','....#eeeeee#....','....########....'],
+      ['.....#aaaaa#....','....#aaaAAaA#...','....#aaaaLLA#...','....#aaaaass#...','.....#pppPP#....','....#gg##GG#....','...#eee#.#ee#...','...####..####...'],
+      ['.....#aaaaa#....','....#aAAaaaA#...','...#LLaaaaaA#...','...#ssaaaaaA#...','.....#pppPP#....','....#GG##gg#....','...#eee#.#ee#...','...####..####...']]};
+P_BODY.up=P_BODY.down;
+const BIKE_BODY={
+down:[['....#aaaaaa#....','...#aaaaaaaA#...','.#sLaaaaaaaALs#.','.##kkkkkkkkkk##.','...#pp#dd#pP#...','...#ee#kk#pP#...','...####kk#ee#...','......#######...'],
+      ['....#aaaaaa#....','...#aaaaaaaA#...','.#sLaaaaaaaALs#.','.##kkkkkkkkkk##.','...#pp#dd#pP#...','...#pp#kk#ee#...','...#ee#kk####...','...#######......']],
+up:  [['....#aaaaaa#....','...#aaaaaaaA#...','.#sLaaaaaaaALs#.','.###aaaaaaaA###.','...#pppddpPP#...','...#ee#kk#pP#...','...####kk#ee#...','......#######...'],
+      ['....#aaaaaa#....','...#aaaaaaaA#...','.#sLaaaaaaaALs#.','.###aaaaaaaA###.','...#pppddpPP#...','...#pp#kk#ee#...','...#ee#kk####...','...#######......']],
+left:[['.....#aaaaa#....','...##aaaaaaA#...','..#sLLaaaaaA#...','..#k#ppppppP#...','.###dddddddd###.','#kwk#d#ee#d#kkk#','#kkk#.####.#kwk#','.###........###.'],
+      ['.....#aaaaa#....','...##aaaaaaA#...','..#sLLaaaaaA#...','..#k#ppppppP#...','.###dddddddd###.','#kkk#d#pp#d#kwk#','#kwk#.#ee#.#kkk#','.###..####..###.']]};
+BIKE_BODY.down[2]=BIKE_BODY.down[1];BIKE_BODY.up[2]=BIKE_BODY.up[1];BIKE_BODY.left[2]=BIKE_BODY.left[1];
+/* head styles: overlays as [firstRow, ...rows]; '.' keeps what is underneath. `base` is applied first. */
 const HATS={
- cap:['.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','..#rrrrrrrrrr#..'],
- backcap:['.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','...#hhhhhhhh#...'],
- spiky:['...#.#.#.#.#....','..#hwhwhwhwh#...','...#hhhhhhhh#...','...#hhhhhhhh#...'],
- beanie:['......####......','....#rrrrrr#....','...#rrrrrrrr#...','...#rRRRRRRr#...'],
- copcap:['....########....','...#rrrrrrrr#...','...#rrrrrrrr#...','..##yyyyyyyy##..'],
- hood:['....########....','...#rrrrrrrr#...','..#rrrrrrrrrr#..','..#rr#ssss#rr#..','..#r#ssssss#r#..'],
- bandana:['.....######.....','....#rrrrrr#....','...#rrrrrrrr#..#','...##rrrrrr##.#.','..#hhhhhhhhhh#..'],
- ponytail:['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#h#.','..#ssssssssss#h#','..#skssssssks#h#'],
- longhair:['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','..#hhhhhhhhhh#..','..#hssssssssh#..','..#hkssssssksh#.','..#hssssssssh#..','..#hhssssssshh#.'],
- headphones:['....########....','...#hhhhhhhh#...','..#o#hhhhhh#o#..','..#o#hhhhhh#o#..'],
- bald:['.....######.....','....#ssssss#....','...#ssssssss#...','...#ssssssss#...'],
- mohawk:['.......##.......','.......#r#......','....#hhrrhh#....','...#hhhrrhhh#...'],
- bun:['......####......','.....#hhhh#.....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhh#...'],
- crown:['....#.####.#....','....#yyyyyy#....','...#yyyyyyyy#...','...#hhhhhhhh#...'],
- visor:['.....######.....','....#hhhhhh#....','...#hhhhhhhh#...','.##oooooooooo##.'],
+short:{down:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','...#hhhhhhhH#...','..#shhhssshHs#..'],
+  up:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','...#hhhhhhhH#...','..#shhhhhhhHs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[4,'.....######.....','....#hhhhhh#....','...#hhihhhhh#...','...#hhhhhhhH#...','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+cap:{down:[3,'.....######.....','....#rrrrrr#....','...#rrirrrrr#...','...#rrrrrrrR#...','..#RRRRRRRRRR#..','..#hssssssssh#..'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','...#rrrrrrrR#...','..#rrrrrrrRRR#..','..#shhhhhhhhs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[3,'.....######.....','....#rrrrrr#....','...#rrrirrrr#...','...#rrrrrrrR#...','#RRRRrrrrrrRR#..','.##sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+backcap:{down:[3,'.....######.....','....#rrrrrr#....','...#rrirrrrr#...','...#rrrhhrrR#...','..#rrhhhhhhrR#..','..#shhhssshhs#..'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','...#rrrrrrrR#...','..#rrrrrrrrRR#..','..#RRRRRRRRRR#..','..#s#RRRRRR#s#..','..#sshhhhhhss#..'],
+  left:[3,'.....######.....','....#rrrrrr#....','...#rrrirrrr#...','...#rrrrrrrR#...','..#hhrrrrrrRRRR#','..#sshhhhhhHH##.','..#skwssShhHH#..','..#sMssssshH#...']},
+spiky:{down:[2,'....#..##..#....','...#i##ii##i#...','..#ihihiihihi#..','..#hhhhhhhhhh#..','..#hhhhhhhhhH#..','..#hhhhhhhhhH#..','..#shhhsshhHs#..'],
+  up:[2,'....#..##..#....','...#i##ii##i#...','..#ihihiihihi#..','..#hhhhhhhhhh#..','..#hhhhhhhhhH#..','..#hhhhhhhhhH#..','..#shhhhhhhHs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[2,'....#..##..#....','...#i##ii##i#...','..#ihihiihihi#..','..#hhhhhhhhhh#..','..#hhhhhhhhhH#..','..#shhhhhhhhH#..','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+beanie:{down:[3,'.....######.....','....#rrrrrr#....','...#rrirrrrr#...','..#rrrrrrrrrR#..','..#RRRRRRRRRR#..','..#shhssssshs#..'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','..#rrrrrrrrrR#..','..#RRRRRRRRRR#..','..#shhhhhhhhs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[3,'.....######.....','....#rrrrrr#....','...#rrrirrrr#...','..#rrrrrrrrrR#..','..#RRRRRRRRRR#..','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+pom:{base:'beanie',down:[1,'.......##.......','......#ww#......'],up:[1,'.......##.......','......#ww#......'],left:[1,'.......##.......','......#ww#......']},
+copcap:{down:[2,'....########....','...#rrrrrrrr#...','..#rrrryyrrrR#..','..#rrrrrrrrrR#..','...#RRRRRRRR#...','..#kkkkkkkkkk#..','..#hssssssssh#..'],
+  up:[2,'....########....','...#rrrrrrrr#...','..#rrrrrrrrrR#..','..#rrrrrrrrrR#..','...#RRRRRRRR#...','...#hhhhhhhh#...','..#shhhhhhhhs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[2,'....########....','...#rrrrrrrr#...','..#ryrrrrrrrR#..','..#rrrrrrrrrR#..','...#RRRRRRRR#...','#kkkkkhhhhhHH#..','.##sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+hood:{down:[3,'.....######.....','....#aaaaaa#....','...#aaiaaaaa#...','..#aaaaaaaaaA#..','..#aaHHHHHHaA#..','..#aSssssssSA#..','..#aswksswksA#..','..#asssMMsssA#..','...#aSssssSA#...'],
+  up:[3,'.....######.....','....#aaaaaa#....','...#aaaaaaaa#...','..#aaaaaaaaaA#..','..#aaaaaaaaAA#..','..#aaaaaaaaAA#..','..#aaaaaaaAAA#..','..#aAAAAAAAAA#..','...#AAAAAAAA#...'],
+  left:[3,'.....######.....','....#aaaaaa#....','...#aaaiaaaa#...','..#aaaaaaaaaA#..','..#HHaaaaaaAA#..','..#ssSaaaaaAA#..','..#skwSaaaaAA#..','..#sMsSaaaaA#...','...#SsaaaaA#....']},
+bandana:{down:[4,'.....######.....','....#rrrrrr#....','...#rrirrrrr#...','..#RRRRRRRRRR##.','..#shhssssshs#r#','..#sswksswkss#r#'],
+  up:[4,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','..#RRRRRRRRRR#..','..#shhhrrhhhs#..','..#shhHrRhHHs#..','..#ssHrHHRHss#..'],
+  left:[4,'.....######.....','....#rrrrrr#....','...#rrrirrrr#...','..#RRRRRRRRRR##.','..#sshhhhhhHH#r#','..#skwssShhHH#r#','..#sMssssshH#...']},
+ponytail:{down:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','...#hhhhhhhH###.','..#shhhhsshHsrh#','..#sswksswkss#h#','..#ssssMMssss#H#'],
+  up:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','...#hhhhhhhH#...','..#shhhrrhhHs#..','..#shhHhhHhHs#..','..#ssHHhhHHss#..','...#SS#hh#SS#...','.......hH.......'],
+  left:[4,'.....######.....','....#hhhhhh#....','...#hhihhhhh#...','...#hhhhhhhH###.','..#sshhhhhhHrhh#','..#skwssShhH#hH#','..#sMssssshH#H#.']},
+longhair:{down:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','..#hhhhhhhhhH#..','..#hhhhsshhhH#..','..#hswksswksH#..','..#hsssMMsssH#..','..#hhSssssShH#..','..#hH......HH#..'],
+  up:[4,'.....######.....','....#hhhhhh#....','...#hihhhhhh#...','..#hhhhhhhhhH#..','..#hhhhhhhhhH#..','..#hhhhhhhhHH#..','..#hhhhhhhhHH#..','..#hhhhhhhHHH#..','..#hHhHHhHhHH#..','...#H.H..H.H#...'],
+  left:[4,'.....######.....','....#hhhhhh#....','...#hhihhhhh#...','..#hhhhhhhhhH#..','..#shhhhhhhhH#..','..#skwshhhhhH#..','..#sMsshhhhHH#..','...#SshhhhHH#...','.......hhhHH#...','........hhH.....']},
+headphones:{base:'short',down:[3,'.....######.....','....#rrrrrr#....','...#rhhhhhhr#...','...#rhhhhhhr#...','..##hhhhhhhH##..','.#rshhhssshHsr#.','.#rsswksswkssr#.','.#Rs........sR#.'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rhhhhhhr#...','...#rhhhhhhr#...','..##hhhhhhhH##..','.#rs........sr#.','.#rs........sr#.','.#Rs........sR#.'],
+  left:[3,'.....######.....','....#hhrrhh#....','...#hhihrhhh#...','...#hhhhrhhH#...','..#sshh###HHH#..','..#skws#rr#HH#..','..#sMss#RR#H#...']},
+bald:{down:[5,'......w.........'],up:[5,'......w.........'],left:[5,'.......w........']},
+prof:{down:[7,'..##ssssssss##..','.#hhssssssssHh#.','.#hsswksswkssH#.'],
+  up:[7,'..##ssssssss##..','.#hhhssssssHHh#.','.#hhhhhhhhHHHH#.','..#shhhhhhHHs#..'],
+  left:[7,'...#ssssssss##..','..#sssssshhhHh#.','..#skwssShhhHH#.','..#sMssssshH#...']},
+mohawk:{down:[1,'.......##.......','......#hh#......','......#hi#......','.....##hh##.....','....#sshhss#....','...#ssshhsss#...','...#SsshhssS#...'],
+  up:[1,'.......##.......','......#hh#......','......#hi#......','.....##hh##.....','....#sshhss#....','...#ssshhsss#...','...#SsshhssS#...','..#sssshhssss#..','..#sssshHssss#..','..#sSSSHHSSSs#..'],
+  left:[0,'....#.#.#.#.....','...#h#h#h#h#....','...#hhihhhhH#...','...#hhhhhhHH#...','....#hhhhhH#....','....#ssSSSs#....']},
+bun:{base:'short',down:[1,'......####......','.....#hihh#.....','.....#hhhH#.....','.....##hh##.....'],up:[1,'......####......','.....#hihh#.....','.....#hhhH#.....','.....##hh##.....'],
+  left:[1,'.......####.....','......#hihh#....','......#hhhH#....','.....###hh##....']},
+crown:{base:'short',down:[1,'....#.#..#.#....','....#y#yy#y#....','....#yyyyyy#....','....#myyyym#....'],up:[1,'....#.#..#.#....','....#y#yy#y#....','....#yyyyyy#....','....#yyyyyy#....'],
+  left:[1,'....#.#..#.#....','....#y#yy#y#....','....#yyyyyy#....','....#myyyyy#....']},
+partyhat:{base:'short',down:[0,'.......##.......','......#yy#......','......#rr#......','.....#wwrr#.....','....#rrrwwr#....'],up:[0,'.......##.......','......#yy#......','......#rr#......','.....#rrww#.....','....#rwwrrr#....'],
+  left:[0,'.......##.......','......#yy#......','......#rr#......','.....#wwrr#.....','....#rrrwwr#....']},
+visor:{base:'short',down:[7,'..#rrrrrrrrrR#..','.#RRRRRRRRRRRR#.'],up:[7,'...#rrrrrrrR#...'],left:[7,'..#rrrrrrrrR#...','#RRRRshhhhhHH#..']},
+bucket:{down:[3,'.....######.....','....#rrrrrr#....','...#rrirrrrr#...','...#rrrrrrrR#...','.#RRRRRRRRRRRR#.','..#shhssssshs#..'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','...#rrrrrrrR#...','.#RRRRRRRRRRRR#.','..#shhhhhhhhs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[3,'.....######.....','....#rrrrrr#....','...#rrrirrrr#...','...#rrrrrrrR#...','.#RRRRRRRRRRRR#.','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+hardhat:{down:[3,'.....######.....','....#rrwwrr#....','...#rrrwwrrr#...','...#rrrrrrrR#...','..#RRRRRRRRRR#..','..#hssssssssh#..'],
+  up:[3,'.....######.....','....#rrrrrr#....','...#rrrrrrrr#...','...#rrrrrrrR#...','..#RRRRRRRRRR#..','..#shhhhhhhhs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[3,'.....######.....','...##rrrrrr#....','..#wwrrirrrr#...','...#rrrrrrrR#...','.#RRRRRRRRRRR#..','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+curtains:{down:[4,'.....######.....','....#hhHhhh#....','...#hihHhihh#...','..#hhhhsshhhH#..','..#hhsssssshH#..'],
+  up:[4,'.....######.....','....#hhHhhh#....','...#hihHhhhh#...','..#hhhhHhhhhH#..','..#hhhhhhhhHH#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[4,'.....######.....','....#hhhhhh#....','...#hhihhhhh#...','..#hhhhhhhhhH#..','..#hsshhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+afro:{down:[1,'....########....','...#hhhhhhhh#...','..#hhihhhhhhh#..','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhhH#.','.#hhhhssssshhH#.','.#hhsssssssshH#.','.#HsswksswkssH#.'],
+  up:[1,'....########....','...#hhhhhhhh#...','..#hhihhhhhhh#..','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhHH#.','.#hhhhhhhhhhHH#.','.#hhhhhhhhhHHH#.','..#HhhhhhHHHH#..','..#sHHHHHHHHs#..'],
+  left:[1,'....########....','...#hhhhhhhh#...','..#hhhihhhhhh#..','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhhH#.','.#hhhhhhhhhhhH#.','.#hsshhhhhhhHH#.','.#ssshhhhhhhHH#.','..#skwsShhhHHH#.','..#sMssshhHHH#..']},
+sidepart:{down:[4,'.....######.....','....#hhhhhh#....','...#hhhhhihh#...','...#hhhhhhhH#...','..#shhhhhhsss#..'],
+  up:[4,'.....######.....','....#hhhhhh#....','...#hhhhhihh#...','...#hhhhhhhH#...','..#shhhhhhhHs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[4,'.....######.....','....#hhhhhh#....','...#hhihhhhh#...','...#hhhhhhhH#...','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
+troll:{down:[0,'.......##.......','......#hh#......','.....#hihh#.....','.....#hhhh#.....','....#hihhhh#....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhH#...','..#shhsssshHs#..'],
+  up:[0,'.......##.......','......#hh#......','.....#hihh#.....','.....#hhhh#.....','....#hihhhh#....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhH#...','..#shhhhhhhHs#..','..#shhhhhhHHs#..','..#ssHHHHHHss#..'],
+  left:[0,'.......##.......','......#hh#......','.....#hihh#.....','.....#hhhh#.....','....#hihhhh#....','....#hhhhhh#....','...#hhhhhhhh#...','...#hhhhhhhH#...','..#sshhhhhhHH#..','..#skwssShhHH#..','..#sMssssshH#...']},
 };
-const BODIES={coat:[[8,'....#wwwwww#....'],[9,'...#ww#ww#ww#...'],[10,'..#sww#ww#wws#..'],[11,'..#s#ww#ww#w#s#.']],
- apron:[[9,'...#byyyyyyb#...'],[10,'..#sbyyyyyybs#..'],[11,'..#s#yyyyyy#s#..']],
- dress:[[12,'...#rrrrrrrr#...'],[13,'..#rrrrrrrrrr#..'],[14,'..#rrrrrrrrrr#..'],[15,'..############..']],
- vest:[[8,'....#nbbbbn#....'],[9,'...#nbbbbbbn#...'],[10,'..#snbbbbbbns#..']]};
-const SHADES={down:[5,'..#skkkkkkkks#..'],left:[5,'..#skkkkkkk#....']};
-function applyOverlay(rows,ov,y0){rows=rows.slice();ov.forEach((r,i)=>{const y=y0+i;if(y>=rows.length)return;let out='';for(let x=0;x<16;x++)out+=r[x]==='.'?rows[y][x]:r[x];rows[y]=out;});return rows;}
+/* face accessories: per direction [row, overlay] */
+const ACCS={
+shades:{down:[9,'....kwkkkkwk....'],left:[9,'..#kwkkk........']},
+glasses:{down:[9,'....nqksskqn....'],left:[9,'...kqn..........']},
+goggles:{down:[8,'..#RRRRRRRRRR#..','..#RffwRRffwR#..'],left:[8,'..#RRRRRRRRRR#..','..#RfwfRRRRRR#..'],up:[8,'..#RRRRRRRRRR#..']},
+stache:{down:[10,'....hhhhhhhh....'],left:[10,'..#hhh..........']},
+beard:{down:[10,'...hhhMMhhhh....','....hhhhhhHH....'],left:[10,'..#hMhhh........','....hhhhh.......']},
+zinc:{down:[10,'......ww........'],left:[9,'..w.............']},
+};
+/* outfits: letter remap over the body rows [from,to] plus per-direction overlays (rows counted on the full sprite) */
+const OUTFITS={
+coat:{map:{a:'d',A:'D',L:'d',p:'d',P:'D',g:'d',G:'D'},rows:[12,17],down:[12,'.......aa.......','.......aa.......','.......aa.......','.......aa.......']},
+vest:{map:{a:'d',A:'D'},rows:[12,15],down:[12,'......aaaa......','.......aa.......','.......aa.......','......aaaa......']},
+apron:{down:[12,'.....d....d.....','.....dddddd.....','....dddddddd....','.....dddddD.....','.....ddddDD.....'],up:[12,'.....d....d.....','......d..d......','.......dd.......','.....d.dd.d.....'],left:[12,'......d.........','.....dd.........','.....dd.........','.....dd.........','......dd........']},
+dress:{map:{p:'a',P:'A',g:'s',G:'S'},rows:[16,17],down:[16,'...#aaaaaaaA#...','..#aaaaaaaaAA#..'],up:[16,'...#aaaaaaaA#...','..#aaaaaaaaAA#..'],left:[16,'....#aaaaaA#....','...#aaaaaaaA#...']},
+pack:{down:[12,'.....d....d.....','.....d....d.....'],up:[12,'.....dddddd.....','....#dddddD#....','....#dwwddD#....','.....#ddDD#.....'],left:[12,'..........#dd#..','...........ddD#.','...........ddD#.','..........#dD#..']},
+sash:{down:[12,'.........dd.....','.......dd.......','.....dd.........'],up:[12,'.....dd.........','.......dd.......','.........dd.....']},
+tie:{down:[12,'.......dd.......','.......dd.......','.......dD.......']},
+stripe:{down:[13,'....dddddddd....'],up:[13,'....dddddddd....'],left:[13,'.....d..dddd....']},
+};
+const SKIN=[['#ffd9b3','#eaa77c'],['#f7c59a','#d9946a'],['#dca06e','#b87a4c'],['#b0744a','#8a5632'],['#80502f','#613a20'],['#f6eee8','#d2c4cc']];
+function tintHex(h,f){const n=parseInt(h.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;if(f<=1){r*=f;g*=f;b*=f;}else{const t=f-1;r+=(255-r)*t;g+=(255-g)*t;b+=(255-b)*t;}return'#'+[r,g,b].map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,'0')).join('');}
+/* look -> full palette. Give base colours, shades are derived. */
+function lookPal(look){const q=look.pal||{};const sk=SKIN[look.sk||0];const h=q.h||'#5a3a22',a=q.a||'#3a6cff',p=q.p||'#3b4a8c',r=q.r||'#ff3f5f',d=q.d||'#fbfbf4';
+  const pal={s:sk[0],S:sk[1],M:tintHex(sk[1],.72),h,H:tintHex(h,.72),i:q.i||tintHex(h,1.38),a,A:tintHex(a,.76),p,P:tintHex(p,.76),e:q.e||'#f4f4ec',r,R:tintHex(r,.74),d,D:tintHex(d,.78)};
+  pal.L=look.long?pal.A:pal.s;pal.g=look.legs==='shorts'?pal.s:pal.p;pal.G=look.legs==='shorts'?pal.S:pal.P;return Object.assign(pal,look.ppal||{});}
+function applyOverlay(rows,ov,y0){rows=rows.slice();ov.forEach((r,i)=>{const y=y0+i;if(y<0||y>=rows.length)return;let out='';const w=rows[y].length;for(let x=0;x<w;x++)out+=(r[x]===undefined||r[x]==='.')?rows[y][x]:r[x];rows[y]=out;});return rows;}
+function applyPart(rows,part,d){if(!part)return rows;const ov=part[d];if(!ov)return rows;return applyOverlay(rows,ov.slice(1),ov[0]);}
+/* close any gap in the outline left by overlays */
+function autoOutline(rows){const h=rows.length,w=rows[0].length;const fill=(x,y)=>x>=0&&y>=0&&x<w&&y<h&&rows[y][x]!=='.'&&rows[y][x]!=='#';
+  return rows.map((r,y)=>{let o='';for(let x=0;x<w;x++){const near=fill(x-1,y)||fill(x+1,y)||fill(x,y-1)||fill(x,y+1);o+=(r[x]==='.'&&near)?'#':r[x];}return o;});}
+function personRows(look,d,f){const blank=['................','................','................','................'];
+  let body=(look.bike?BIKE_BODY:P_BODY)[d][f];let rows=blank.concat(P_HEAD[d],body);
+  const fits=[].concat(look.body||[]);
+  for(const k of fits){const o=OUTFITS[k];if(o&&o.map&&!look.bike)rows=rows.map((r,y)=>y>=o.rows[0]&&y<=o.rows[1]?r.replace(/[a-zA-Z]/g,c=>o.map[c]||c):r);}
+  for(const k of fits)rows=applyPart(rows,OUTFITS[k],d);
+  const hat=HATS[look.hat||'short']||HATS.short;if(hat.base)rows=applyPart(rows,HATS[hat.base],d);rows=applyPart(rows,hat,d);
+  for(const k of [].concat(look.acc||[]))rows=applyPart(rows,ACCS[k],d);
+  return autoOutline(rows);}
 const peopleCache={};
 function personSet(look){look=look||{};const key=JSON.stringify(look);if(peopleCache[key])return peopleCache[key];
-  const pal=Object.assign({h:'#2c2444',r:'#ff3f5f',b:'#3a6cff',s:'#ffd4a8',n:'#2c2444'},look.pal||{});const s={};
-  for(const d of ['down','up','left']){s[d]=HERO_BASE[d].map(fr=>{let rows=fr;if(look.hat&&HATS[look.hat])rows=applyOverlay(rows,HATS[look.hat],0);
-      if(look.body&&BODIES[look.body])for(const[y,r]of BODIES[look.body]){if(d==='left')continue;rows=applyOverlay(rows,[r],y);}
-      if(look.shades&&d!=='up'){const[y,r]=SHADES[d];rows=applyOverlay(rows,[r],y);}
-      return mkSprite(rows,pal);});}
+  const pal=lookPal(look);const s={};
+  for(const d of ['down','up','left'])s[d]=[0,1,2].map(f=>mkSprite(personRows(look,d,f),pal));
   s.right=s.left.map(flipH);peopleCache[key]=s;return s;}
-/* 24x24 trainer portraits */
-const PORTRAIT=['........########........','.......#hhhhhhhh#.......','......#hhhhhhhhhh#......','......#hhhhhhhhhh#......','.....#ssssssssssss#.....','.....#ssssssssssss#.....','.....#sskssssssksss#....','.....#ssssssssssss#.....','.....#sssss#ssssss#.....','......#sssss###ss#......','.......#ssssssss#.......','........########........','......#bbbbbbbbbbb#.....','.....#bbbbbbbbbbbbb#....','....#sbbbbbbbbbbbbbs#...','....#sbbbbbbbbbbbbbs#...','....#s#bbbbbbbbbbb#s#...','....##.#bbbbbbbbb#.##...','.......#nnnnnnnnn#......','.......#nnnn#nnnn#......','.......#nnnn#nnnn#......','.......#nnnn#nnnn#......','.......#nnnn#nnnn#......','.......######.####......'];
-const PHATS={
- cap:['........########........','.......#rrrrrrrr#.......','......#rrrrrrrrrr#......','.....#rrrrrrrrrrrr#.....','....#rrrrrrrrrrrrrr#....'],
- backcap:['........########........','.......#rrrrrrrr#.......','......#rrrrrrrrrr#......','......#rrrrrrrrrr#r#....','......#hhhhhhhhhh#......'],
- spiky:['......#..#..#..#..#.....','.....#w##w##w##w##w#....','......#hwhhwhhwhhwh#....','......#hhhhhhhhhh#......'],
- beanie:['.........######.........','.......#rrrrrrrr#.......','......#rrrrrrrrrr#......','......#rRRRRRRRRr#......'],
- copcap:['......############......','.....#rrrrrrrrrrrr#.....','.....#rrrrrrrrrrrr#.....','....##yyyyyyyyyyyy##....','....################....'],
- hood:['......############......','.....#rrrrrrrrrrrr#.....','....#rrrrrrrrrrrrrr#....','....#rrr#ssssss#rrr#....','....#rr#ssssssss#rr#....','....#rr#ssssssss#rr#....','....#rr#ssssssss#rr#....'],
- bandana:['........########........','.......#rrrrrrrr#.......','......#rrrrrrrrrr#..##..','......##rrrrrrrr##.#r#..','.....#hhhhhhhhhhhh##....'],
- ponytail:['........########........','.......#hhhhhhhh#.......','......#hhhhhhhhhh#......','......#hhhhhhhhhh#hh#...','.....#ssssssssssss#hh#..','.....#ssssssssssss#hh#..','.....#sskssssssksss#h#..'],
- longhair:['........########........','.......#hhhhhhhh#.......','......#hhhhhhhhhh#......','.....#hhhhhhhhhhhh#.....','....#hhssssssssssshh#...','....#hhssssssssssshh#...','....#hhskssssssksshh#...','....#hhssssssssssshh#...','....#hhhssssssssshhh#...','....#hhhh#ssss###hhh#...','....#hhhhhhhhhhhhhhh#...','....##################..'],
- headphones:['......############......','.....#hhhhhhhhhhhh#.....','....#o#hhhhhhhhhh#o#....','...#oo#hhhhhhhhhh#oo#...','...#oo#ssssssssss#oo#...','...#oo#ssssssssss#oo#...','....##sskssssssksss##...'],
- bald:['........########........','.......#ssssssss#.......','......#ssssssssss#......','......#ssssssssss#......'],
- mohawk:['..........####..........','..........#rr#..........','......#hhh#rr#hhh#......','......#hhh#rr#hhh#......'],
- bun:['.........######.........','........#hhhhhh#........','.......#hhhhhhhh#.......','......#hhhhhhhhhh#......','......#hhhhhhhhhh#......'],
- crown:['......#..####..#........','......#yyyyyyyy#........','.....#yyyyyyyyyy#.......','......#hhhhhhhhhh#......'],
- visor:['........########........','.......#hhhhhhhh#.......','......#hhhhhhhhhh#......','....##oooooooooooo##....'],
+/* builder: C(hat, skin 0-5, hair, top, legs, opts) */
+function C(hat,sk,h,a,p,o){o=o||{};const pal={h,a,p};for(const k of ['r','d','e','i'])if(o[k])pal[k]=o[k];
+  const l={hat,sk,pal};for(const k of ['body','acc','legs','long','art','ppal','bike'])if(o[k]!==undefined)l[k]=o[k];return l;}
+/* the cast: every character's look lives here; `art` names their battle portrait */
+const CAST={
+player:C('backcap',1,'#6a3a1a','#3a6cff','#3b3f6a',{r:'#ff3f5f',d:'#ffe03a',body:'pack'}),
+neighbor:C('backcap',2,'#3a3448','#a04cff','#3b3f6a',{r:'#ffe03a',legs:'shorts'}),
+chad:C('spiky',1,'#e0b040','#ff3fa4','#c8b078',{i:'#fff6c8',acc:'shades',legs:'shorts',art:'chad'}),
+todd:C('backcap',2,'#8a5a2c','#6a6a78','#4a5a3a',{r:'#19e6d2',legs:'shorts',art:'todd'}),
+kenny:C('bucket',0,'#b0502a','#ffe03a','#6a7a3a',{r:'#57d65a',acc:'glasses',legs:'shorts',art:'kenny'}),
+marv:C('copcap',1,'#5a3a22','#3a6cff','#2c3a6a',{r:'#3a4a7a',acc:['shades','stache'],long:true}),
+pogkid:C('visor',3,'#3a3448','#ffe03a','#3b4a8c',{r:'#ff3f5f',legs:'shorts'}),
+raven:C('longhair',5,'#3a3448','#5a3a6a','#2e2a3a',{long:true,e:'#3a3448',art:'raven'}),
+band:C('curtains',1,'#f0cc4a','#fbfbf4','#e8e8f0',{i:'#fff8d0',body:'vest',d:'#9ad8ff',art:'band'}),
+lisa:C('ponytail',0,'#f0cc4a','#19e6d2','#ff8ccc',{r:'#ff3fa4',legs:'shorts',art:'lisa'}),
+mallmom:C('bun',1,'#8a5a2c','#ff3fa4','#4a5a8c',{long:true}),
+teen:C('mohawk',0,'#a04cff','#3a3448','#2e2a3a',{e:'#3a3448'}),
+angler:C('bucket',2,'#b8b8c4','#8a9a5a','#6a5a3a',{r:'#c8b078',acc:'beard',body:'vest',d:'#8a5a2c',art:'angler'}),
+aol:C('sidepart',0,'#8a5a2c','#fbfbf4','#6a6a78',{acc:'glasses',long:true,body:'tie',d:'#ff3f5f',art:'aol'}),
+bouncer:C('bald',4,'#3a3448','#3a3448','#2e2a3a',{acc:'shades',e:'#3a3448'}),
+clerk:C('cap',2,'#3a3448','#fbfbf4','#3b4a8c',{r:'#3a6cff',body:'vest',d:'#ffe03a'}),
+nerd:C('sidepart',0,'#b0502a','#fbfbf4','#8a7a5a',{acc:'glasses',body:'sash',d:'#ff8c2a',art:'nerd'}),
+macarena:C('afro',1,'#b0502a','#ff3fa4','#19e6d2',{art:'macarena'}),
+prof:C('prof',1,'#c8c8d4','#7ec8a0','#6a5a4a',{body:'coat',acc:['glasses','stache'],d:'#fbfbf4'}),
+mom:C('bun',1,'#8a5a2c','#ff8ccc','#4a5a8c',{body:'apron',d:'#ffe03a'}),
+sleep:C('ponytail',3,'#3a3448','#ff8ccc','#ff8ccc',{r:'#fbfbf4',body:'dress'}),
+mart:C('visor',2,'#5a3a22','#fbfbf4','#3b4a8c',{r:'#3a6cff',body:'apron',d:'#ff9a2a'}),
+hank:C('headphones',1,'#3a3448','#3a3448','#3b3f6a',{r:'#ff3f5f',art:'hank'}),
+pete:C('cap',2,'#b0502a','#fbfbf4','#6a4a2a',{r:'#ff3f5f',body:'apron',d:'#ffe03a',acc:'stache',art:'pete'}),
+skatie:C('ponytail',3,'#a04cff','#19e6d2','#ff3fa4',{r:'#ffe03a',acc:'shades',legs:'shorts',art:'skatie'}),
+rita:C('bun',2,'#3a3448','#fbfbf4','#3a3448',{body:'vest',d:'#3a6cff',acc:'glasses',art:'rita'}),
+mike:C('headphones',0,'#8a5a2c','#b6ff3b','#6a6a78',{r:'#3a3448',acc:'glasses',art:'mike'}),
+pat:C('partyhat',3,'#3a3448','#a04cff','#3b3f6a',{r:'#ff3fa4',art:'pat'}),
+oldangler:C('bald',1,'#ececf0','#19c8c0','#6a5a3a',{acc:'beard'}),
+mitch:C('visor',2,'#f0cc4a','#ff3f5f','#ff3f5f',{r:'#fbfbf4',acc:['shades','zinc'],legs:'shorts',art:'mitch'}),
+surfer:C('longhair',2,'#f0cc4a','#dca06e','#19e6d2',{legs:'shorts',e:'#dca06e',art:'surfer'}),
+heather:C('beanie',0,'#8a5a2c','#5a6a4a','#4a5a8c',{r:'#3a3448',long:true,art:'heather'}),
+counselor:C('visor',1,'#8a5a2c','#ffe03a','#8a7a4a',{r:'#57d65a',legs:'shorts',art:'counselor'}),
+sticks:C('hood',1,'#3a3448','#8a5a2c','#4a4a5a',{long:true,art:'sticks'}),
+steve:C('hardhat',1,'#5a3a22','#c8743a','#6a5a3a',{r:'#ffe03a',acc:'beard',art:'steve'}),
+zero:C('hood',0,'#3a3448','#3a3448','#2e2a3a',{long:true,acc:'shades',e:'#3a3448',art:'zero'}),
+toasterguy:C('sidepart',1,'#c8843a','#ff8c2a','#8a5a2c',{art:'toasterguy'}),
+shred:C('pom',1,'#f0cc4a','#ff3fa4','#3a6cff',{r:'#19e6d2',acc:'goggles',long:true,art:'shred'}),
+doug:C('headphones',1,'#8a5a2c','#3a6cff','#6a6a78',{r:'#ff8c2a',long:true,art:'doug'}),
+yeti:C('hood',1,'#5a3a22','#f4f4fa','#f4f4fa',{long:true,e:'#f4f4fa',art:'yeti'}),
+mod:C('hood',2,'#3a3448','#b6ff3b','#3a3448',{long:true,acc:'shades',art:'mod'}),
+troll:C('troll',0,'#57d65a','#ff3fa4','#3b4a8c',{legs:'shorts',art:'troll'}),
+aslguy:C('spiky',1,'#a04cff','#ffe03a','#3b4a8c',{i:'#d8a8ff',art:'aslguy'}),
+surfclerk:C('longhair',2,'#f0cc4a','#19e6d2','#ff8c2a',{acc:'shades',legs:'shorts'}),
 };
-const PBODIES={coat:[[12,'......#wwwwwwwwwww#.....'],[13,'.....#www##www##www#....'],[14,'....#swww##www##wwws#...'],[15,'....#swww##www##wwws#...'],[16,'....#s#wwwwwwwwwww#s#...']],
- apron:[[13,'.....#bbyyyyyyyyybb#....'],[14,'....#sbbyyyyyyyyybbs#...'],[15,'....#sbbyyyyyyyyybbs#...'],[16,'....#s#byyyyyyyyyb#s#...']],
- dress:[[18,'......#rrrrrrrrrrr#.....'],[19,'.....#rrrrrrrrrrrrr#....'],[20,'.....#rrrrrrrrrrrrr#....'],[21,'....#rrrrrrrrrrrrrrr#...'],[22,'....#rrrrrrrrrrrrrrr#...'],[23,'....#################...']],
- vest:[[12,'......#nnbbbbbbbnn#.....'],[13,'.....#nnbbbbbbbbbnn#....'],[14,'....#snnbbbbbbbbbnns#...']]};
-const PSHADES=[6,'.....#skkkkkkkkkkks#....'];
-function applyOverlay24(rows,ov,y0){rows=rows.slice();ov.forEach((r,i)=>{const y=y0+i;if(y>=rows.length)return;let out='';for(let x=0;x<24;x++)out+=r[x]==='.'?rows[y][x]:r[x];rows[y]=out;});return rows;}
+/* 24x24 battle portraits: hand-drawn per trainer in 02b-trainer-art.js, coloured from the same look */
 const portraitCache={};
 function portrait(look){look=look||{};const key=JSON.stringify(look);if(portraitCache[key])return portraitCache[key];
-  const pal=Object.assign({h:'#2c2444',r:'#ff3f5f',b:'#3a6cff',s:'#ffd4a8',n:'#2c2444'},look.pal||{});let rows=PORTRAIT;
-  if(look.hat&&PHATS[look.hat])rows=applyOverlay24(rows,PHATS[look.hat],0);
-  if(look.body&&PBODIES[look.body])for(const[y,r]of PBODIES[look.body])rows=applyOverlay24(rows,[r],y);
-  if(look.shades)rows=applyOverlay24(rows,[PSHADES[1]],PSHADES[0]);
-  if(look.smirk)rows=applyOverlay24(rows,['.....#sssss#ssssss#.....','......#sssss###ss#......'],8);else rows=applyOverlay24(rows,['.....#ssssssssssss#.....','......#sss######ss#......'],8);
-  const c=mkSprite(rows,pal);portraitCache[key]=c;return c;}
+  const art=typeof TRAINER_ART!=='undefined'&&TRAINER_ART[look.art];let c;
+  if(art)c=mkSprite(art,Object.assign(lookPal(look),{x:'#c8c8d4',X:'#8a8a9a',u:'#ff9a2a',U:'#c86a1a'},TRAINER_PAL[look.art]||{}));
+  else{c=document.createElement('canvas');c.width=24;c.height=24;c.getContext('2d').drawImage(personSet(look).down[0],4,2);}
+  portraitCache[key]=c;return c;}
+/* =============== trainer battle portraits (24x24, hand-drawn) ===============
+   Same letters as the map sprites (see 02-people.js) plus x/X/u/U props from TRAINER_PAL. */
+const TRAINER_ART={
+chad:['.......#..#..#..#.......','......#i##i##i##i#......','.....#hihhihhihhih#.....','.....#hhhhhhhhhhhH#.....','.....#hhshhhsshhhH#.....','.....#sssssssssssS#.....','.....#skkkkkkkkkks#.....','.....#skqkksskqkks#.....','.....#ssssssssssMs#.....','.####.#sssssMMMMs#......','#sSsS#.#ssssssss#.......','#ssss#.##aaaaaa##.......','#sssss#aaaaaaaaaa#......','.#sssLLaaaaaaaaaaA#.....','..###aaaaaaaaaaaaAL#....','.....#aaaaaaaaaaA#LL#...','......#aaaaaaaaA#s#.....','......#pppppppppP#......','......#pPPp##pPPp#......','......#pppp##pppp#......','.......#gg#..#gg#.......','.......#gg#..#gg#.......','......#eee#..#eee#......','......#####..#####......'],
+todd:['........................','......########..........','....##rrrrrrrr##........','...#rrrirrrrrrrR#.......','...#rrrrhhhhrrrR#.......','...#rhhhhhhhhhhR#...##..','...#hhssshhsssHs#..#xx#.','...#ssswksswksss#..#xx#.','...#ssskksskkscc#.##xx#.','...#ssssssssssss#.#wxx#.','....#sssMMMMsss#..#wxX#.','.....##ssmmss##...##xX#.','....#aaaaaaaaaa#...#xX#.','...#aaaaaaaaaaaA####xX#.','..#LLaaaaaaaaaaALLs#xX#.','..#LL#aaaaaaaaA####xxX#.','..#ss#aaaaaaaaA#...#xX#.','...###pppppppP##...#xX#.','....#pppppppppP#..##xX#.','....#pppp##pppP#..#wxX#.','....#pppp##pppP#..#wxX#.','.....#gg#..#gg#...##xX#.','....#eee#..#eee#...#xx#.','....#####..#####....##..'],
+kenny:['..................####..','......######.....#wqww#.','....##rrrrrr##...#qwqw#.','...#rrrirrrrrR#..#wqww#.','...#rrrrrrrrrR#...#qw#..','.##RRRRRRRRRRRR##..##...','..#hhssssssssHh#...#t#..','..#snnnnssnnnns#...#t#..','..#snqknnnnkqns#..#t#...','..#snnnnssnnnns#..#t#...','..#sfssssssssfs#.#t#....','...#sssMwMMsss#..#t#....','....##ssssss####t#......','...#aaaaaaaaaaLLs#......','..#LaaaaaaaaaaA###......','.#LL#aaaaaaaaA#.........','####s#aaaaaaaA#.........','#qq##pppppppP#..........','#qzq#ppp##ppP#..........','#qqq#ppp##ppP#..........','####.#gg#.#gg#..........','.....#gg#.#gg#..........','....#eee#.#eee#.........','....#####.#####.........'],
+raven:['........................','........########........','......##hhhhhhhh##......','.....#hhhihhhhhhhh#.....','....#hhhhhhhhhhhhhH#....','....#hhhhhhhhsshhhH#....','....#hhhhhhhsssshhH#....','....#hhhhhhsvvvsshH#....','....#hhhhhhskwksshH#....','....#hhhhhssssssshH#....','....#hhhhhssvvssshH#....','....#hHhhh#ssss#hhH#....','....#hHh##kkyykk##H#....','....#Hh#aaaaaaaaaa#H#...','....#H#aaaaaaaaaaaA##...','.....#sssssssssaaaA#....','.....#aassssssssssA#....','......#aaaaaaaaaaA#.....','......#aaaaaaaaaaA#.....','.....#aaadaaaadaaaA#....','.....#aadaaaaaadaAA#....','......###pp##pp###......','......#eeee##eeee#......','......#####..#####......'],
+band:['........................','........########....##..','......##hhhHhhhh##.#ss#.','.....#hhihhHhhihhh##ss#.','....#hhhhhhsshhhhhH#LL#.','....#hhhhssssssshhH#aa#.','....#hhsssssssssshH#aa#.','....#hssswkssssssSH#aa#.','....#ksskksskkssss#aaa#.','.....#kkssssssssss#aaa#.','......#skssMMMsss#aaa#..','.......##ssssss##aaa#...','......#ddaayyaadd#a#....','.....#dddaayyaaddd#.....','....#aadddaaaadddD#.....','....#aa#ddaaaaddD#......','....#ss#ddaaaaddD#......','.....###ppppppppP#......','.......#pppppppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','......#eeee##eeee#......','......#####..#####......'],
+lisa:['........................','.......########.........','.....##hhhhhhhh##..##...','....#hhhihhhhhhhh##hh#..','....#hhhhhhhhhhhhrrhhh#.','....#hhhsshhhsshhH#hhH#.','....#hssssssssssH#.#hH#.','....#ssswksswksss#..#H#.','....#ssskksskksys#...#..','....#smssssssssms#......','.....#sssMwwMsss#.......','......##ssMMss##........','.....#aaaaaaaaaa#.......','....#aa########aa#......','...#LL#xxxxxxxx#LL#.....','...#Ls#xyxxmxxx#sL#.....','...#ss#xxxzxxyx#ss#.....','....###xmxxxxqx###......','......##########........','......#pppp##ppP#.......','.......#gg#..#gg#.......','.......#gg#..#gg#.......','......#eee#..#eee#......','......#####..#####......'],
+angler:['....................##..','.......######......#.n..','.....##rrrrrr##...#..n..','....#rrrirrrrrR#.#...n..','....#rrmrrrryrR##....n..','..##RRRRRRRRRRRR##..###.','...#hsssssssssHh#..#tt#.','...#ssnnssssnnss#..#tt##','...#sswksssswkss#..#ttt#','...#shhhhhhhhhhs#..#####','...#hhhhMMMMhhhh#.#.....','....#hhhhhhhhhH#.#......','.....##hhhhHH###........','....#ddaa#hH#ddLs#......','...#ddddaa##adddL#......','...#Ld#dwdaadwdd#.......','...#Ld#ddddaddDD#.......','...#ss#ddddadDDD#.......','....###ppppppppP#.......','......#ppp##ppP#........','......#ppp##ppP#........','......#eee##eee#........','.....#eeee##eeee#.......','.....#####..#####.......'],
+aol:['........................','........########........','......##hhhhhhhh##......','.....#hhhhhhhihhhh#.....','.....#hhhhhhhhhhhH#.....','.....#shhhhhhhsssS#.....','..##.#snnnnssnnnns#.....','.#cc##snqknnnnkqns#.....','.#cc#ssnnnnssnnnns#.....','.#cc#sssssssssssss#.....','.#cc#s#sssMwwMsss#......','.#cc#L##ssMMMMss##......','..##nLLawwwddwwwaa#.....','...n#Laaaaaddaaaaaa#....','..n.#aaaawaddaaaaAL#....','...n.#aaawaadaaaA#L#....','..n..#aaaaaaaaaaA#s#....','...n.#pppppppppP###.....','..n...#pppppppP#........','...n..#ppp##ppP#........','..n...#ppp##ppP#........','...n..#ppp##ppP#........','..nn.#eeee##eeee#.......','.....#####..#####.......'],
+nerd:['........................','........########........','......##hhhhhhhh##......','.....#hhhhhhhihhhh#..#..','.....#hhhhhhhhhhhH#.#s#.','.....#shhhhhhhsssS#.#s#.','.....#snnnnssnnnns#.#s#.','.....#snkqnnnnkqns##ss#.','.....#snnnnssnnnns#sss#.','.....#ssssssssssss#LL#..','......#ssssMMMsss#aa#...','.......##sMsssM##aa#....','..######aaaaddaaaaa#....','..#tttt#aaddaaaaa##.....','..#twwt#ddyaaaaaA#......','..#twnt#daaaaaaaA#......','..#twwtsdaaaaaaaA#......','..#twnt#pppppppP#.......','..######ppp##ppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','......#eeee##eeee#......','......#####..#####......'],
+macarena:['.......##########.......','.....##hhhhhhhhhh##.....','....#hhhihhhhhhhhhh#....','...#hhhhhhhhhhhhhhhH#...','...#hhrrrrrrrrrrrrhH#...','...#hhsssssssssssshH#...','...#hhssswksswkssshH#...','...#hhyssskksskkssyH#...','...#hhssssssssssssHH##..','...#hHsssrwwwwrsssHH#s#.','....#hH#ssrrrrss#HH#LL#.','.....##.##ssss##.##LL#..','########aaaaaaaa##LL#...','#ssLLLLaaaaaaaaaaaL#....','########aaaaaaaaA##.....','........#aaaaaaA#.......','........#apppppA#.......','.......#pppppppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','.......#mmm##mmm#.......','.......#mmm##mmm#.......','......#eeee##eeee#......','......#####..#####......'],
+hank:['....................##..','........########...#yy#.','......##rrrrrrrr##.#yy#.','.....#rrhhhhhhhhrr#.##..','....#rhhhihhhhhhhhr#....','...#rrhhhhhhhhhhhhrr#.#.','...#rrhhhhsssshhhhrr#...','...#rRssnnnssnnnssrR#...','...#rRssswksswksssrR#...','...#rRssskksskksssrR#...','....##ssssssssssMs##....','......#sssssMMMMs#......','.......##ssssss##..###..','......#aaaaaaaaaa##ss#..','.....#aaaaaayyaaaaLL#...','....#aaaaayyaaaaaa##....','....#LL#aaaayyaaA#......','....#ss#aaaaaaaaA#......','.....###ppppppppP#......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','......#eeee##eeee#......','......#####..#####......'],
+pete:['........................','.....##########.........','....#rwwrwwrwwrw#.......','....#rwwrwwrwwrw#.##.##.','...#RRRRRRRRRRRR##tt#tw#','...#hssssssssssh##t#.#t#','...#ssswksswksss##wtttt#','...#ssskksskksss#.#ttt#.','...#shhhhhhhhhhs#.s###..','...#hhhhMMMMhhhh##ss#...','....#sshhsssshhs##LL#...','.....##ssssss###aLL#....','....#aaddddddddaaa#.....','...#aaadddddddddaa#.....','..#LLadddddddddddA#.....','..#LL#ddddddddddD#......','.###s#ddddwdddddD#......','#yyy##ddddddddddD#......','#yyy#.#dddddddDD#.......','.###..#ppp##pppP#.......','......#ppp##pppP#.......','......#ppp##pppP#.......','.....#eeee##eeee#.......','.....#####..#####.......'],
+skatie:['......########.####.....','....##rrrrrrrr#mhhh#....','...#rhhhhhhhhhhr#hhH#...','..#rhhhihhhhhhhhr##hH#..','.#rrhhhhhhhhhhhhrr##hH#.','.#rRhhhhhhhhhhhHrR##hH#.','.#rRhhhhhhhhhhhHrR##hH#.','..##hhhhhhhhhhHH##.#hH#.','...#shHHHHHHHHHs#..#hH#.','....###ssssss###...#hH#.','....#aaaaaaaaaa#....#H#.','...#aaaaaaaaaaaa#....#..','..#aaaaaaaaaaaaaA#......','..#LL#aaaaaaaaa#LL#.....','..#LL#mmmmmmmmm#LL###...','..#ss#aaaaaaaaA#s#kk#...','...###ppppppppP##kmmk#..','.....#ppp##ppP#.#kmmk#..','.....#gg#..#gg#..#kk#...','.....#gg#..#gg#...##....','....#www#..#www#........','....#wwc#..#wwc#........','...#mm#mm##mm#mm#.......','....##.##..##.##........'],
+rita:['.......##.####.##.......','......#yy#hihh#yyk#.....','.......###hhhH####......','......##hhhhhhhh##......','.....#hhhhhihhhhhh#.....','.....#hhhhhhhhhhhH#.....','.....#rhhhsssshhhr#.....','.....#srrrrssrrrrs#.....','.....#srqkrrrrkqrs#.....','.....#ssssssssssss#.....','......#ssssMMssss#......','.......##ssssss##.......','......#ddaaaaaadd#.#####','.....#dddaaaaaaddd##kkk#','....#adwwdaaaadddLLswkw#','....#aa#ddaaaaddD#.#ccc#','....#ss#ddaaaaddD#.#####','.....###ppppppppP#......','.......#pppppppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','.......#ppp##ppP#.......','......#eeee##eeee#......','......#####..#####......'],
+mike:['........................','........########........','......##rrrrrrrr##......','.....#rhhhhhhhhhhr#.....','....#rhhhihhhhhhhhr#....','...#rrhhhhhhhhhhhhrr#...','...#rrhhsssssssshhrr#...','...#rRsnnnnssnnnnsrR#...','...#rRsnSSnnnnSSnsrR#...','....#ksnkqnssnkqns##....','....#kksssssssssss#.....','......#kssMMMMsss#......','.......##ssssss##.......','..q...#aawaaaawaa#......','.q...#aaaawnnwaaaa#.x.x.','..q.#LaaaaannaaaaaL#x#x#','....#L#aaaawwaaaA#Ls###.','.####s#aaaawwaaaA###k#..','#oo#o#.#pppppppP#...k...','#oo##..#ppp##ppP#....k..','####...#ppp##ppP#....k..','.......#ppp##ppP#...k...','......#eeee##eeee#.k....','......#####..#####......'],
+pat:['...........##....y......','..........#yy#.o........','..z.......#rr#......m...','.........#wwrr#.........','.........#rrww#...z.....','........#rrrwwr#........','......###wwrrrw###..o...','.....#hhhhhhhhhhhh#.....','.....#hhsssssssshH#.....','.....#ssswksswksss#.....','.##..#ssskksskksss#..##.','#ss#.#ssssssssssss#.#ss#','#LL#..#sssMwwwMss#..#LL#','.#LL#..##sMMMss##..#LL#.','..#LL##aaaaaaaaaa##LL#..','...#LLaaaaaaaaaaaaLL#...','....##aaaaaaaaaaaA##....','......#aaaaaaaaaA#......','......#pppppppppP#......','......#pppp##pppP#......','......#pppp##pppP#......','......#pppp##pppP#......','.....#eeee#..#eeee#.....','.....#####....#####.....'],
+mitch:['........................','........########........','......##hhhhhhhh##......','.....#hhhihhhhhhhh#.....','.....#rrrrrrrrrrrr#.....','...##RRRRRRRRRRRRRR##...','.....#skkkkkkkkkks#.....','.....#skqkkkkkqkks#.....','.....#ssssswwsssss#.....','......#ssMwwwwMss#......','.......##sMMMMs##.......','.....#LaasssssaaL#......','.####LLaaaynaaaaLL#.....','#uuwu#L#aaayaaaa#LL#....','#uuwu#s#aaaaaaaa#.#L#...','.####..#aaaaaaaa#..#s#..','.......#pppppppp#...#...','......#ppppppppp#.......','.....#ppp#.#pppp#.......','....#ggg#...#ggg#.......','....#gg#.....#ggg#......','...#ggg#......#gg#......','...#ggg#......#ggg#.....','...#####......#####.....'],
+surfer:['...................##...','.....########.....#oo#..','...##hhhhhhhh##..#ooom#.','..#hhhihhhhhhhh#.#oomo#.','..#hhhhhhhhhhhH#.#omoo#.','..#hhhssshhsshH#.#mooo#.','..#hhssssssssHH#.#ooom#.','..#hhsSSssSSssH#.#oomo#.','..#hhskksskkssH#.#omoo#.','..#hhssssssssHH#.#mooo#.','..#hHsMwwwwMsHH#.#ooom#.','..#hH##ssss##HH#.#oomo#.','..#H#ssssssss#H###omoo#.','...#sswswswswsss##mooo#.','..#sssSssssSsssss#ooom#.','..#ss#ssssssss#ss#oomo#.','..#ss#sssSssss#.##omoo#.','..#ss#pppppppp#..#mooo#.','...###ppmpppmp#..#ooom#.','.....#ppp##ppp#..#oomo#.','.....#gg#..#gg#..#omoo#.','.....#gg#..#gg#..#oooo#.','....#ggg#..#ggg#..#oo#..','....#####..#####...##...'],
+heather:['......############......','....##rrrrrrrrrrrr##....','...#rrrirrrrrrrrrrrr#...','..#rrrrrrrrrrrrrrrrrR#..','..#RRRRRRRRRRRRRRRRRR#..','.#hhssssssssssssssssHh#.','.#hsssnnnsssssssnnnssH#.','.#ssnnwkkwssssswkkwnnS#.','.#ssswwkkwssssswkkwwsS#.','.#sssqwwwqssssqwwwqssS#.','.#sssqsssssSSsssssqssS#.','.#ssqssssssqSssssssqsS#.','.#sssssssssssssssssssS#.','.#SsssssssMkkMsssssssS#.','..#SsssssssMMsssssssS#..','...##ssssssssssssss##...','.....###ssssssss###.....','...##aaa########aaa##...','..#aaaaaaaaaaaaaaaaaa#..','.#aaaaaa#########aaaaa#.','#aaaaaa#xxxxxkkkx#aaaaA#','#aaaass#xrxxkqqkx#ssaaA#','#aaaass#xxxxxkkkx#ssaAA#','########################'],
+counselor:['........................','........########........','......##hhhhhhhh##......','.....#hhhihhhhhhhh#.....','.....#rrrrrrrrrrrr#.....','...##RRRRRRRRRRRRRR##...','.....#hssssssssssh#.....','.....#ssswksswksss#.....','.#...#ssskksskksss#...#.','#s#..#sMssssssssMs#..#s#','#s##..#sMwwwwwwMs#..##s#','#sss#..##MMMMMM##..#sss#','#sss#.#aaaanyaaaa#.#sss#','.#LL##aaaaanyaaaaa##LL#.','..#LLaaaaalllaaaaaaLL#..','...##aaaalllllaaaaa##...','.....#aaaaataaaaaA#.....','.....#aaaaataaaaaA#.....','.....#pppppppppppP#.....','.....#ppppp##ppppP#.....','......#gg#....#gg#......','......#wr#....#wr#......','.....#eee#....#eee#.....','.....#####....#####.....'],
+sticks:['...........xx...........','..t.t......xx...........','...t.......xx......t.t..','..ttt......xx.......t...','...t....########...ttt..','..t.t.##aaaaaaaa##..t...','.....#aaaiaaaaaaaa#.t.t.','....#aaaaaaaaaaaaaA#....','....#aaaaaaaaaaaaaA#....','....#aaaaaaaaaaaaAA#....','....#aaaaaaaaaaaaAA#....','....#AaaaaaaaaaaAAA#....','.....#AAaaaaaaAAAA#.....','....##aaAAAAAAAAaa##....','...#aaaaaaaaaaaaaaaA#...','...#aaaaaaaaaaaaaaaA#...','...#aa#aaaaaaaaaa#aA#...','...#aa#aaaaaaaaaA#aA#...','...#ss#AAAAAAAAAA#ss#...','...x###pppppppP###..x...','..x...#ppp##ppP#.....x..','.x....#ppp##ppP#......x.','x....#eeee##eeee#......x','.....#####..#####.......'],
+steve:['........................','.....########...........','...##rrrFFrrr##.........','..#rrrrFwwFrrrr#........','..#rrrrrFFrrrrR#........','.#RRRRRRRRRRRRRR#.......','..#hssssssssssh#........','..#swwwwsswwwws#........','..#swukwsswkuws#........','..#sSSSSssSSSSs#.#####..','..#hhssssssssHh##xxtxx##','...#hhhMMMMhhH##x##t##x#','....##hhhhhH##.##.#t#.##','...#aaacaaaaaa#...#t#...','..#aaaacaaaaaaa#..#t#...','.#LLaaaacaaaaaaLL##t#...','.#LL#aaaacaaaA#LL##t#...','.#ss#aaaaacaaA#ss##t#...','..###aaaaaacaA###.#t#...','....#pppppppP#....#t#...','....#ppp##ppP#....#t#...','....#ppp##ppP#....###...','...#eeee##eeee#.........','...#####..#####.........'],
+zero:['........................','........########........','......##aaaaaaaa##......','.....#aaaiaaaaaaaa#.....','....#aaaaaaaaaaaaaA#....','....#aaHHHHHHHHHHaA#....','....#aasssssssssSaA#....','....#akkkkkkkkkkkkA#....','....#akzkzkkkzkzkkA#....','....#aassssssssssaA#....','....#aasssssMMMssaA#....','.....#aasssssssSaA#.....','....##aaa######aaa##....','...#aaaaaaaaaaaaaaaA#...','..#aaaa############aA#..','..#aaa#cccccccccccc#A#..','..#aas#cccczzcccccc#s#..','..#aas#cccczzcccccc#s#..','...###xxxxxxxxxxxxxx##..','.....##############.....','......#aaaa##aaaA#......','......#aaaa##aaaA#......','.....#eeee#..#eeee#.....','.....#####....#####.....'],
+toasterguy:['........####.####.......','.......#tcct#tcct#......','......##tcct#tcct##.....','.....#xxxxxxxxxxxxk#....','.....#xXXXXXXXXXXxx#....','.....#xxxxxxxxxxxxx#....','..##.###############.##.','.#ss##hhhihhhhhhhh##ss#.','.#LL##hhhsshhhsshH##LL#.','.#LL##sswwwsswwwss##LL#.','.#LL##sswkwsswkwss##LL#.','.#LLL#sMssssssssMs#LLL#.','..#LLL#sMwwwwwwMs#LLL#..','...#LLL##MMMMMM##LLL#...','....#aaaaaaaaaaaaaa#....','.....#aaaaaaaaaaaA#.....','.....#aaaaayyaaaaA#.....','.....#aaaaayyaaaaA#.....','.....#aaaaaaaaaaaA#.....','......#pppppppppP#......','......#pppp##pppP#......','......#pppp##pppP#......','.....#eeee#..#eeee#.....','.....#####....#####.....'],
+shred:['........##..............','.......#ww#........###..','.....##rrrr##.....#zzz#.','...##rrrirrrr##...#zmz#.','..#rrrrrrrrrrrr#..#zzz#.','..#RRRRRRRRRRRR#..#zzz#.','.#RRRRRRRRRRRRRR#.#kkk#.','.#RffffwRRffffwR#.#zzz#.','.#RfffffRRfffffR#.#zzz#.','..#RRRRRssRRRRR#..#zmz#.','..#ssssssssssss#..#zzz#.','...#sssMMMMsss#...#zzz#.','....##sMMMMs##....#zzz#.','...#aaaaaaaaaa#...#zmz#.','..#aaaaaawaaaaa#..#zzz#.','.#aaaaaaawaaaaaA#.#zzz#.','.#aa#aaaawaaaA#aA##kkk#.','.#aa#aaaawaaaA#aA##zzz#.','.#dd#AAAAAAAAA#dd##zzz#.','..###pppppppP###..#zmz#.','....#ppp##ppP#....#zzz#.','....#ppp##ppP#....#zzz#.','...#eeee##eeee#....###..','...#####..#####.........'],
+doug:['.#.#....................','#r#r#.....########......','#r#r#...##rrrrrrrr##....','#x#x#..#rhhhhhhhhhhr#...','#x#x#.#rhhhihhhhhhhhr#..','#x#x##rrhhuuuuuuuuhhrr#.','#x#x##rrussssssssssurr#.','#x#x##rRusswksswkssurR#.','#x#x##rRusskksskkssurR#.','#x#x#.##uuuuuuuuuuuu##..','#x#x#..#uwwwwwwwwwwu#...','#x#x#...#uwwMMMMwwu#....','#k#k#....##uuuuuu##.....','#x#x#...#aaaaaaaaaa#....','#x#x#..#aaaaaawaaaaa#...','#x#x#.#aaaaaaawaaaaaA#..','#x#x#.#aa#aaaawaaaA#aA#.','#x#x#.#aa#aaaawaaaA#aA#.','#x#x#.#dd#AAAAAAAAA#dd#.','#x#x#..###pppppppP###...','#x#x#....#ppp##ppP#.....','#x#x#....#ppp##ppP#.....','#x#x#...#eeee##eeee#....','#####...#####..#####....'],
+yeti:['.......##########.......','.....##aaaaaaaaaa##.....','....#aaaiaaaaaaaaaa#....','...#aaaaaaaaaaaaaaaA#...','...#aaaa########aaaA#...','...#aaa#hhhhhhhh#aaA#...','...#aa#snnssssnns#aA#...','...#aa#sswksswkss#aA#...','...#aa#sskksskkss#aA#...','...#aa#ssssqsssss#aA#...','...#aaa#ssMMMMss#aaA#...','..#aaaaa########aaaaA#..','.#aaaaAaaaaaaaaaaaAaaA#.','#aaaaaaaaaayyaaaaaaaaaA#','#aaAaaaaAaayyaaaaAaAaaA#','#aaA#aaaaaaaaaaaaaa#AaA#','#aaA#aaaAaaaaaaAaaA#AaA#','#aAA#aaaaaaaaaaaaaA#AAA#','.#q##aaaaaaaaaaaaaA##q#.','.....#aaaAaaaaaAaA#.....','.....#aaaaa##aaaaA#.....','.....#aaaaa##aaaaA#.....','....#aaaaaa##aaaaaA#....','....#######..#######....'],
+mod:['................########','......########..#xxxxxX#','....##aaaaaaaa###xxxxxX#','...#aaaiaaaaaaaa#xXXXXX#','..#aaaaaaaaaaaaa###t####','..#aaHHHHHHHHHHaA#t#....','..#aasssssssssSaA#t#....','..#aakkkkkkkkkka#t#.....','..#aakqkkkkkqkka#t#.....','..#aassssssssssa#t#.....','..#aasssMMMMsss#t#......','...#aasssssssSa#t#......','..##aaa######aa#t#......','.#aaaaaaaaaaa##t#A#.....','#aaaaaaayyyaa#ss#aA#....','#aa#aaaayyyaa#ss#aA#....','#aa#aaaaayaaaa###aA#....','#ss#aaaaaaaaaaaA#ss#....','.###AAAAAAAAAAAA###.....','....#pppp##pppP#........','....#pppp##pppP#........','....#pppp##pppP#........','...#eeee#..#eeee#.......','...#####....#####.......'],
+troll:['.........##........###..','........#hh#.......#u#..','.......#hihh#......#u#..','.......#hhhh#......#u#..','......#hihhhh#....##u##.','......#hhhhhh#....#uuu#.','.....#hhhhhhhh#...#uuu#.','....#hhhhhhhhhh#..#uuu#.','...#hhhhsssshhhh#.#uuu#.','...#snnsssssnnss#.#####.','...#ssswksswksss#..#s#..','...#ssskksskksss#..#L#..','...#sMwwwwwwwwMs#..#L#..','....#sMwwwwwwMs#...#L#..','.....##MMMMMM##...#LL#..','....#aaaaaaaaaa###LL#...','...#aaaaaaaaaaaLL#......','..#LL#aaaaaaaA#LLL#.....','..#ss#aaaaaaaA##LL#.....','...###ssssssss#.........','.....#pppppppP#.........','.....#gg#..#gg#.........','....#eee#..#eee#........','....#####..#####........'],
+aslguy:['.......#..#..#..#.......','......#i##i##i##i#......','.....#hihhihhihhih#.....','.....#hhhhhhhhhhhH#.....','.....#hhshhhsshhhH#.....','.....#ssnnnsssssss#.....','.....#sssssssnnnss#.....','.....#ssswksssssss#.....','.....#ssskksskkkss#.....','.....#ssssssssssss#.....','......#ssMMMMMwss#......','#......##ssssss##......#','#s#...#aassyysaa#....#s#','.#s##.#aaasyysaaa#.##s#.','.#sss#aaaaassaaaaa#sss#.','..###LLaaaasaaaaaLL###..','.....#aaaaaaaaaaaA#.....','.....#aaaaaaaaaaaA#.....','......#pppppppppP#......','......#pppp##pppP#......','......#pppp##pppP#......','......#pppp##pppP#......','.....#eeee#..#eeee#.....','.....#####....#####.....'],
+};
+const TRAINER_PAL={'todd': {'x': '#ff9a2a', 'X': '#c86a1a'}, 'lisa': {'x': '#a04cff'}, 'mitch': {'u': '#ff5a2a'}, 'sticks': {'x': '#9a9aa8'}, 'steve': {'u': '#ff3f5f'}, 'doug': {'u': '#f08a6a', 'x': '#3ad0e8'}, 'mod': {'x': '#b8b8c8', 'X': '#7a7a8c'}, 'troll': {'u': '#ffe03a'}};
 
 const MON_ART={
 Dialupine:['........#.#.#.#.........','.......#F#F#F#F#........','......#fFfFfFfFf#.......','.....#aFfFfFfFfFa#......','....#aafFfFfFfFfaa#.....','...#aaaFfFfFfFfFaaa#....','..#aaaaFFFFFFFFFaaaa#...','.#aaaaaaaaaaaaaaaaaaa#..','.#aaaaaaaaaaaaaaaaaaa#..','#aaa##aaaaaaaaaa##aaaa#.','#aaawwkaaaaaaaawwkaaaa#.','#aaawkkaaaaaaaawkkaaaa#.','#aaaaaaaaaaaaaaaaaaaaa#.','#aaaaaaaa##########aaa#.','#aaaaaaaaaaaaaaaaa#aaa#.','.#aaaabbbbbbbbbbbaaaa#..','.#aaabbbbbbbbbbbbbaaa#..','.#aaabbbbbbbbbbbbbaaa#..','..#aaabbbbbbbbbbbaaa#...','..#aaaaaaaaaaaaaaaaa#...','..#aaa#aaaaaaaa#aaaa#...','...##.#aaaa#aaa#.###....','......#aaa#.#aaa#.......','......#####.#####.......'],
@@ -627,73 +785,74 @@ function drawTile(ch,x,y,fr){let under=null;if(UNDER_GRASS.includes(ch))under=(M
 
 /* =============== world =============== */
 const MAPS={};
-function hero(r,b,hat,o){return Object.assign({hat:hat||'cap',pal:{r,b}},o||{});}
-const T=(id,x,y,dir,pal,trainer,team,o)=>Object.assign({id,x,y,dir,pal,trainer,team,flag:id},o);
+const T=(id,x,y,dir,look,trainer,team,o)=>Object.assign({id,x,y,dir,look,trainer,team,flag:id},o);
 /* ---- outdoor maps ---- */
 MAPS.home={name:'Dial-Up Downs',outdoor:true,music:'town',wild:['Milkwog','Milkwog','Slapbrace','Beanbuddy'],lv:[2,4],edges:{top:'r1'},rows:[
 'TTTTTTTTTppTTTTTTTTT','T........pp........T','T.PPPP...pp..BBBB..T','T.PPPP...pp..BBBB..T','T.VWDW...pp..WDVW..T','T...p....pp....p...T','T...pppppppppppp...T','T.f......pp......f.T',
 'T........pp..YYYY..T','T..CCCC..pp..YYYY..T','T..CCCC..pp..VWDW..T','T..WDVW..ppS...p...T','T...pppppppppppp...T','T.......f..........T','T..,,,,......,,,,..T','TTTTTTTTTTTTTTTTTTTT'],
  signs:{'11,11':'DIAL-UP DOWNS\nPop. 12 and one very loud modem.\nLab: north-west. Sleepover: east.'},
  buildings:[{door:[4,4],kind:'lab'},{door:[14,4],kind:'house',id:'myhome'},{door:[15,10],kind:'sleep',id:'sleep1'},{door:[4,11],kind:'mart',id:'mart1'}],
- npcs:[{id:'neighbor',x:12,y:13,dir:'left',look:hero('#ffe03a','#a04cff','backcap'),special:'kid'}]};
+ npcs:[{id:'neighbor',x:12,y:13,dir:'left',look:CAST.neighbor,special:'kid'},
+  /* Chad ambushes you the moment you step out of the lab with a starter, then walks off north */
+  T('chad1',8,5,'left',CAST.chad,'CHAD',()=>[makeMon(RIVAL_PICK(),5)],{watch:4,leaveTo:[9,0],show:()=>!!G.flags.starter&&!G.flags.chad1,
+   tutorial:'CHAD: Ugh, fine. JUICE POUCH. My mom packs like ten. Your Radimal is all healed up. Everybody loses their first one. Next time, try a different move.',
+   before:['CHAD: YO. Hold up. The old guy gave YOU one too? I thought I was special.','CHAD: Nice Radimal. Mine\'s cooler. My tips are frosted. My cargo shorts have 11 pockets. Let\'s go.'],after:['CHAD: Whatever! That was a warm-up. I\'m gonna go train in the grass like a normal person.'],healAfter:'CHAD: Ugh, take a JUICE POUCH. My mom packs like ten. Your team is all healed up. NOT because I care.',healBefore:'CHAD: Dude, your Radimal looks wrecked. Here, JUICE POUCH. When I win, you\'re not blaming THAT.',lose:'CHAD: As if! Talk to the hand.',reward:{money:300}})]};
 MAPS.r1={name:'Slap Bracelet Trail',outdoor:true,music:'route',wild:['Milkwog','Slapbrace','Slapbrace','Beanbuddy','Fuzzbeak','Y2Kroach','Grungehog'],lv:[3,6],edges:{bottom:'home',top:'t2'},rows:[
 'TTTTTTTTTppTTTTTTTTT','T........pp........T','T..,,,,,.pp.,,,,,..T','T..,,,,,.pp.,,,,,..T','T..,,,,,.pp.,,,,,..T','T........pp........T','T.FFFFFF.pp..f.....T','T........pp........T',
 'T~~~~....pp....TT..T','T~~~~~...pp....TT..T','T~~~~....pT........T','T........pp.,,,,,..T','T.,,,,,..pp.,,,,,..T','T.,,,,,..pp.,,,,,..T','T.,,,,,..pp........T','T........pp....S...T',
 'T....f...pp........T','T.TT.....pp..FFFF..T','T.TT..,,,,,,,,.....T','T.....,,,,,,,,.....T','T.....,,,,,,,,.....T','T........pp........T','T.f......pp...f....T','T........pp........T',
 'T..TT....pp....TT..T','T..TT....pp....TT..T','T........pp........T','TTTTTTTTTppTTTTTTTTT'],
  signs:{'15,15':'SLAP BRACELET TRAIL\nTall grass ahead. Trainers ahead. Regret ahead.'},
- npcs:[T('chad1',9,10,'down',hero('#ffe03a','#ff3fa4','spiky',{shades:true}),'CHAD',()=>[makeMon(RIVAL_PICK(),5)],{show:()=>!G.flags.chad1,
-   before:['CHAD: Yo. Nice Radimal. Mine\'s cooler. My tips are frosted. My cargo shorts have 11 pockets. Let\'s go.'],after:['CHAD: Whatever! That was a warm-up. I\'m gonna go train in the grass like a normal person.'],healAfter:'CHAD: Ugh, take a JUICE POUCH. My mom packs like ten. Your team is all healed up. NOT because I care.',healBefore:'CHAD: Dude, your Radimal looks wrecked. Here, JUICE POUCH. When I win, you\'re not blaming THAT.',lose:'CHAD: As if! Talk to the hand.',reward:{money:300}}),
-  T('todd',9,22,'down',hero('#19e6d2','#3a3a3a','backcap'),'SKATER TODD',()=>[makeMon('Hamsterjam',3),makeMon('Milkwog',4)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],healAfter:'SKATER TODD: Here, have my orange slices. Soccer practice was cancelled anyway. (Your team is all healed up!)',lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
-  T('kenny',12,7,'left',hero('#57d65a','#ffe03a','cap'),'BUG KID KENNY',()=>[makeMon('Slapbrace',3),makeMon('Y2Kroach',4)],{watch:3,before:['BUG KID KENNY: My roach survived a microwave. What has your Radimal survived?'],after:['BUG KID KENNY: It also survived this, technically.'],lose:'BUG KID KENNY: Roaches: 1. You: 0.',reward:{money:180}})]};
+ npcs:[T('todd',9,22,'down',CAST.todd,'SKATER TODD',()=>[makeMon('Hamsterjam',3),makeMon('Milkwog',4)],{watch:4,before:['SKATER TODD: Dude. Do a kickflip. No? Then battle.'],after:['SKATER TODD: Bogus. My deck was worth more than your whole team.'],healAfter:'SKATER TODD: Here, have my orange slices. Soccer practice was cancelled anyway. (Your team is all healed up!)',lose:'SKATER TODD: Sick. Thanks for the allowance.',reward:{money:200}}),
+  T('kenny',12,7,'left',CAST.kenny,'BUG KID KENNY',()=>[makeMon('Slapbrace',3),makeMon('Y2Kroach',4)],{watch:3,before:['BUG KID KENNY: My roach survived a microwave. What has your Radimal survived?'],after:['BUG KID KENNY: It also survived this, technically.'],lose:'BUG KID KENNY: Roaches: 1. You: 0.',reward:{money:180}})]};
 MAPS.t2={name:'Capville',outdoor:true,music:'town',wild:['Milkwog','Beanbuddy','Fuzzbeak'],lv:[4,6],edges:{bottom:'r1',right:'r2'},rows:[
 'TTTTTTTTTTTTTTTTTTTT','T..CCCCCC..........T','T..CCCCCC..YYYY....T','T..VWWDWV..YYYY....T','T....p.....VWDW....T','T....p.......p.....T','T....ppppppppp.....T','T........ppppppppppp',
 'T........pppppppppFp','T..PPPP..pp....S...T','T..PPPP..pp........T','T..VDVW..pp..f.f...T','T...p....pp........T','T...ppppppp..,,,,..T','T........pp..,,,,..T','TTTTTTTTTppTTTTTTTTT'],
  signs:{'15,9':'CAPVILLE\nHome of the ARCADE HANGOUT.\nHi-Score Hank has held the top spot since \'91. Nobody has checked since \'92.'},
  buildings:[{door:[6,3],kind:'arcade'},{door:[13,4],kind:'sleep',id:'sleep2'},{door:[4,11],kind:'mart',id:'mart2'}],
- npcs:[{id:'marv',x:18,y:7,dir:'left',look:hero('#3a3a3a','#3a6cff','copcap',{shades:true}),show:()=>!G.pogs.includes('Arcade'),lines:['MALL COP MARV: Road\'s closed. golf cart\'s charging. Come back with an ARCADE CAP and I\'ll pretend I didn\'t see you.']},
-   {id:'pogkid',x:14,y:12,dir:'down',look:hero('#ff3f5f','#ffe03a','visor'),lines:['KID: I traded my whole Milkwog for a holographic slammer. Worth it. Mom says it was not worth it.']}]};
+ npcs:[{id:'marv',x:18,y:7,dir:'left',look:CAST.marv,show:()=>!G.pogs.includes('Arcade'),lines:['MALL COP MARV: Road\'s closed. golf cart\'s charging. Come back with an ARCADE CAP and I\'ll pretend I didn\'t see you.']},
+   {id:'pogkid',x:14,y:12,dir:'down',look:CAST.pogkid,lines:['KID: I traded my whole Milkwog for a holographic slammer. Worth it. Mom says it was not worth it.']}]};
 MAPS.r2={name:'Skate Park Pass',outdoor:true,music:'route',wild:['Fuzzbeak','Pagerpup','Grungehog','Y2Kroach','Frostedtip','Beanbuddy','Boppurr'],lv:[7,11],edges:{left:'t2',right:'t3'},rows:[
 'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT','T....,,,,,....FFFFFF.........T','T....,,,,,..............,,,,.T','T....,,,,,....f.........,,,,.T','T............................T','T..TT......,,,,,.....TT......T',
 'T..TT......,,,,,.....TT......T','pppppppppp,,,,,ppppppppppppppp','pppppppppp,,,,,ppppppppppppppp','T........S...........f.......T','T.~~~~.........FFFF..........T','T.~~~~...,,,,,.........,,,,..T',
 'T.~~~~...,,,,,..TT.....,,,,..T','T........,,,,,..TT...........T','T....f.......................T','TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'],
  signs:{'9,9':'SKATE PARK PASS\nNo skating. No Radimals. No fun. (Sign installed by MARV.)'},
- npcs:[T('raven',12,4,'down',hero('#181818','#181818','longhair'),'GOTH KID RAVEN',()=>[makeMon('Gelpenguin',9),makeMon('Y2Kroach',8)],{watch:3,before:['GOTH KID RAVEN: Everything is meaningless. Except this battle. This battle means everything.'],after:['GOTH KID RAVEN: ...Fine. I\'m going to go write about this in my journal.'],lose:'GOTH KID RAVEN: Darkness wins. As foretold.',reward:{money:260}}),
-  T('band',22,10,'up',hero('#ffe03a','#ffffff','bandana',{shades:true}),'BOY BAND DYLAN',()=>[makeMon('Frostedtip',9),makeMon('Frostedtip',9),makeMon('Milkwog',8)],{watch:3,before:['BOY BAND NICK: Bye bye bye! Wait, that\'s after we battle. Battle first.'],after:['BOY BAND NICK: Tearin\' up my heart. Also my team.'],lose:'BOY BAND DYLAN: Five-part harmony. One-part win.',reward:{money:300}}),
-  T('lisa',7,10,'up',hero('#ff3fa4','#19e6d2','ponytail'),'STICKER LISA',()=>[makeMon('Pagerpup',10),makeMon('Beanbuddy',9)],{watch:3,before:['STICKER LISA: My binder is covered in dolphins and rainbows and it is NONE of your business.'],after:['STICKER LISA: I would\'ve traded you a scratch-n-sniff for that. Too late now.'],lose:'STICKER LISA: Scratch that. Sniff this.',reward:{money:240}})]};
+ npcs:[T('raven',12,4,'down',CAST.raven,'GOTH KID RAVEN',()=>[makeMon('Gelpenguin',9),makeMon('Y2Kroach',8)],{watch:3,before:['GOTH KID RAVEN: Everything is meaningless. Except this battle. This battle means everything.'],after:['GOTH KID RAVEN: ...Fine. I\'m going to go write about this in my journal.'],lose:'GOTH KID RAVEN: Darkness wins. As foretold.',reward:{money:260}}),
+  T('band',22,10,'up',CAST.band,'BOY BAND DYLAN',()=>[makeMon('Frostedtip',9),makeMon('Frostedtip',9),makeMon('Milkwog',8)],{watch:3,before:['BOY BAND DYLAN: Bye bye bye! Wait, that\'s after we battle. Battle first.'],after:['BOY BAND DYLAN: Tearin\' up my heart. Also my team.'],lose:'BOY BAND DYLAN: Five-part harmony. One-part win.',reward:{money:300}}),
+  T('lisa',7,10,'up',CAST.lisa,'STICKER LISA',()=>[makeMon('Pagerpup',10),makeMon('Beanbuddy',9)],{watch:3,before:['STICKER LISA: My binder is covered in dolphins and rainbows and it is NONE of your business.'],after:['STICKER LISA: I would\'ve traded you a scratch-n-sniff for that. Too late now.'],lose:'STICKER LISA: Scratch that. Sniff this.',reward:{money:240}})]};
 MAPS.t3={name:'Mallington',outdoor:true,music:'mall',wild:['Beanbuddy','Pagerpup','Fuzzbeak'],lv:[8,11],edges:{left:'r2',top:'r3'},rows:[
 'TTTTTTTTTTTppTTTTTTTTTTT','T.........pp...........T','T.NNNNNN..pp..YYYY.....T','T.NNNNNN..pp..YYYY.....T','T.VWWDWV..pp..VWDW.....T','T....p....pp....p......T','T....pppppppppppp......T','pppppppppppp...........T',
 'pppppppppppppppppp.....T','T.........pp.....p.....T','T.PPPPPP..pp..CCCC.....T','T.PPPPPP..pp..CCCC.....T','T.VWDWWV..pp..VDVW.....T','T...p.....pp...p.......T','T...ppppppppppppS......T','T.f.......pp......f....T',
 'T.........pp..,,,,.....T','TTTTTTTTTTTTTTTTTTTTTTTT'],
  signs:{'16,14':'MALLINGTON\nFOOD COURT (Fire) and ROLLER RINK (Air) hangouts.\nPlease do not feed the Beanbabies. They already have too many.'},
  buildings:[{door:[5,4],kind:'foodcourt'},{door:[16,4],kind:'sleep',id:'sleep3'},{door:[4,12],kind:'rink'},{door:[15,12],kind:'mart',id:'mart3'}],
- npcs:[{id:'mallmom',x:19,y:8,dir:'left',look:hero('#8a5a2c','#ff3fa4','bun'),lines:['MOM WITH BAGS: I came in for one candle. I have been here six hours. I have four candles and a pretzel.']},
-   {id:'teen',x:8,y:15,dir:'right',look:hero('#a04cff','#181818','mohawk'),lines:['TEEN: The Roller Rink leader only skates backwards. Nobody has ever seen her face.','TEEN: Pretzel Pete at the Food Court hits hard. Bring Water types. Or napkins.']}]};
+ npcs:[{id:'mallmom',x:19,y:8,dir:'left',look:CAST.mallmom,lines:['MOM WITH BAGS: I came in for one candle. I have been here six hours. I have four candles and a pretzel.']},
+   {id:'teen',x:8,y:15,dir:'right',look:CAST.teen,lines:['TEEN: The Roller Rink leader only skates backwards. Nobody has ever seen her face.','TEEN: Pretzel Pete at the Food Court hits hard. Bring Water types. Or napkins.']}]};
 MAPS.r3={name:'Rewind Road',outdoor:true,music:'route',wild:['Gelpenguin','Milkwog','VHSaur','Grungehog','Lavalamprey','Skipmanta','Pagerpup','Frostingroo'],lv:[12,16],edges:{bottom:'t3',top:'t4'},rows:[
 'TTTTTTTTTTTppTTTTTTT','T.........pp.......T','T..,,,,,..pp.,,,,..T','T..,,,,,..pp.,,,,..T','T..,,,,,..pp.......T','T.........pp..FFF..T','T~~~~~~...pp.......T','T~~~~~~...pp.,,,,..T',
 'T~~~~~~...pp.,,,,..T','T~~~~~~...pp.,,,,..T','T~~~~.....pp.......T','T.........pp..TT...T','T..f......pp..TT...T','T.,,,,,,,,pp.......T','T.,,,,,,,,pp...S...T','T.,,,,,,,,pp.......T',
 'T.........pp..f....T','T..TT.....pp.......T','T..TT.....pp.,,,,..T','T.........pp.,,,,..T','T....,,,,,,,,,,,...T','T....,,,,,,,,,,,...T','T....,,,,,,,,,,,...T','T.........pp.......T',
 'T.f.......pp....f..T','T.........pp.......T','T.........pp.......T','TTTTTTTTTTTppTTTTTTT'],
  signs:{'15,14':'REWIND ROAD\nBe kind. Rewind. Or pay the $2 fee.'},
- npcs:[T('angler',7,10,'right',hero('#19e6d2','#8a5a2c','bald'),'ANGLER GUS',()=>[makeMon('Gelpenguin',13),makeMon('Skipmanta',14)],{watch:3,before:['ANGLER GUS: I fish with a CD player as bait. Works on Mantas. Works on nothing else.'],after:['ANGLER GUS: Anti-skip failed me again.'],lose:'ANGLER GUS: Reel talk. You lost.',reward:{money:380}}),
-  T('aol',13,5,'down',hero('#ffe03a','#3a6cff','cap'),'DIAL-UP GUY AL',()=>[makeMon('Pagerpup',13),makeMon('Pagerpup',13),makeMon('Boppurr',14)],{watch:4,before:['DIAL-UP GUY AL: You\'ve got MAIL! Just kidding. You\'ve got a BATTLE. 500 free hours!'],after:['DIAL-UP GUY AL: Goodbye! ...that sounded sadder than I meant.'],postChamp:async()=>{if(!G.key.cd){await say('DIAL-UP GUY AL: Champion! Here. A FREE TRIAL CD. 500 hours. Give it to Prof. Dialtone. Tell him... tell him I said you\'ve got mail.');G.key.cd=1;sfx('buy');await say('You got the FREE TRIAL CD!');}},lose:'DIAL-UP GUY AL: You\'ve got L!',reward:{money:400}}),
-  T('chad2',10,17,'down',hero('#ffe03a','#ff3fa4','spiky',{shades:true}),'CHAD',()=>[makeMon('Fuzzbeak',12),makeMon('Milkwog',12),makeMon(RIVAL_PICK(),15)],{show:()=>!G.flags.chad2,requires:'chad1',
+ npcs:[T('angler',7,10,'right',CAST.angler,'ANGLER GUS',()=>[makeMon('Gelpenguin',13),makeMon('Skipmanta',14)],{watch:3,before:['ANGLER GUS: I fish with a CD player as bait. Works on Mantas. Works on nothing else.'],after:['ANGLER GUS: Anti-skip failed me again.'],lose:'ANGLER GUS: Reel talk. You lost.',reward:{money:380}}),
+  T('aol',13,5,'down',CAST.aol,'DIAL-UP GUY AL',()=>[makeMon('Pagerpup',13),makeMon('Pagerpup',13),makeMon('Boppurr',14)],{watch:4,before:['DIAL-UP GUY AL: You\'ve got MAIL! Just kidding. You\'ve got a BATTLE. 500 free hours!'],after:['DIAL-UP GUY AL: Goodbye! ...that sounded sadder than I meant.'],postChamp:async()=>{if(!G.key.cd){await say('DIAL-UP GUY AL: Champion! Here. A FREE TRIAL CD. 500 hours. Give it to Prof. Dialtone. Tell him... tell him I said you\'ve got mail.');G.key.cd=1;sfx('buy');await say('You got the FREE TRIAL CD!');}},lose:'DIAL-UP GUY AL: You\'ve got L!',reward:{money:400}}),
+  T('chad2',10,17,'down',CAST.chad,'CHAD',()=>[makeMon('Fuzzbeak',12),makeMon('Milkwog',12),makeMon(RIVAL_PICK(),15)],{show:()=>!G.flags.chad2,requires:'chad1',
    before:['CHAD: Sup. Got two caps already? Same. Well, one. But mine\'s holographic. Round two!'],after:['CHAD: Psych! I let you win. I\'m saving my real strategy for Y2K Tower. It\'s a secret. It\'s Belly Flop.'],lose:'CHAD: All that and a bag of chips, baby.',reward:{money:500}})]};
 MAPS.t4={name:'Rental Ridge',outdoor:true,music:'town',wild:['VHSaur','Beanbuddy','Frostedtip'],lv:[13,16],edges:{bottom:'r3',right:'r4'},rows:[
 'TTTTTTTTTTTTTTTTTTTT','T..BBBBBB..........T','T..BBBBBB..PPPP....T','T..VWWDWV..PPPP....T','T....p.....VWDW....T','T....p.......p.....T','T....ppppppppp.....T','T.........pppppppppp',
 'T.........pppppppppp','T..YYYY...pp...S...T','T..YYYY...pp.......T','T..VDVW...pp.f.f...T','T...p.....pp.......T','T...pppppppp.,,,,..T','T..........pp,,,,..T','TTTTTTTTTTTppTTTTTTT'],
  signs:{'15,9':'RENTAL RIDGE\nVIDEO VAULT hangout (Rock).\nLate fees: your dignity.'},
  buildings:[{door:[6,3],kind:'vault'},{door:[13,4],kind:'sleep',id:'sleep4'},{door:[4,11],kind:'mart',id:'mart4'}],
- npcs:[{id:'bouncer',x:18,y:8,dir:'left',look:hero('#181818','#ff3f5f','bald',{shades:true}),show:()=>G.pogs.length<4,lines:['BOUNCER: Y2K Tower is past here. Four CAPS or no entry. It\'s not personal. It\'s in the FAQ.']},
-   {id:'clerk',x:8,y:5,dir:'right',look:hero('#3a6cff','#ffe03a','cap',{body:'vest'}),lines:['VIDEO CLERK: Rewind Rita\'s Rock team is slow but hits like a late fee. Water and Grass. Trust me. I work weekends.']}]};
+ npcs:[{id:'bouncer',x:18,y:8,dir:'left',look:CAST.bouncer,show:()=>G.pogs.length<4,lines:['BOUNCER: Y2K Tower is past here. Four CAPS or no entry. It\'s not personal. It\'s in the FAQ.']},
+   {id:'clerk',x:8,y:5,dir:'right',look:CAST.clerk,lines:['VIDEO CLERK: Rewind Rita\'s Rock team is slow but hits like a late fee. Water and Grass. Trust me. I work weekends.']}]};
 MAPS.r4={name:'Y2K Ascent',outdoor:true,music:'route',wild:['VHSaur','Lavalamprey','Boppurr','Frostingroo','Snapviper','Beeperhound','Skipmanta'],lv:[17,22],edges:{left:'t4'},rows:[
 'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT','T....,,,,......TT.....,,,,,..T','T....,,,,......TT.....,,,,,..T','T..............f.....,,,,,,..T','T..,,,,,..FFFFF..............T','T..,,,,,...............JJJJJ.T',
 'T..,,,,,...............JJJJJ.T','ppppppp,,,,,,ppppppppppppDJJ.T','ppppppp,,,,,,ppppp......S....T','T..............,,,,,.........T','T~~~~~.........,,,,,.,,,,....T','T~~~~~....TT...,,,,,.,,,,....T',
 'T~~~~~....TT.................T','T....f.......f...............T','T............................T','TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'],
  signs:{'24,8':'Y2K TOWER\nAll systems normal. Definitely no giant glitch monster upstairs. Have a nice day.'},
  buildings:[{door:[25,7],kind:'tower1'}],
- npcs:[T('nerd',16,3,'down',hero('#8a5a2c','#fbfbf4','bald',{body:'vest'}),'HALL MONITOR HUGH',()=>[makeMon('Beeperhound',19),makeMon('VHSaur',18)],{watch:4,before:['HALL MONITOR HUGH: Walking pass? Battling pass? No? Detention.'],after:['HALL MONITOR HUGH: I\'m telling the principal. The principal is me.'],lose:'HALL MONITOR HUGH: Rules are rules.',reward:{money:520}}),
-  T('macarena',16,10,'left',hero('#ff3fa4','#19e6d2','bun'),'DANCE MOM DEB',()=>[makeMon('Frostingroo',19),makeMon('Boppurr',20)],{watch:3,before:['DANCE MOM DEB: Heeeey, line dance! ...Now battle.'],after:['DANCE MOM DEB: One more time from the top!'],lose:'DANCE MOM DEB: That\'s a five-six-seven-EIGHT loss.',reward:{money:520}})]};
+ npcs:[T('nerd',16,3,'down',CAST.nerd,'HALL MONITOR HUGH',()=>[makeMon('Beeperhound',19),makeMon('VHSaur',18)],{watch:4,before:['HALL MONITOR HUGH: Walking pass? Battling pass? No? Detention.'],after:['HALL MONITOR HUGH: I\'m telling the principal. The principal is me.'],lose:'HALL MONITOR HUGH: Rules are rules.',reward:{money:520}}),
+  T('macarena',16,10,'left',CAST.macarena,'DANCE MOM DEB',()=>[makeMon('Frostingroo',19),makeMon('Boppurr',20)],{watch:3,before:['DANCE MOM DEB: Heeeey, line dance! ...Now battle.'],after:['DANCE MOM DEB: One more time from the top!'],lose:'DANCE MOM DEB: That\'s a five-six-seven-EIGHT loss.',reward:{money:520}})]};
 /* ---- interiors ---- */
 const RIVAL_PICK=()=>({Dialupine:'Floppuss',Floppuss:'Trollsprout',Trollsprout:'Dialupine'}[G.flags.starter]||'Milkwog');
 const INT={
@@ -705,31 +864,31 @@ const INT={
  tower:['JJJJJJJJJJ','JjjjjjjjjJ','JjjjjjjUjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjEjjjjJ'],
  top:['JJJJJJJJJJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjjjjjjJ','JjjjEjjjjJ']};
 const LEADERS={
- arcade:{name:'HI-SCORE HANK',pog:'Arcade',look:hero('#ff3f5f','#181818','headphones',{smirk:true}),tape:'tape_dialtone',team:()=>[makeMon('Pagerpup',8),makeMon('Boppurr',10)],music:'battle',
+ arcade:{name:'HI-SCORE HANK',pog:'Arcade',look:CAST.hank,tape:'tape_dialtone',team:()=>[makeMon('Pagerpup',8),makeMon('Boppurr',10)],music:'battle',
    before:['HI-SCORE HANK: Three letters. H-N-K. Top of every machine in here. You want the ARCADE CAP? Insert coin.'],win:['HI-SCORE HANK: New high score. Ugh. Fine. Enter your initials.'],lose:'HI-SCORE HANK: GAME OVER. Continue? 9... 8... 7...',money:900},
- foodcourt:{name:'PRETZEL PETE',pog:'Food Court',look:hero('#ffe03a','#ff6a2a','cap',{body:'apron'}),tape:'tape_lavalamp',team:()=>[makeMon('Lavalamprey',13),makeMon('Dialupine',12),makeMon('Lavalamprey',14)],music:'battle',
+ foodcourt:{name:'PRETZEL PETE',pog:'Food Court',look:CAST.pete,tape:'tape_lavalamp',team:()=>[makeMon('Lavalamprey',13),makeMon('Dialupine',12),makeMon('Lavalamprey',14)],music:'battle',
    before:['PRETZEL PETE: Everything here is hot, salty and 80% cheese. My team too. FOOD COURT CAP on the line.'],win:['PRETZEL PETE: Well butter my pretzel. Take the cap. Take a sample. Take two.'],lose:'PRETZEL PETE: No refunds. No samples.',money:1200},
- rink:{name:'DJ SKATIE',pog:'Roller Rink',look:hero('#a04cff','#19e6d2','ponytail',{shades:true,smirk:true}),tape:'tape_hairspray',team:()=>[makeMon('Frostedtip',14),makeMon('Fuzzbeak',14),makeMon('Skipmanta',15)],music:'battle',
+ rink:{name:'DJ SKATIE',pog:'Roller Rink',look:CAST.skatie,dir:'up',noturn:true,tape:'tape_hairspray',team:()=>[makeMon('Frostedtip',14),makeMon('Fuzzbeak',14),makeMon('Skipmanta',15)],music:'battle',
    before:['DJ SKATIE: Couples skate is over. It\'s BATTLE skate. Everybody clear the floor. ROLLER RINK CAP, let\'s go.'],win:['DJ SKATIE: Last song of the night... for me. Take the cap. Skates back at the counter.'],lose:'DJ SKATIE: Reverse skate! Everybody reverse!',money:1200},
- vault:{name:'REWIND RITA',pog:'Video Vault',look:hero('#3a6cff','#181818','bun',{body:'vest'}),tape:'tape_slammer',team:()=>[makeMon('VHSaur',16),makeMon('Rewindosaur',19),makeMon('Slammerog',17)],music:'battle',
+ vault:{name:'REWIND RITA',pog:'Video Vault',look:CAST.rita,tape:'tape_slammer',team:()=>[makeMon('VHSaur',16),makeMon('Rewindosaur',19),makeMon('Slammerog',17)],music:'battle',
    before:['REWIND RITA: You didn\'t rewind. You never rewind. That\'s a VIDEO VAULT CAP battle. Be kind.'],win:['REWIND RITA: ...Fee waived. Take the cap. Please. Rewind. Something. Anything.'],lose:'REWIND RITA: Late fee: one battle. Pay up.',money:1500}};
 function mkInterior(id,kind,retMap,rx,ry,npcs,extra){const rows=INT[{arcade:'hang',foodcourt:'hang',rink:'hang',vault:'hang',tower1:'tower',tower2:'tower',tower3:'top'}[kind]||kind];
   const m={name:'',rows,warps:{'4,8':{map:retMap,x:rx,y:ry+1,dir:'down'}},npcs:npcs||[],music:'inside'};Object.assign(m,extra||{});MAPS[id]=m;}
 for(const mid of ['home','t2','t3','t4','r4']){const M=MAPS[mid];for(const b of M.buildings){const id=b.id||b.kind;M.warps=M.warps||{};M.warps[b.door[0]+','+b.door[1]]={map:id,x:4,y:7,dir:'up'};
   let npcs=[],extra={};const L=LEADERS[b.kind];
-  if(b.kind==='lab')npcs=[{id:'prof',x:6,y:3,dir:'down',look:hero('#c0c0c0','#fbfbf4','bald',{body:'coat',pal:{h:'#c0c0c0'}}),special:'prof'}];
-  else if(b.kind==='house')npcs=[{id:'mom',x:7,y:2,dir:'down',look:hero('#8a5a2c','#ff3fa4','bun',{body:'apron'}),special:'mom'}];
-  else if(b.kind==='sleep')npcs=[{id:id+'n',x:4,y:2,dir:'down',look:hero('#ff8ccc','#fbfbf4','ponytail',{body:'dress'}),special:'sleep'}];
-  else if(b.kind==='mart')npcs=[{id:id+'c',x:7,y:2,dir:'down',look:hero('#3a6cff','#ffe03a','visor',{body:'apron'}),special:'mart'}];
-  else if(L){npcs=[{id:'lead_'+b.kind,x:4,y:1,dir:'down',look:L.look,special:'leader',kind:b.kind}];extra={name:L.name,music:'hang'};}
+  if(b.kind==='lab')npcs=[{id:'prof',x:6,y:3,dir:'down',look:CAST.prof,special:'prof'}];
+  else if(b.kind==='house')npcs=[{id:'mom',x:7,y:2,dir:'down',look:CAST.mom,special:'mom'}];
+  else if(b.kind==='sleep')npcs=[{id:id+'n',x:4,y:2,dir:'down',look:CAST.sleep,special:'sleep'}];
+  else if(b.kind==='mart')npcs=[{id:id+'c',x:7,y:2,dir:'down',look:CAST.mart,special:'mart'}];
+  else if(L){npcs=[{id:'lead_'+b.kind,x:4,y:1,dir:L.dir||'down',noturn:L.noturn,look:L.look,special:'leader',kind:b.kind}];extra={name:L.name,music:'hang'};}
   mkInterior(id,b.kind,mid,b.door[0],b.door[1],npcs,extra);MAPS[id].name=MAPS[id].name||{lab:'Prof. Dialtone\'s Lab',house:'Your House',sleep:'Sleepover',mart:'Corner Store',tower1:'Y2K Tower 1F'}[b.kind]||b.kind;}}
 /* tower floors */
 MAPS.tower1.warps['7,2']={map:'tower2',x:7,y:3,dir:'down'};MAPS.tower1.music='tower';MAPS.tower1.name='Y2K Tower 1F';
-MAPS.tower1.npcs=[T('mike',4,4,'down',hero('#181818','#b6ff3b','headphones',{body:'vest'}),'IT GUY MIKE',()=>[makeMon('Beeperhound',22),makeMon('Y2Kroach',21),makeMon('Boppurr',22)],{watch:3,before:['IT GUY MIKE: Have you tried turning your team off and on again? No? Let me.'],after:['IT GUY MIKE: Ticket closed. Escalating to floor 2.'],lose:'IT GUY MIKE: Working as intended.',reward:{money:700}})];
+MAPS.tower1.npcs=[T('mike',4,4,'down',CAST.mike,'IT GUY MIKE',()=>[makeMon('Beeperhound',22),makeMon('Y2Kroach',21),makeMon('Boppurr',22)],{watch:3,before:['IT GUY MIKE: Have you tried turning your team off and on again? No? Let me.'],after:['IT GUY MIKE: Ticket closed. Escalating to floor 2.'],lose:'IT GUY MIKE: Working as intended.',reward:{money:700}})];
 mkInterior('tower2','tower2','tower1',7,1,[],{name:'Y2K Tower 2F',music:'tower'});MAPS.tower2.warps={'4,8':{map:'tower1',x:7,y:3,dir:'down'},'7,2':{map:'tower3',x:4,y:7,dir:'up'}};
-MAPS.tower2.npcs=[T('pat',6,5,'left',hero('#ff3fa4','#a04cff','crown'),'PARTY PAT',()=>[makeMon('Frostingroo',23),makeMon('Snapviper',22),makeMon('Modemauler',24)],{watch:3,before:['PARTY PAT: I\'m gonna party like it\'s 1999! Because it is! For eleven more minutes!'],after:['PARTY PAT: The party\'s upstairs. It\'s not a fun party.'],lose:'PARTY PAT: Two thousand zero zero, party over, oops, you\'re out of time.',reward:{money:800}})];
+MAPS.tower2.npcs=[T('pat',6,5,'left',CAST.pat,'PARTY PAT',()=>[makeMon('Frostingroo',23),makeMon('Snapviper',22),makeMon('Modemauler',24)],{watch:3,before:['PARTY PAT: I\'m gonna party like it\'s 1999! Because it is! For eleven more minutes!'],after:['PARTY PAT: The party\'s upstairs. It\'s not a fun party.'],lose:'PARTY PAT: Two thousand zero zero, party over, oops, you\'re out of time.',reward:{money:800}})];
 mkInterior('tower3','tower3','tower2',7,1,[],{name:'Y2K Tower Roof',music:'tower'});MAPS.tower3.warps={'4,8':{map:'tower2',x:7,y:3,dir:'down'}};
-MAPS.tower3.npcs=[T('chad3',4,4,'down',hero('#ffe03a','#ff3fa4','spiky',{shades:true}),'CHAD',()=>[makeMon('Fuzzbeak',22),makeMon('Slammerog',23),makeMon('Beeperhound',23),makeMon({Dialupine:'CDRompuss',Floppuss:'Trolltree',Trollsprout:'Modemauler'}[G.flags.starter]||'Frostingroo',26)],{show:()=>!G.flags.chad3,requires:'chad2',
+MAPS.tower3.npcs=[T('chad3',4,4,'down',CAST.chad,'CHAD',()=>[makeMon('Fuzzbeak',22),makeMon('Slammerog',23),makeMon('Beeperhound',23),makeMon({Dialupine:'CDRompuss',Floppuss:'Trolltree',Trollsprout:'Modemauler'}[G.flags.starter]||'Frostingroo',26)],{show:()=>!G.flags.chad3,requires:'chad2',
    before:['CHAD: Told you I\'d be here. There\'s a giant glitch squid on the roof. It ate my frosted tips. This is personal now.','CHAD: Beat me, and it\'s all yours. Final. Round.'],after:['CHAD: ...Okay. Okay! You\'re actually good. Go get it. And get my tips back. Please.'],lose:'CHAD: Booyah! Now step aside, I have a squid to fight.',reward:{money:1500}}),
   {id:'kraken',x:4,y:1,dir:'down',special:'kraken',show:()=>!G.flags.champion||!G.flags.krakenDone}];
 
@@ -739,49 +898,49 @@ MAPS.beach={name:'Sunnyside Boardwalk',outdoor:true,music:'beach',wild:['Fishtan
 'pppppppppppppppppp~~~~~T','T.....p.......S..p~~~~~T','T.....p..........p~~~~~T','T..,,,p......,,,,p~~~~~T','T..,,,p......,,,,p~~~~~T','T.....pppppppppppp~~~~~T','T..f.............X....~T','TTTTTTTTTTTTTTTTTTTTTTTT'],
  signs:{'14,9':'SUNNYSIDE BOARDWALK\nNo running. No diving. No Radimals over 40 lbs on the pier.'},
  buildings:[{door:[11,5],kind:'surfshop'}],items:[{x:20,y:14,item:'juice',qty:2},{x:2,y:11,item:'slammer',qty:3}],
- npcs:[{id:'oldangler',x:16,y:10,dir:'left',look:hero('#8a5a2c','#19e6d2','bald'),special:'rodgift'},
-  T('mitch',13,2,'down',hero('#ff3f5f','#ff3f5f','cap',{shades:true}),'LIFEGUARD RICK',()=>[makeMon('Snorkelot',7),makeMon('Slurpeel',8)],{watch:4,before:['LIFEGUARD RICK: I run on this beach in slow motion. It takes forever. Battle me while I get there.'],after:['LIFEGUARD RICK: ...Still running. Still slow. Nice fight.'],lose:'LIFEGUARD RICK: Saved you. Slowly.',reward:{money:220}}),
-  T('surfer',3,13,'right',hero('#ffe03a','#19e6d2','longhair'),'SURFER DUDE',()=>[makeMon('Cloudsurf',8),makeMon('Brineape',7)],{watch:3,before:['SURFER DUDE: Duuude. The wave is, like, a metaphor. Battle.'],after:['SURFER DUDE: Gnarly. That was the metaphor.'],lose:'SURFER DUDE: Wipeout, bro.',reward:{money:200}})]};
+ npcs:[{id:'oldangler',x:16,y:10,dir:'left',look:CAST.oldangler,special:'rodgift'},
+  T('mitch',13,2,'down',CAST.mitch,'LIFEGUARD RICK',()=>[makeMon('Snorkelot',7),makeMon('Slurpeel',8)],{watch:4,before:['LIFEGUARD RICK: I run on this beach in slow motion. It takes forever. Battle me while I get there.'],after:['LIFEGUARD RICK: ...Still running. Still slow. Nice fight.'],lose:'LIFEGUARD RICK: Saved you. Slowly.',reward:{money:220}}),
+  T('surfer',3,13,'right',CAST.surfer,'SURFER DUDE',()=>[makeMon('Cloudsurf',8),makeMon('Brineape',7)],{watch:3,before:['SURFER DUDE: Duuude. The wave is, like, a metaphor. Battle.'],after:['SURFER DUDE: Gnarly. That was the metaphor.'],lose:'SURFER DUDE: Wipeout, bro.',reward:{money:200}})]};
 MAPS.woods={name:'Shaky Cam Woods',outdoor:true,music:'route',wild:['Fernbaby','Mothballer','Butterclip','Slapbrace','Sproutpup','Fuzzpuff','Y2Kroach','Cicadaboom','Grungehog','Rantz','Weedwhack'],lv:[5,9],edges:{right:'r1'},rows:[
 'TTTTTTTTTTTTTTTTTTTTTTTT','T.,,,,..TT....,,,,,....T','T.,,,,..TT....,,,,,....T','T.......TT.............T','T...TT......,,,,...TT..T','T...TT......,,,,...TT..T','T........S..,,,,.......T','T.TTT..................T',
 'T.TTT.,,,,,......TTTT..T','T.....,,,,,......TTTT..T','T.....,,,,,............T','T.........TT....,,,,...T','T..,,,....TT....,,,,...T','T..,,,..........,,,,...T','T..,,,.....TTT.........T','T..........TTT..........',
 'T.......................','T.,,,,,......,,,,......T','T.,,,,,......,,,,..TT..T','TTTTTTTTTTTTTTTTTTTTTTTT'],
  signs:{'9,6':'SHAKY CAM WOODS\nIf you find a pile of sticks, do NOT stand in the corner.'},
  items:[{x:2,y:3,item:'tape_hackysack',qty:1},{x:21,y:17,item:'warhead',qty:1},{x:12,y:9,item:'juice',qty:2}],
- npcs:[T('heather',7,2,'down',hero('#181818','#2c2444','beanie'),'FILM STUDENT HANNAH',()=>[makeMon('Mothballer',7),makeMon('Fernbaby',8)],{watch:4,before:['FILM STUDENT HANNAH: I\'m so scared. I\'m so scared. Also we\'re battling.'],after:['FILM STUDENT HANNAH: This footage was found a year later. It\'s mostly your win.'],lose:'FILM STUDENT HANNAH: Don\'t look in the corner.',reward:{money:240}}),
-  T('counselor',16,13,'left',hero('#57d65a','#ffe03a','visor'),'CAMP COUNSELOR RANDY',()=>[makeMon('Sproutpup',9),makeMon('Fuzzpuff',8),makeMon('Rantz',8)],{watch:3,before:['CAMP COUNSELOR RANDY: Buddy system! You\'re my buddy now. Buddies battle.'],after:['CAMP COUNSELOR RANDY: Lights out was forty minutes ago.'],lose:'CAMP COUNSELOR RANDY: Back to the cabin.',reward:{money:260}}),
-  T('sticks',14,3,'down',hero('#8a5a2c','#8a5a2c','hood'),'GUY IN THE CORNER',()=>[makeMon('Weedwhack',10),makeMon('Cicadaboom',9)],{watch:2,before:['GUY IN THE CORNER: ...'],after:['GUY IN THE CORNER: ...'],lose:'GUY IN THE CORNER: ...',reward:{money:300}})]};
+ npcs:[T('heather',7,2,'down',CAST.heather,'FILM STUDENT HANNAH',()=>[makeMon('Mothballer',7),makeMon('Fernbaby',8)],{watch:4,before:['FILM STUDENT HANNAH: I\'m so scared. I\'m so scared. Also we\'re battling.'],after:['FILM STUDENT HANNAH: This footage was found a year later. It\'s mostly your win.'],lose:'FILM STUDENT HANNAH: Don\'t look in the corner.',reward:{money:240}}),
+  T('counselor',16,13,'left',CAST.counselor,'CAMP COUNSELOR RANDY',()=>[makeMon('Sproutpup',9),makeMon('Fuzzpuff',8),makeMon('Rantz',8)],{watch:3,before:['CAMP COUNSELOR RANDY: Buddy system! You\'re my buddy now. Buddies battle.'],after:['CAMP COUNSELOR RANDY: Lights out was forty minutes ago.'],lose:'CAMP COUNSELOR RANDY: Back to the cabin.',reward:{money:260}}),
+  T('sticks',14,3,'down',CAST.sticks,'GUY IN THE CORNER',()=>[makeMon('Weedwhack',10),makeMon('Cicadaboom',9)],{watch:2,before:['GUY IN THE CORNER: ...'],after:['GUY IN THE CORNER: ...'],lose:'GUY IN THE CORNER: ...',reward:{money:300}})]};
 MAPS.cave1={name:'Screensaver Caverns 1F',music:'cave',dark:true,wild:['Petrock','Blowcart','Moonbootle','Gargoylie','Cassettle','Screensaurus','Brickphone','Staticling','Mothballer'],lv:[13,17],edges:{left:'r3'},rows:[
 'JJJJJJJJJJJJJJJJJJJJ','JjjjjjjjjjjjJJjjjjjJ','JjjJJjjjjjjjjjjjjjjJ','JjjJJjjjjjJJjjjjJJjJ','JjjjjjjjjjJJjjjjjjjJ','JjjjjjjjjjjjjjjjjjjJ','JjjjjjjJJjjjjjjjjjjJ','JjjjjjjJJjjjjjjjjjjJ',
 'JjjjjjjjjjjjjjJJjjjJ','JjjjjjjjjjjjjjJJjjjJ','jjjjJJjjjjjjjjjjjjjJ','jjjjJJjjjjjjJJjjjjjJ','JjjjjjjjjjjjJJjjjjUJ','JjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjJ','JJJJJJJJJJJJJJJJJJJJ'],
  warps:{'18,12':{map:'cave2',x:1,y:1,dir:'down'}},items:[{x:15,y:4,item:'mega',qty:2},{x:2,y:13,item:'pizza',qty:1}],
- npcs:[T('steve',7,3,'down',hero('#ffe03a','#8a5a2c','copcap'),'SPELUNKER STEVE',()=>[makeMon('Petrock',14),makeMon('Blowcart',15)],{watch:3,before:['SPELUNKER STEVE: The flying toasters live on the next floor. I have not slept in nine days.'],after:['SPELUNKER STEVE: They\'re coming. They\'re always coming.'],lose:'SPELUNKER STEVE: Told you. Toasters.',reward:{money:420}}),
-  T('zero',12,9,'up',hero('#181818','#181818','hood',{shades:true}),'HACKER ZERO',()=>[makeMon('Staticling',15),makeMon('Snakebyte',16)],{watch:3,before:['HACKER ZERO: I\'m in. I\'m in the mainframe. It\'s a cave. Whatever. Battle.'],after:['HACKER ZERO: Access denied. By you. Rude.'],lose:'HACKER ZERO: Hack the planet.',reward:{money:450}})]};
+ npcs:[T('steve',7,3,'down',CAST.steve,'SPELUNKER STEVE',()=>[makeMon('Petrock',14),makeMon('Blowcart',15)],{watch:3,before:['SPELUNKER STEVE: The flying toasters live on the next floor. I have not slept in nine days.'],after:['SPELUNKER STEVE: They\'re coming. They\'re always coming.'],lose:'SPELUNKER STEVE: Told you. Toasters.',reward:{money:420}}),
+  T('zero',12,9,'up',CAST.zero,'HACKER ZERO',()=>[makeMon('Staticling',15),makeMon('Snakebyte',16)],{watch:3,before:['HACKER ZERO: I\'m in. I\'m in the mainframe. It\'s a cave. Whatever. Battle.'],after:['HACKER ZERO: Access denied. By you. Rude.'],lose:'HACKER ZERO: Hack the planet.',reward:{money:450}})]};
 MAPS.cave2={name:'Screensaver Caverns 2F',music:'cave',dark:true,wild:['Toastwing','Toastwing','Screensaurus','Gargoylie','Cassettle','Blowcart','Zapdisk','Bufferfly','Emailephant'],lv:[16,20],rows:[
 'JJJJJJJJJJJJJJJJJJJJ','JUjjjjjjjjjjjjjjjjjJ','JjjjjjJJjjjjjjjJJjjJ','JjjjjjJJjjjjjjjJJjjJ','JjjjjjjjjjjjjjjjjjjJ','JjjJJjjjjjjjjjjjjjjJ','JjjJJjjjjjjJJjjjjjjJ','JjjjjjjjjjjJJjjjjjjJ',
 'JjjjjjjjjjjjjjjjjjjJ','JjjjjjjjJJjjjjjjjjjJ','JjjjjjjjJJjjjjjjJJjJ','JjjjjjjjjjjjjjjjJJjJ','JjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjJ','JJJJJJJJJJJJJJJJJJJJ'],
  warps:{'1,1':{map:'cave1',x:18,y:13,dir:'down'}},items:[{x:17,y:13,item:'tape_y2kcrash',qty:1},{x:9,y:4,item:'holo',qty:2},{x:3,y:13,item:'ringpop',qty:1}],
- npcs:[T('toasterguy',14,8,'left',hero('#c0c0d0','#ff8c2a','headphones'),'TOAST FANATIC TED',()=>[makeMon('Toastwing',18),makeMon('Toastwing',18),makeMon('Toastwing',19)],{watch:3,before:['TOAST FANATIC TED: They fly. They are toast. Nobody explains it. Nobody has to.'],after:['TOAST FANATIC TED: Fly, my beauties. Fly.'],lose:'TOAST FANATIC TED: Toasted.',reward:{money:500}})]};
+ npcs:[T('toasterguy',14,8,'left',CAST.toasterguy,'TOAST FANATIC TED',()=>[makeMon('Toastwing',18),makeMon('Toastwing',18),makeMon('Toastwing',19)],{watch:3,before:['TOAST FANATIC TED: They fly. They are toast. Nobody explains it. Nobody has to.'],after:['TOAST FANATIC TED: Fly, my beauties. Fly.'],lose:'TOAST FANATIC TED: Toasted.',reward:{money:500}})]};
 MAPS.snow={name:'Frosted Peak',outdoor:true,music:'snow',snow:true,wild:['Slushpuppy','Goosebumpy','Frostedtip','Papairplane','Dustbunnie','Moonbootle','Gelpenguin','Abominabull','Balloonatic','Paperjet'],lv:[15,20],edges:{bottom:'t4'},rows:[
 'TTTTTTTTTTTTTTTTTTTT','T...ss..TT..ssss...T','T..ssss.TT..ssss...T','T..ssss.....ssss.S.T','T..................T','T.TT......ssss...TTT','T.TT..sss.ssss...TTT','T.....sss..........T',
 'T.....sss..........T','T..........ssss....T','T.ssss.....ssss.TT.T','T.ssss.....ssss.TT.T','T.ssss.............T','T..........sss.....T','T....TT....sss.....T','T....TT....sss.....T',
 'T..................T','T..ssss.......ssss.T','T..ssss.......ssss.T','T..ssss.......ssss.T','T..................T','T....TT.....TT.....T','T........pp........T','TTTTTTTTTppTTTTTTTTT'],
  signs:{'17,3':'FROSTED PEAK SUMMIT\nYou made it. There is nothing up here. Enjoy the nothing.'},
  items:[{x:4,y:1,item:'holo',qty:3},{x:17,y:17,item:'tape_twister',qty:1},{x:2,y:12,item:'capri',qty:1},{x:15,y:6,item:'warhead',qty:1}],
- npcs:[T('shred',9,20,'down',hero('#19e6d2','#ff3fa4','beanie',{shades:true}),'SNOWBOARDER SHRED',()=>[makeMon('Slushpuppy',17),makeMon('Paperjet',17)],{watch:3,before:['SNOWBOARDER SHRED: Skiers, man. Skiers. Anyway, battle.'],after:['SNOWBOARDER SHRED: You caught an edge, but like, a good one.'],lose:'SNOWBOARDER SHRED: Yard sale!',reward:{money:480}}),
-  T('doug',5,9,'right',hero('#ff8c2a','#3a6cff','headphones'),'SKI BUM DOUG',()=>[makeMon('Goosepimple',18),makeMon('Dustbunnie',17)],{watch:3,before:['SKI BUM DOUG: Snowboarders, man. Snowboarders. Anyway, battle.'],after:['SKI BUM DOUG: Pizza. French fries. Pizza. You won.'],lose:'SKI BUM DOUG: Lift closed.',reward:{money:480}}),
-  T('yeti',12,2,'down',hero('#ffffff','#ffffff','longhair'),'ABOMINABLE ANDY',()=>[makeMon('Abominabull',21),makeMon('Slushhound',20)],{watch:3,before:['ABOMINABLE ANDY: I\'m not a yeti. I\'m just very tall and very cold and I hate the lift line.'],after:['ABOMINABLE ANDY: Fine. Tell no one. Especially skiers.'],lose:'ABOMINABLE ANDY: Roar, or whatever.',reward:{money:600}})]};
+ npcs:[T('shred',9,20,'down',CAST.shred,'SNOWBOARDER SHRED',()=>[makeMon('Slushpuppy',17),makeMon('Paperjet',17)],{watch:3,before:['SNOWBOARDER SHRED: Skiers, man. Skiers. Anyway, battle.'],after:['SNOWBOARDER SHRED: You caught an edge, but like, a good one.'],lose:'SNOWBOARDER SHRED: Yard sale!',reward:{money:480}}),
+  T('doug',5,9,'right',CAST.doug,'SKI BUM DOUG',()=>[makeMon('Goosepimple',18),makeMon('Dustbunnie',17)],{watch:3,before:['SKI BUM DOUG: Snowboarders, man. Snowboarders. Anyway, battle.'],after:['SKI BUM DOUG: Pizza. French fries. Pizza. You won.'],lose:'SKI BUM DOUG: Lift closed.',reward:{money:480}}),
+  T('yeti',12,2,'down',CAST.yeti,'ABOMINABLE ANDY',()=>[makeMon('Abominabull',21),makeMon('Slushhound',20)],{watch:3,before:['ABOMINABLE ANDY: I\'m not a yeti. I\'m just very tall and very cold and I hate the lift line.'],after:['ABOMINABLE ANDY: Fine. Tell no one. Especially skiers.'],lose:'ABOMINABLE ANDY: Roar, or whatever.',reward:{money:600}})]};
 MAPS.net={name:'The Internet',music:'boss',wild:['Chatbrat','Bufferfly','Snakebyte','Staticling','Glowpeg','Emailephant','Pixelpest','Zapdisk','Spellbot','Discodisc'],lv:[38,46],rows:[
 'JJJJJJJJJJJJJJJJJJJJJJJJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjJJJjjjjJJJjjjjJJJjjjjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjJJjjjjjjjjjjJJjjjJ','JjjjjjJJjjjjjjjjjjJJjjjJ','JjjjjjjjjjjjJJjjjjjjjjjJ','JjjjjjjjjjjjJJjjjjjjjjjJ',
 'JjJJjjjjjjjjjjjjjjjjJJjJ','JjJJjjjjjjjjjjjjjjjjJJjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjjjJJjjjjjjJJjjjjjJ','JjjjjjjjJJjjjjjjJJjjjjjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjJJjjjjjjjjjjjjjjJJjJ','JjjjJJjjjjjjjjjjjjjjJJjJ',
 'JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjJJjjjjjjjjjjJ','JjjjjjjjjjjJJjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjjjjjjjjjjjjjJ','JjjjjjjjjjjEjjjjjjjjjjjJ','JJJJJJJJJJJJJJJJJJJJJJJJ'],
  warps:{'11,22':{map:'lab',x:3,y:4,dir:'down'}},items:[{x:2,y:20,item:'capri',qty:2},{x:21,y:1,item:'holo',qty:5}],
- npcs:[T('mod',11,15,'down',hero('#181818','#b6ff3b','hood',{shades:true}),'MODERATOR',()=>[makeMon('Emailephant',40),makeMon('Chatroomer',41),makeMon('Bufferfly',40)],{watch:3,before:['MODERATOR: You have been warned. This is the warning.'],after:['MODERATOR: Banned. Lifted. Banned again. Fine, go.'],lose:'MODERATOR: Thread locked.',reward:{money:1500}}),
-  T('troll',4,8,'right',hero('#57d65a','#ff3fa4','mohawk'),'FORUM TROLL',()=>[makeMon('Trolltree',42),makeMon('Rantzilla',41)],{watch:3,before:['FORUM TROLL: first. FIRST. Actually your team is bad and you should feel bad.'],after:['FORUM TROLL: whatever. lol. wasn\'t even trying.'],lose:'FORUM TROLL: owned.',reward:{money:1500}}),
-  T('aslguy',15,4,'down',hero('#a04cff','#ffe03a','spiky'),'CHATROOM CHAD',()=>[makeMon('Chatroomer',43),makeMon('Glowpegger',42),makeMon('Diskdrake',44)],{watch:3,before:['CHATROOM CHAD: a/s/l? Doesn\'t matter. Battle.'],after:['CHATROOM CHAD: brb. Not really.'],lose:'CHATROOM CHAD: g2g.',reward:{money:1800}}),
+ npcs:[T('mod',11,15,'down',CAST.mod,'MODERATOR',()=>[makeMon('Emailephant',40),makeMon('Chatroomer',41),makeMon('Bufferfly',40)],{watch:3,before:['MODERATOR: You have been warned. This is the warning.'],after:['MODERATOR: Banned. Lifted. Banned again. Fine, go.'],lose:'MODERATOR: Thread locked.',reward:{money:1500}}),
+  T('troll',4,8,'right',CAST.troll,'FORUM TROLL',()=>[makeMon('Trolltree',42),makeMon('Rantzilla',41)],{watch:3,before:['FORUM TROLL: first. FIRST. Actually your team is bad and you should feel bad.'],after:['FORUM TROLL: whatever. lol. wasn\'t even trying.'],lose:'FORUM TROLL: owned.',reward:{money:1500}}),
+  T('aslguy',15,4,'down',CAST.aslguy,'CHATROOM CHAD',()=>[makeMon('Chatroomer',43),makeMon('Glowpegger',42),makeMon('Diskdrake',44)],{watch:3,before:['CHATROOM CHAD: a/s/l? Doesn\'t matter. Battle.'],after:['CHATROOM CHAD: brb. Not really.'],lose:'CHATROOM CHAD: g2g.',reward:{money:1800}}),
   {id:'tama',x:11,y:1,dir:'down',special:'tama',show:()=>!G.flags.tamaCaught}]};
 /* new interiors */
-mkInterior('surfshop','mart','beach',11,5,[{id:'surfclerk',x:7,y:2,dir:'down',look:hero('#ffe03a','#19e6d2','longhair',{shades:true}),special:'mart'}],{name:'Surf Shack'});MAPS.beach.warps={'11,5':{map:'surfshop',x:4,y:7,dir:'up'}};
+mkInterior('surfshop','mart','beach',11,5,[{id:'surfclerk',x:7,y:2,dir:'down',look:CAST.surfclerk,special:'mart'}],{name:'Surf Shack'});MAPS.beach.warps={'11,5':{map:'surfshop',x:4,y:7,dir:'up'}};
 /* open new exits in existing maps */
 MAPS.home.rows[7]='T.f......pp......f..';MAPS.home.rows[8]='T........pp..YYYY...';MAPS.home.edges.right='beach';
 MAPS.r1.rows[15]='.........pp....S...T';MAPS.r1.rows[16]='.....f...pp........T';MAPS.r1.edges.left='woods';
@@ -818,11 +977,11 @@ let mode='title',textOpen=false,busy=false,fade=0,frameCount=0,bHeld=false,playT
 function codeKey(k){if(mode!=='title'||cheat)return;codeBuf.push(k);if(codeBuf.length>10)codeBuf.shift();if(codeBuf.join()===CODE.join()){cheat=true;sfx('levelup');}}
 const cv=$('#screen'),ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
 function fitScreen(){const w=Math.min(window.innerWidth,462)-32;const sc=Math.max(1,Math.floor(w/160));cv.style.width=160*sc+'px';cv.style.height=144*sc+'px';$('#app').style.setProperty('--sw',160*sc+'px');$('#app').style.setProperty('--tbh',Math.round(144*sc*.34)+'px');$('#app').style.setProperty('--tbf',sc<2?'9px':'13px');}window.addEventListener('resize',fitScreen);fitScreen();
-const PLAYER_LOOK={hat:'backcap',pal:{r:'#ff3f5f',b:'#3a6cff',h:'#6a3a1a'}};const BIKE_LOOK={hat:'backcap',pal:{r:'#ff3f5f',b:'#3a6cff',h:'#6a3a1a',n:'#19e6d2'}};
+const PLAYER_LOOK=CAST.player;const BIKE_LOOK=Object.assign({},CAST.player,{bike:true});
 let heroSpr=personSet(PLAYER_LOOK);
 const M=()=>MAPS[G.map];
 const tileAt=(x,y)=>{const m=M();if(x<0||y<0||x>=m.w||y>=m.h)return 'T';return m.rows[y][x];};
-const npcs=()=>M().npcs.filter(n=>!n.show||n.show());
+const npcs=()=>M().npcs.filter(n=>!n.show||n.show()||n.linger);
 const npcAt=(x,y)=>npcs().find(n=>n.x===x&&n.y===y);
 const DIRS={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
 const OPP={up:'down',down:'up',left:'right',right:'left'};
@@ -833,9 +992,10 @@ function drawMap(){const m=M();const[cx,cy]=camera();const fr=Math.floor(frameCo
   const x0=Math.floor(cx/16),y0=Math.floor(cy/16);
   for(let y=y0;y<=y0+9;y++)for(let x=x0;x<=x0+10;x++){if(x<0||y<0||x>=m.w||y>=m.h)continue;drawTile(m.rows[y][x],x*16-cx,y*16-cy,fr);}
   const ents=npcs().map(n=>({y:n.y*16+(n.py||0),draw:()=>{if(n.special==='kraken'){ctx.save();ctx.translate(n.x*16-cx-16,n.y*16-cy-30);ctx.scale(48/MONSPR.Y2Kraken.width,48/MONSPR.Y2Kraken.width);ctx.drawImage(MONSPR.Y2Kraken,0,0);ctx.restore();return;}
-    const s=personSet(n.look||{pal:n.pal})[n.dir||'down'][n.walkF||0];ctx.drawImage(s,n.x*16+(n.px||0)-cx,n.y*16+(n.py||0)-cy-2);
+    if(n.special==='tama'){ctx.drawImage(MONSPR.Pixelgodchi,n.x*16-cx-4,n.y*16-cy-10+(Math.floor(frameCount/30)%2),24,24);return;}
+    const s=personSet(n.look)[n.dir||'down'][n.walkF||0];ctx.drawImage(s,n.x*16+(n.px||0)-cx,n.y*16+(n.py||0)-cy-6);
     if(n.bang){const bx=n.x*16-cx,by=n.y*16+(n.py||0)-cy;ctx.fillStyle='#fbfbf4';ctx.fillRect(bx+4,by-14,8,10);ctx.fillStyle='#181818';ctx.fillRect(bx+7,by-12,2,5);ctx.fillRect(bx+7,by-6,2,1);}}}));
-  ents.push({y:G.y*16+P.py,draw:()=>{ctx.drawImage(heroSpr[G.dir][P.frame],G.x*16+P.px-cx,G.y*16+P.py-cy-2);}});
+  ents.push({y:G.y*16+P.py,draw:()=>{ctx.drawImage(heroSpr[G.dir][P.frame],G.x*16+P.px-cx,G.y*16+P.py-cy-6);}});
   for(const o of (m.items||[])){if((G.flags.picked||{})[G.map+':'+o.x+','+o.y])continue;ctx.drawImage(TILES.bag,o.x*16-cx+4,o.y*16-cy+4);}
   ents.sort((a,b)=>a.y-b.y).forEach(e=>e.draw());
   if(m.dark&&!G.key.glow){const oc=DARK.getContext('2d');oc.globalCompositeOperation='source-over';oc.fillStyle='rgba(0,0,10,.94)';oc.fillRect(0,0,160,144);const px=G.x*16+P.px-cx+8,py=G.y*16+P.py-cy+8;oc.globalCompositeOperation='destination-out';const gr=oc.createRadialGradient(px,py,6,px,py,26);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,0)');oc.fillStyle=gr;oc.beginPath();oc.arc(px,py,26,0,7);oc.fill();ctx.drawImage(DARK,0,0);}
@@ -1015,30 +1175,39 @@ const held=new Set();let bumpT=0;
 function tryStep(dir){if(P.moving||busy||textOpen||mode!=='map')return;G.dir=dir;const[dx,dy]=DIRS[dir];const nx=G.x+dx,ny=G.y+dy;const m=M();
   if(nx<0||ny<0||nx>=m.w||ny>=m.h){edgeWarp(dir);return;}
   if(SOLID.includes(tileAt(nx,ny))||npcAt(nx,ny)){if(bumpT<=0){sfx('bump');bumpT=300;}return;}
-  P.moving=true;P.walkT=0;P.px=0;P.py=0;P.frame=1;P.target=[nx,ny];P.dur=G.bike?70:bHeld?95:160;}
-function updateMove(dt){if(!P.moving)return;P.walkT+=dt;const t=Math.min(1,P.walkT/P.dur);const[dx,dy]=DIRS[G.dir];P.px=dx*16*t;P.py=dy*16*t;P.frame=t<.5?1:0;
+  P.moving=true;P.walkT=0;P.px=0;P.py=0;P.step=P.step===1?2:1;P.frame=P.step;P.target=[nx,ny];P.dur=G.bike?70:bHeld?95:160;}
+function updateMove(dt){if(!P.moving)return;P.walkT+=dt;const t=Math.min(1,P.walkT/P.dur);const[dx,dy]=DIRS[G.dir];P.px=dx*16*t;P.py=dy*16*t;P.frame=t<.55?P.step:0;
   if(t>=1){P.moving=false;P.px=P.py=0;G.x=P.target[0];G.y=P.target[1];P.frame=0;onArrive();}}
 Object.defineProperty(window,'_f',{get:()=>fade,set:v=>fade=v});
 async function fadeOut(){busy=true;await tween(window,'_f',1,220);}async function fadeIn(){await tween(window,'_f',0,220);busy=false;}
 function mapMusic(){return M().music||'town';}
-async function warpTo(w){sfx('door');await fadeOut();G.map=w.map;if(!MAPS[w.map].outdoor&&G.bike){G.bike=false;heroSpr=personSet(PLAYER_LOOK);}G.x=w.x;G.y=w.y;if(w.dir)G.dir=w.dir;playTrack(mapMusic());await fadeIn();await maybeSwarm();autosave();}
+async function warpTo(w){sfx('door');await fadeOut();G.map=w.map;if(!MAPS[w.map].outdoor&&G.bike){G.bike=false;heroSpr=personSet(PLAYER_LOOK);}G.x=w.x;G.y=w.y;if(w.dir)G.dir=w.dir;playTrack(mapMusic());await fadeIn();if(MAPS[w.map].outdoor&&await spotCheck()){autosave();return;}await maybeSwarm();autosave();}
 async function edgeWarp(dir){const m=M();const e=m.edges&&m.edges[{down:'bottom',up:'top',left:'left',right:'right'}[dir]];if(!e)return;
-  if(!G.party.length){await say("MOM (yelling from the window): Not without a Radimal, you're not! PROF. DIALTONE. Pink roof. GO.");closeText();return;}const T2=MAPS[e];busy=true;await fadeOut();G.map=e;
+  if(!G.party.length){await say("MOM (yelling from the window): Not without a Radimal, you're not! PROF. DIALTONE. Pink roof. GO.");closeText();return;}
+  if(G.map==='home'&&G.flags.starter&&!G.flags.chad1){await say("CHAD (from over by the lab): HEY. Nobody leaves town until I've battled them. I'll wait. I have literally nothing else going on.");closeText();return;}const T2=MAPS[e];busy=true;await fadeOut();G.map=e;
   if(dir==='down')G.y=0;else if(dir==='up')G.y=T2.h-1;else if(dir==='right')G.x=0;else G.x=T2.w-1;playTrack(mapMusic());await fadeIn();await maybeSwarm();autosave();}
 async function onArrive(){const t=tileAt(G.x,G.y);const m=M();const w=m.warps&&m.warps[G.x+','+G.y];
   if(w&&'DEU'.includes(t)){await warpTo(w);return;}
-  for(const n of npcs()){if(n.trainer&&n.watch&&!G.flags[n.flag]){const[dx,dy]=DIRS[n.dir];for(let i=1;i<=n.watch;i++){const sx=n.x+dx*i,sy=n.y+dy*i;if(SOLID.includes(tileAt(sx,sy)))break;if(sx===G.x&&sy===G.y){await trainerApproach(n,i);return;}}}}
+  if(await spotCheck())return;
   if(G.repel>0){G.repel--;if(G.repel===0){await say('The BODY SPRAY wore off. Things can smell you again.');closeText();}}
   const it=(m.items||[]).find(o=>o.x===G.x&&o.y===G.y&&!(G.flags.picked||{})[G.map+':'+o.x+','+o.y]);
   if(it){G.flags.picked=G.flags.picked||{};G.flags.picked[G.map+':'+it.x+','+it.y]=1;G.bag[it.item]=bagN(it.item)+it.qty;sfx('buy');await say(`You found ${it.qty>1?it.qty+' ':''}${ITEMS[it.item].name}!`);closeText();save();return;}
   if(t===','&&G.party.length&&G.repel<=0&&Math.random()<0.11){await wildEncounter();}}
-async function trainerApproach(n,dist){busy=true;sfx('spot');n.bang=true;await sleep(700);n.bang=false;const[dx,dy]=DIRS[n.dir];
-  for(let i=1;i<dist;i++){const t0=performance.now();await new Promise(res=>{(function f(now){const t=Math.min(1,(now-t0)/160);n.px=dx*16*t;n.py=dy*16*t;n.walkF=t<.5?1:0;if(t<1)requestAnimationFrame(f);else{n.x+=dx;n.y+=dy;n.px=n.py=0;n.walkF=0;res();}})(t0);});}
-  G.dir=OPP[n.dir];busy=false;await interact(n);}
+async function spotCheck(){for(const n of npcs()){if(n.trainer&&n.watch&&!G.flags[n.flag]){const[dx,dy]=DIRS[n.dir];for(let i=1;i<=n.watch;i++){const sx=n.x+dx*i,sy=n.y+dy*i;if(SOLID.includes(tileAt(sx,sy)))break;if(sx===G.x&&sy===G.y){await trainerApproach(n,i);return true;}}}}return false;}
+function npcStep(n,dir,ms=160){n.o=n.o||{x:n.x,y:n.y,dir:n.dir};n.dir=dir;n.stepF=n.stepF===1?2:1;const[dx,dy]=DIRS[dir];const t0=performance.now();return new Promise(res=>{(function f(now){const t=Math.min(1,(now-t0)/ms);n.px=dx*16*t;n.py=dy*16*t;n.walkF=t<.55?n.stepF:0;if(t<1)requestAnimationFrame(f);else{n.x+=dx;n.y+=dy;n.px=n.py=0;n.walkF=0;res();}})(t0);});}
+async function trainerApproach(n,dist){busy=true;sfx('spot');n.bang=true;await sleep(700);n.bang=false;const d=n.dir;
+  for(let i=1;i<dist;i++)await npcStep(n,d);
+  G.dir=OPP[d];busy=false;await interact(n);}
+/* walk an NPC off to (tx,ty) around solid tiles, the player and other NPCs; if boxed in they just go */
+async function npcLeave(n,tx,ty){const m=M(),key=(x,y)=>x+','+y,blocked=new Set(npcs().filter(o=>o!==n).map(o=>key(o.x,o.y)));blocked.add(key(G.x,G.y));
+  const prev={[key(n.x,n.y)]:null},q=[[n.x,n.y]];let found=false;
+  while(q.length&&!found){const[x,y]=q.shift();for(const d in DIRS){const nx=x+DIRS[d][0],ny=y+DIRS[d][1],k=key(nx,ny);if(nx<0||ny<0||nx>=m.w||ny>=m.h||k in prev||blocked.has(k)||SOLID.includes(m.rows[ny][nx]))continue;prev[k]=[x,y,d];if(nx===tx&&ny===ty){found=true;break;}q.push([nx,ny]);}}
+  if(!found)return;const path=[];let k=key(tx,ty);while(prev[k]){path.unshift(prev[k][2]);k=key(prev[k][0],prev[k][1]);}
+  busy=true;for(const d of path)await npcStep(n,d,90);busy=false;}
 
 /* =============== interactions =============== */
 function facing(){const[dx,dy]=DIRS[G.dir];return[G.x+dx,G.y+dy];}
-async function onA(){if(busy||P.moving||mode!=='map')return;const[fx,fy]=facing();const n=npcAt(fx,fy);if(n){if(!n.special||n.special!=='kraken')n.dir=OPP[G.dir];await interact(n);return;}
+async function onA(){if(busy||P.moving||mode!=='map')return;const[fx,fy]=facing();const n=npcAt(fx,fy);if(n){if(!n.noturn&&n.special!=='kraken')n.dir=OPP[G.dir];await interact(n);return;}
   const t=tileAt(fx,fy);if(t==='S'){const s=M().signs[fx+','+fy];if(s){await say(s);closeText();}return;}
   if(t==='X'){G.flags.truck=(G.flags.truck||0)+1;if(G.flags.truckDone){await say('A parked truck. There is nothing under it. There was never anything under it. Stop asking.');closeText();return;}
     if(G.flags.truck<3){await say(['A parked truck. Kids at school swear there\'s something under it. You push. It does not move.','You push again. It does not move. A seagull judges you.'][G.flags.truck-1]);closeText();return;}
@@ -1050,18 +1219,10 @@ async function onA(){if(busy||P.moving||mode!=='map')return;const[fx,fy]=facing(
 async function interact(n){if(n.special)return specials[n.special](n);
   if(n.trainer){if(n.requires&&!G.flags[n.requires]){await say(`${n.trainer}: ...Wait. We haven't had our LAST fight yet. Go back. Do it in order. I have a whole arc.`);closeText();return;}if(!G.party.length){await say(`${n.trainer}: You don't even HAVE a Radimal? Come back when you're worth my time.`);closeText();return;}if(G.flags[n.flag]){await sayAll(n.after);if(n.postChamp&&G.flags.champion)await n.postChamp();closeText();return;}
     await sayAll(n.before);if(n.healBefore&&G.party.some(m=>m.hp<m.st.hp)){G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.healBefore);}closeText();const r=await battle(n.team(),{trainer:n.trainer,look:n.look});
-    if(r==='win'){G.flags[n.flag]=1;await giveReward(n.reward,n.trainer);await sayAll(n.after);if(n.healAfter){G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.healAfter);}closeText();save();}
+    if(r==='win'){n.linger=true;G.flags[n.flag]=1;await giveReward(n.reward,n.trainer);await sayAll(n.after);if(n.healAfter){G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.healAfter);}closeText();if(n.leaveTo)await npcLeave(n,n.leaveTo[0],n.leaveTo[1]);n.linger=false;save();}
+    else if(n.tutorial){/* the first rival fight can't be failed: he heals you and moves on either way */n.linger=true;G.flags[n.flag]=1;await say(n.lose);G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(n.tutorial);closeText();if(n.leaveTo)await npcLeave(n,n.leaveTo[0],n.leaveTo[1]);n.linger=false;save();}
     else{await say(n.lose);closeText();await blackout();}return;}
   await sayAll(n.lines);closeText();}
-/* the rival's first battle happens in the lab, right after you pick a starter (the tutorial fight) */
-async function rivalIntro(){const c=MAPS.r1.npcs.find(n=>n.id==='chad1');if(G.flags.chad1||!c)return;
-  await say('???: Yo, PROF! Is the new kid getting a Radimal before ME? Not happening.');await sayAll(c.before);
-  await say('PROF. DIALTONE: Chad. Fine. ONE battle. Inside voices. Tip: pick FIGHT, then a move.');closeText();
-  const r=await battle(c.team(),{trainer:c.trainer,look:c.look||c.pal});G.flags.chad1=1;
-  if(r==='win'){await giveReward(c.reward,c.trainer);await sayAll(c.after);}
-  else{await say(c.lose);await say('PROF. DIALTONE: Everybody loses their first one. Mostly Chad, usually. Next time, try a different move.');}
-  G.party.forEach(m=>{m.hp=m.st.hp;m.sts=null;});sfx('heal');await say(r==='win'?c.healAfter:'PROF. DIALTONE: There. Your Radimal is all healed up. Go get him next time.');
-  await say('PROF. DIALTONE: Chad already ran north. He took the good bike. Of course he did.');closeText();}
 async function giveReward(rw,who){if(!rw)return;const parts=[];if(rw.money){G.money+=rw.money;parts.push('$'+rw.money+' allowance');}for(const k in ITEMS)if(rw[k]){G.bag[k]=bagN(k)+rw[k];parts.push(rw[k]+' '+ITEMS[k].name);}
   if(parts.length){sfx('buy');await say(`${who} coughed up ${parts.join(' and ')}!`);}}
 const specials={
@@ -1084,7 +1245,7 @@ const specials={
       PREVIEW=null;const m=makeMon(names[i],5);G.party.push(m);G.flags.starter=names[i];G.seen[names[i]]=1;G.caught[names[i]]=1;sfx('catch');
       await say(`PROF. DIALTONE: ${names[i].toUpperCase()} is yours. Here are 5 SLAMMERS to catch more, 3 JUICE BOXES, and $500. Don't spend it all on gel pens.`);
       await say('PROF. DIALTONE: Collect the four CAPS from the Hangout leaders. Then Y2K Tower. Something up there is... glitchy. Probably fine. Probably.');
-      closeText();await rivalIntro();save();}
+      await say('PROF. DIALTONE: Oh, and CHAD is waiting outside. He has been practicing his entrance all morning. Please act surprised. Tip: pick FIGHT, then a move.');closeText();save();}
     else if(G.pogs.length>=4&&!G.flags.goldGiven){G.flags.goldGiven=1;await say('PROF. DIALTONE: Four Caps! I was saving this for... honestly I forgot what for. Take it.');G.bag.gold=bagN('gold')+1;sfx('catch');await say('You got the GOLDEN SLAMMER! It never misses. There is only one. Do not waste it on a Milkwog.');closeText();save();}
     else if(G.flags.champion&&G.key.cd){const i=await choose('PROF. DIALTONE: A FREE TRIAL CD! Want me to dial you in to THE INTERNET? It takes a while. Nobody pick up the phone.',['DIAL IN','NOT NOW']);
       if(i===0){closeText();sfx('modem');busy=true;await fadeOut();await sleep(900);G.map='net';G.x=11;G.y=21;G.dir='up';playTrack('boss');await fadeIn();await say('*SCREECH* *HISS* *BONG BONG* ...CONNECTED. Welcome to THE INTERNET. Population: everyone, somehow.');closeText();}else closeText();}
@@ -1121,7 +1282,7 @@ async function toyBox(){while(true){const i=await pickMenu([{label:'WITHDRAW',su
     if(i===0){const j=await pickMenu(G.box.map(m=>({label:m.name.toUpperCase(),sub:'L'+m.lv})),{text:'Take out which?',cols:2});if(j>=0){const m=G.box.splice(j,1)[0];m.hp=m.st.hp;G.party.push(m);sfx('select');}}
     else if(i===1){const j=await pickMenu(G.party.map(m=>({label:m.name.toUpperCase(),sub:'L'+m.lv})),{text:'Put away which?',cols:2});if(j>=0){G.box.push(G.party.splice(j,1)[0]);sfx('select');}}
     else{closeText();save();return;}}}
-async function blackout(){busy=true;await fadeOut();G.party.forEach(m=>m.hp=m.st.hp);G.money=Math.floor(G.money*.8);const last=G.flags.lastSleep||'sleep1';G.map=last;G.x=4;G.y=4;G.dir='up';playTrack(mapMusic());await fadeIn();
+async function blackout(){busy=true;await fadeOut();for(const k in MAPS)for(const n of MAPS[k].npcs)if(n.o){n.x=n.o.x;n.y=n.o.y;n.dir=n.o.dir;n.px=n.py=0;delete n.o;}G.party.forEach(m=>m.hp=m.st.hp);G.money=Math.floor(G.money*.8);const last=G.flags.lastSleep||'sleep1';G.map=last;G.x=4;G.y=4;G.dir='up';playTrack(mapMusic());await fadeIn();
   await say('You wake up at the sleepover. Someone drew on your face. Your team is healed. You lost some allowance.');closeText();}
 
 /* =============== battle =============== */

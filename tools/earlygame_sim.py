@@ -14,7 +14,7 @@ with sync_playwright() as p:
       window.pickMenu=async(items,o)=>{if(items[0]&&items[0].label==='FIGHT')return 0;if(o&&o.id==='moves'){const me=B.me,en=B.en;const dm=me.moves.map((m,i)=>[i,MOVES[m][1]?MOVES[m][1]*eff(MOVES[m][0],SPECIES[en.name].type)*(MOVES[m][0]===SPECIES[me.name].type?1.3:1):0]);
           const att=dm.filter(x=>x[1]>0);if(strat==='best'){att.sort((a,b)=>b[1]-a[1]);return att[0][0];}return att[Math.floor(Math.random()*att.length)][0];}
         const ok=items.map((it,i)=>it.disabled?-1:i).filter(i=>i>=0);return ok.length?ok[0]:-1;};
-      const npc=id=>MAPS.r1.npcs.find(n=>n.id===id);const fight=async id=>{const r=await battle(npc(id).team(),{trainer:id,look:PLAYER_LOOK});closeText();mode='map';busy=false;return r==='win';};
+      const npc=id=>MAPS.r1.npcs.concat(MAPS.home.npcs).find(n=>n.id===id);const fight=async id=>{const r=await battle(npc(id).team(),{trainer:id,look:PLAYER_LOOK});closeText();mode='map';busy=false;return r==='win';};
       const out={};for(const st of ['Dialupine','Floppuss','Trollsprout'])for(const s of ['best','rand']){strat=s;const c={chadLab:0,todd:0,kennyCarried:0,kennyFull:0};
         for(let i=0;i<N;i++){G.flags={starter:st};G.bag={};G.party=[makeMon(st,5)];
           if(await fight('chad1'))c.chadLab++;G.party.forEach(m=>m.hp=m.st.hp);

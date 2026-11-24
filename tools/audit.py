@@ -17,5 +17,12 @@ with sync_playwright() as p:
       const avail=new Set();for(const k in MAPS)for(const w of (MAPS[k].wild||[]).concat(MAPS[k].fish||[]))avail.add(w);['Dialupine','Floppuss','Trollsprout','Y2Kraken','Pixelgodchi'].forEach(n=>avail.add(n));
       let grew=true;while(grew){grew=false;for(const n of DEX){const ev=SPECIES[n].evo;if(avail.has(n)&&ev&&!avail.has(ev[1])){avail.add(ev[1]);grew=true;}}}
       const miss=DEX.filter(n=>!avail.has(n));if(miss.length)out.push('UNOBTAINABLE: '+miss.join(','));
+      const looks=[];for(const k in MAPS)for(const n of MAPS[k].npcs){if(n.special==='kraken'||n.special==='tama')continue;if(!n.look)out.push(k+' npc '+n.id+' has no look');else looks.push([n.id,n.look,!!n.trainer]);}
+      for(const k in LEADERS)looks.push([LEADERS[k].name,LEADERS[k].look,true]);looks.push(['player',PLAYER_LOOK,false],['bike',BIKE_LOOK,false]);
+      let arts=0;for(const[id,l,tr]of looks){if(l.hat&&!HATS[l.hat])out.push(id+' bad hat '+l.hat);for(const b of [].concat(l.body||[]))if(!OUTFITS[b])out.push(id+' bad outfit '+b);for(const a of [].concat(l.acc||[]))if(!ACCS[a])out.push(id+' bad accessory '+a);
+        try{const s=personSet(l);for(const d of ['down','up','left','right'])if(s[d].length!==3||s[d][0].width!==16||s[d][0].height!==20)out.push(id+' sprite '+d);}catch(e){out.push(id+' sprite '+e);}
+        if(tr){const A=TRAINER_ART[l.art];if(!A)out.push(id+' has no battle portrait');else if(A.length!==24||A.some(r=>r.length!==24))out.push(id+' portrait not 24x24');else arts++;}}
+      for(const k in HATS)for(const d of ['down','up','left'])if(HATS[k][d])for(const r of HATS[k][d].slice(1))if(r.length!==16)out.push('hat '+k+' '+d+' row width');
+      out.push('characters '+looks.length+' trainer portraits '+Object.keys(TRAINER_ART).length+' (in use '+new Set(looks.filter(x=>x[2]).map(x=>x[1].art)).size+')');
       out.push('species '+DEX.length+' hand-drawn '+DEX.filter(n=>!SPECIES[n].gen).length);return out;}""")
     print("\n".join(rep)); print('page errors:',errs); b.close()

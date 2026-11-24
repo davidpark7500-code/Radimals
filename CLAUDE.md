@@ -34,8 +34,19 @@ tracks, and an App Store legal pass.
 - The old 24px art (`MON_ART`/`HAND_ART`/`HAND_ART2`, `tools/sprites/designs.py`) is kept as a
   fallback for anything without 48px art (e.g. Glitchy) and frozen in `art/legacy-24px-art.json`.
   `drawMon()`/battle/title/Binder/party code handles either size.
-- People: 16x16 base + hat/body/shades overlays (`HERO_BASE`, `HATS`, `BODIES`); 24x24 battle
-  portraits (`PORTRAIT`, `PHATS`, `PBODIES`). Eyes are 2px with highlight, close-set, smile, bangs.
+- People (rebuilt Nov 2026): map sprites are 16x20 (one tile of body plus 4 rows of headroom for
+  hair/hats, drawn 6px above the tile), built per direction from `P_HEAD` / `P_BODY` (3 frames:
+  stand, step A, step B; right = left mirrored) plus `HATS` (hair and hats), `OUTFITS`, `ACCS`.
+  Every character's look lives in `CAST` (`C(hat, skin 0-5, hair, top, legs, opts)`); shades and
+  highlights are derived in `lookPal`, and `autoOutline` closes any outline gap. Never put a look
+  inline on an NPC, add it to `CAST`. Face rule stays: eyes 2px with highlight, close-set, bangs.
+  Battle portraits are 24x24, hand-drawn per trainer in `TRAINER_ART[look.art]` (drawn at 2x),
+  coloured from the same look so map sprite and portrait match; extra prop colours in
+  `TRAINER_PAL`. Each has a pose or prop that sells the trainer's joke (Chad's talk-to-the-hand
+  palm, Pretzel Pete's pretzel, DJ Skatie drawn from behind because nobody has seen her face).
+  `tools/audit.py` fails any trainer without a portrait. Review sheets: `tools/people_sheet.py` ->
+  `art/people-sheet.png`, `tools/portrait_sheet.py [out] [names]` -> `art/trainer-portraits.png`.
+  Open follow-up: the portraits are still 24px while creatures are 48px.
 - Screen is 160x144 rendered at an integer scale; in-canvas text uses a 3x5 pixel font (`FONT`).
   HTML menus use the embedded 5x7 TTF "RadPix" (source: `art/radimals-pixel-font.ttf`).
 
@@ -87,9 +98,21 @@ tracks, and an App Store legal pass.
   (`maybeSwarm`, 1/7 on entering a route, lasts that visit only); BINDER milestones (`MILES`, prizes
   at 10/25/50/80/120/151 caught); 12 STICKERS (`STICKERS`, checked in `rewardsCheck()` at battle end).
 - Run chance clamped 15–95%. Exp = level^3, cap 50. Evolutions at level (and via Sour Bomb).
-- Gating: can't leave town without a starter; trainers refuse an empty party; rival fights are
-  in tree-walled chokepoints and must be done in order; bouncer needs 4 Caps; Marv needs the
+- Gating: can't leave town without a starter; trainers refuse an empty party; rival fights must be
+  done in order. Chad 1 (owner's call, Nov 2026) is NOT fought in the lab: he ambushes you the moment
+  you step out of the lab with a starter (`watch` + `spotCheck()` after an outdoor warp), is a
+  tutorial fight that can't be failed (`tutorial:` line, he heals you win or lose), walks off north
+  afterwards (`leaveTo` + `npcLeave`) and blocks the town exit until it has happened. Chad 2 and 3
+  stay in tree-walled chokepoints; bouncer needs 4 Caps; Marv needs the
   Arcade Cap; Chad 3 must be beaten before the Y2Kraken; Internet needs champion + Free Trial CD.
+
+## Trainers
+`T(id,x,y,dir,look,name,team,opts)` builds a trainer; `look` is a `CAST` entry and drives both the
+map sprite and the battle portrait intro (every trainer gets one). `watch:N` = sight range;
+`leaveTo:[x,y]` = walks off there after the fight; NPCs moved by a cutscene snap back on blackout.
+Leaders can set `dir` and `noturn` in `LEADERS` (DJ Skatie faces the wall and never turns round).
+Headless screenshots: launch Chromium with `--disable-accelerated-2d-canvas --disable-gpu` or the
+game canvas can come out black even though the game is rendering fine.
 
 ## Testing (already written — reuse them)
 `tools/` has Playwright scripts: `audit.py` (warps/edges/NPCs/species/items), `playthrough.py`
