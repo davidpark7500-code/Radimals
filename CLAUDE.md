@@ -47,7 +47,10 @@ tracks, and an App Store legal pass.
   `tools/audit.py` fails any trainer without a portrait. Review sheets: `tools/people_sheet.py` ->
   `art/people-sheet.png`, `tools/portrait_sheet.py [out] [names]` -> `art/trainer-portraits.png`.
   Open follow-up: the portraits are still 24px while creatures are 48px.
-- Screen is 160x144 rendered at an integer scale; in-canvas text uses a 3x5 pixel font (`FONT`).
+- Screen is 160x144 rendered at an integer scale (2x on a normal iPhone); in-canvas text uses a 3x5 pixel font (`FONT`).
+  Viewports too narrow for 2x (iPhone Display Zoom "Larger Text" reports 320pt) must NOT fall to 1x:
+  `fitScreen` then picks the largest scale that is a whole number of device pixels per game pixel
+  (5/3 on a zoomed iPhone), slims the bezel (`--bp`) and scales the text-box font (`--tbf`).
   HTML menus use the embedded 5x7 TTF "RadPix" (source: `art/radimals-pixel-font.ttf`).
 
 ## Visual/UX decisions (keep)
@@ -117,7 +120,7 @@ game canvas can come out black even though the game is rendering fine.
 ## Testing (already written — reuse them)
 `tools/` has Playwright scripts: `audit.py` (warps/edges/NPCs/species/items), `playthrough.py`
 (scripted full arc: starter → all leaders → tower → boss → legendary), `fuzz.py` (random
-battles + rule checks), `textfit.py` (text box never overflows at 3 screen widths; optional
+battles + rule checks), `textfit.py` (text box never overflows at 4 screen widths, incl. 320pt @3x for Display Zoom; optional
 screenshot dir arg), `sweep.py` (500-battle fuzz with invariants, every dialogue string fits,
 save/load + old-save compatibility, field items, swarm expiry, shop limits), `sheet.py` (renders all 151 with hand/generated tags), `shots.py`.
 Run `pip install playwright && playwright install chromium` first (in the cloud sandbox, set

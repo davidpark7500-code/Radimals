@@ -51,8 +51,8 @@ with sync_playwright() as p:
     pg.close()
 
     # ---------------------------------------------------------------- 2. every dialogue string fits, at 3 screen widths
-    for W in (330, 390, 600):
-        pg = b.new_page(viewport={'width': W, 'height': 900}); pg.goto(URL); time.sleep(1)
+    for W in (320, 330, 390, 600):
+        pg = b.new_page(viewport={'width': W, 'height': 900}, device_scale_factor=3 if W == 320 else 1); pg.goto(URL); time.sleep(1)
         res = pg.evaluate("""()=>{const strs=new Set();const grab=v=>{if(typeof v==='string'&&v.length>20&&/[a-z]/.test(v))strs.add(v);};
           const src=document.querySelector('script').textContent;for(const m of src.matchAll(/(['`])((?:\\\\.|(?!\\1).){40,}?)\\1/g)){const t=m[2];if(!t.includes('${')&&!/[{};=<>]/.test(t))strs.add(t.replace(/\\\\n/g,'\\n').replace(/\\\\'/g,"'"));}
           for(const n in SPECIES)grab(SPECIES[n].desc);

@@ -15,12 +15,13 @@ html,body{overflow-x:hidden;margin:0;background:radial-gradient(circle at 50% 20
 #led{width:7px;height:7px;border-radius:50%;background:#b6ff3b;box-shadow:0 0 7px #b6ff3b;margin:0 22px 0 auto;display:inline-block;flex:none;animation:led 3s ease-in-out infinite}
 @keyframes led{50%{opacity:.55}}
 #top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 6px;font-size:11px;letter-spacing:.2em;position:relative}
+@media(max-width:350px){#top{letter-spacing:.06em;padding-left:12px;padding-right:12px}}
 #top span{color:var(--lime);text-shadow:1px 1px 0 var(--pink)}
 #top button{background:none;border:1px solid var(--teal);color:var(--teal);font:inherit;font-size:11px;padding:3px 0;border-radius:3px;width:86px;text-align:center;flex:none}
 #screenwrap{padding:4px 16px 0;position:relative;display:flex;justify-content:center}
-#bezel{position:relative;padding:14px;background:linear-gradient(180deg,#0e0e12,#17171c);border-radius:12px;box-shadow:inset 0 5px 12px rgba(0,0,0,.9),inset 0 -1px 0 rgba(255,255,255,.07),0 1px 0 rgba(255,255,255,.06)}
+#bezel{position:relative;padding:var(--bp,14px);background:linear-gradient(180deg,#0e0e12,#17171c);border-radius:12px;box-shadow:inset 0 5px 12px rgba(0,0,0,.9),inset 0 -1px 0 rgba(255,255,255,.07),0 1px 0 rgba(255,255,255,.06)}
 #screen{width:320px;height:288px;background:#000;border:3px solid #000;box-shadow:0 0 0 2px var(--teal),0 0 0 4px var(--pink),inset 0 0 18px rgba(0,0,0,.6);border-radius:3px;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
-#textbox{position:absolute;left:17px;right:17px;bottom:17px;height:var(--tbh,98px);margin:0;background:var(--paper);color:var(--ink);border:3px solid var(--ink);box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 4px var(--ink);padding:6px 10px;overflow:hidden;font-size:var(--tbf,13px);line-height:1.4;visibility:hidden;z-index:3}
+#textbox{position:absolute;left:calc(var(--bp,14px) + 3px);right:calc(var(--bp,14px) + 3px);bottom:calc(var(--bp,14px) + 3px);height:var(--tbh,98px);margin:0;background:var(--paper);color:var(--ink);border:3px solid var(--ink);box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 4px var(--ink);padding:6px 10px;overflow:hidden;font-size:var(--tbf,13px);line-height:1.4;visibility:hidden;z-index:3}
 #textbox.on{visibility:visible}
 #tbtext{white-space:pre-wrap}
 #tbup,#tbdn{position:absolute;right:3px;font-size:9px;line-height:1;display:none}#tbdn{bottom:3px}#tbup.on,#tbdn.on{display:block}
@@ -976,7 +977,11 @@ const P={px:0,py:0,moving:false,frame:0,walkT:0};
 let mode='title',textOpen=false,busy=false,fade=0,frameCount=0,bHeld=false,playT=0,codeBuf=[],cheat=false,idleT=0;const CODE=['up','up','down','down','left','right','left','right','b','a'];
 function codeKey(k){if(mode!=='title'||cheat)return;codeBuf.push(k);if(codeBuf.length>10)codeBuf.shift();if(codeBuf.join()===CODE.join()){cheat=true;sfx('levelup');}}
 const cv=$('#screen'),ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
-function fitScreen(){const w=Math.min(window.innerWidth,462)-32;const sc=Math.max(1,Math.floor(w/160));cv.style.width=160*sc+'px';cv.style.height=144*sc+'px';$('#app').style.setProperty('--sw',160*sc+'px');$('#app').style.setProperty('--tbh',Math.round(144*sc*.34)+'px');$('#app').style.setProperty('--tbf',sc<2?'9px':'13px');}window.addEventListener('resize',fitScreen);fitScreen();
+function fitScreen(){const vw=window.innerWidth,w=Math.min(vw,462)-32;let sc=Math.max(1,Math.floor(w/160)),bp=14;
+  /* Narrow viewports (iPhone Display Zoom "Larger Text" is 320pt wide) can't fit 2x. Rather than drop to a tiny 1x screen,
+     use the largest scale that is still a whole number of device pixels per game pixel, with a slimmer bezel. */
+  if(sc<2){const dpr=window.devicePixelRatio||1,f=Math.floor((vw-46)*dpr/160)/dpr;if(f>1){sc=f;bp=8;}}
+  const A=$('#app').style;cv.style.width=160*sc+'px';cv.style.height=144*sc+'px';A.setProperty('--sw',160*sc+'px');A.setProperty('--bp',bp+'px');A.setProperty('--tbh',Math.round(144*sc*.34)+'px');A.setProperty('--tbf',sc>=2?'13px':sc>1?Math.max(9,Math.round(6.5*sc))+'px':'9px');}window.addEventListener('resize',fitScreen);fitScreen();
 const PLAYER_LOOK=CAST.player;const BIKE_LOOK=Object.assign({},CAST.player,{bike:true});
 let heroSpr=personSet(PLAYER_LOOK);
 const M=()=>MAPS[G.map];

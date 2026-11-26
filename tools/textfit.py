@@ -1,4 +1,4 @@
-"""Text-box fit check: drives dialogue, menus, shop, battle, binder at 3 screen widths and fails if the
+"""Text-box fit check: drives dialogue, menus, shop, battle, binder at 4 screen widths and fails if the
 in-screen text box content ever overflows. Usage: python tools/textfit.py [shots_dir]"""
 from playwright.sync_api import sync_playwright
 import time,os,sys
@@ -26,8 +26,8 @@ def shot(pg,name):
 bad=0
 with sync_playwright() as p:
     b=p.chromium.launch()
-    for W in (330,390,600):
-        pg=b.new_page(viewport={'width':W,'height':900},device_scale_factor=2 if W==390 else 1); errs=[]; pg.on('pageerror',lambda e:errs.append(str(e)))
+    for W in (320,330,390,600):  # 320 @3x = iPhone Display Zoom, the fractional-scale path
+        pg=b.new_page(viewport={'width':W,'height':900},device_scale_factor=3 if W==320 else 2 if W==390 else 1); errs=[]; pg.on('pageerror',lambda e:errs.append(str(e)))
         pg.goto('file://'+os.path.abspath('www/index.html')); time.sleep(1); pg.evaluate(MON); pg.evaluate("()=>{localStorage.setItem('radimals98v3_s2',JSON.stringify(Object.assign({},G,{party:[makeMon('Modemauler',34)],pogs:['arcade','foodcourt','rink'],playT:45240000})));}")
         pg.keyboard.press('z'); time.sleep(0.3)
         for k in range(10):
